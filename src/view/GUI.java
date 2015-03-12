@@ -80,7 +80,6 @@ public class GUI extends javax.swing.JFrame {
         hidePages();
         jPanelWeek.add(page);
         page.setSize(1000, 400);
-
         if (page.getClass().getSimpleName().equals("WeekPanel")) {
             enableWeekChooser();
             enableShop();
@@ -92,6 +91,9 @@ public class GUI extends javax.swing.JFrame {
             disableShop();
             disableWeekGen();
             enableBack();
+        }
+        if (page.getClass().getSimpleName().equals("JLabel")) {
+            disableShop();
         }
         jPanelWeek.revalidate();
         jPanelWeek.repaint();
@@ -257,6 +259,7 @@ public class GUI extends javax.swing.JFrame {
         jButtonShop.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/shop.png"))); // NOI18N
         jButtonShop.setText("Indkøbsliste");
         jButtonShop.setBorder(null);
+        jButtonShop.setEnabled(false);
         jButtonShop.setFocusPainted(false);
         jButtonShop.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButtonShop.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
