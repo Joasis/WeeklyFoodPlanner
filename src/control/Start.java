@@ -23,12 +23,13 @@ public class Start {
         uh = new UnitHandler();
         ih = new IngredientHandler();
 
+        System.out.println("List of all unittypes:");
         for (Unit un : uh.getUnitList()) {
-            System.out.println(un.getName());
+            System.out.println("\t" + un.getName() + " (" + un.getShortname() + ")");
         }
+        System.out.println("\nList of all ingredients:");
         for (Ingredient in : ih.getIngredientList()) {
-            System.out.println(in.getName());
+            System.out.println("\t" + in.getName());
         }
-        System.out.println("skidthop");
     }
 }
