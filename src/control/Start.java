@@ -29,6 +29,7 @@ public class Start {
         for (Ingredient in : ih.getIngredientList()) {
             System.out.println(in.getName());
         }
+        System.out.println("test");
     }
 
 }
