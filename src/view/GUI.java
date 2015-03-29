@@ -31,16 +31,16 @@ public class GUI extends javax.swing.JFrame {
         int x = 10;
         int y = 10;
 
-        for (int i = 0; i < 7; i++) {
-            if (i == 3) {
-                y = 130;
-                x = 10;
-            }
-            WeekdayPanel wdp = new WeekdayPanel();
-            wdp.setLocation(x, y);
-            jPanelWeek.add(wdp);
-            x+=158;
-        }
+//        for (int i = 0; i < 7; i++) {
+//            if (i == 3) {
+//                y = 130;
+//                x = 10;
+//            }
+//            WeekdayPanel wdp = new WeekdayPanel();
+//            wdp.setLocation(x, y);
+//            jPanelWeek.add(wdp);
+//            x += 158;
+//        }
     }
 
     /**
