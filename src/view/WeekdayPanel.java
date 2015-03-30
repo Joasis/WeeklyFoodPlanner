@@ -5,6 +5,7 @@
  */
 package view;
 
+import model.Recipe;
 import model.Weekday;
 
 /**
@@ -13,15 +14,30 @@ import model.Weekday;
  */
 public class WeekdayPanel extends javax.swing.JPanel {
 
-    private Weekday wday;
-    
+    private Weekday wkday;
+    private Recipe weekRecipe;
+
     /**
      * Creates new form WeekdayPanel
      */
-    public WeekdayPanel() {
-        this.wday = wday;
+    public WeekdayPanel(Weekday wkday) {
+        this.wkday = wkday;
+        weekRecipe = wkday.getRecipe();
         initComponents();
-        setSize(148,100);
+        setSize(148, 100);
+        setWeekday();
+    }
+
+    public void setWeekday() {
+        jLabelDate.setText(wkday.getDate());
+        jLabelDescription.setText(getWeekRecipe().getDescription());
+        jLabelOpskriftNavn.setText(getWeekRecipe().getName());
+        jLabelCookingTime.setText(getWeekRecipe().getCookingtime() + "");
+        jLabelPortions.setText(getWeekRecipe().getPortions() + "");
+    }
+
+    public Recipe getWeekRecipe() {
+        return wkday.getRecipe();
     }
 
     /**
@@ -34,47 +50,59 @@ public class WeekdayPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jLabelOpskriftNavn = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        jLabelDescription = new javax.swing.JLabel();
+        jLabelDate = new javax.swing.JLabel();
+        jButtonInfo = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        jLabelCookingTime = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jLabelPortions = new javax.swing.JLabel();
 
         jLabelOpskriftNavn.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabelOpskriftNavn.setText("Stor fed skinke");
 
-        jLabel1.setText("<html>Smid skinken i ovnen<br>, og vent 30 min... </html>");
+        jLabelDescription.setText("<html>Smid skinken i ovnen<br>, og vent 30 min... </html>");
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("25-05-2015");
+        jLabelDate.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabelDate.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelDate.setText("25-05-2015");
 
-        jButton1.setText("I");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonInfo.setText("I");
+        jButtonInfo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonInfoActionPerformed(evt);
             }
         });
 
         jLabel3.setText("Tilberedningstid:");
 
-        jLabel4.setText("30 min");
+        jLabelCookingTime.setText("30 min");
+
+        jLabel4.setText("Antal personer");
+
+        jLabelPortions.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabelPortions.setText("4");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(jLabelDescription, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelOpskriftNavn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabelDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jButtonInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel3)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel4))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabelCookingTime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabelPortions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -82,30 +110,36 @@ public class WeekdayPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel2))
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(13, 13, 13)
+                        .addComponent(jLabelDate))
+                    .addComponent(jButtonInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelOpskriftNavn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelDescription, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabelPortions))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel4)))
+                    .addComponent(jLabelCookingTime)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButtonInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInfoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jButtonInfoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JButton jButtonInfo;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabelCookingTime;
+    private javax.swing.JLabel jLabelDate;
+    private javax.swing.JLabel jLabelDescription;
     private javax.swing.JLabel jLabelOpskriftNavn;
+    private javax.swing.JLabel jLabelPortions;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,6 +5,8 @@
  */
 package view;
 
+import model.Week;
+
 /**
  *
  * @author Jonas
@@ -16,10 +18,14 @@ public class WeekPanel extends javax.swing.JPanel {
     /**
      * Creates new form WeekPanel
      */
-    public WeekPanel() {
+    public WeekPanel(Week week) {
         weekdays = new WeekdayPanel[7];
         initComponents();
         setSize(60, 300);
+    }
+
+    public WeekdayPanel[] getWeekdays() {
+        return weekdays;
     }
 
     /**

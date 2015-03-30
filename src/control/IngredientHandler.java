@@ -22,7 +22,6 @@ public class IngredientHandler {
         ingredientList = new ArrayList<>();
         getIngredientsFromDB();
     }
-    
 
     public void getIngredientsFromDB() {
         try {
@@ -34,6 +33,18 @@ public class IngredientHandler {
         } catch (SQLException ex) {
             System.out.println("SQL FEJL " + ex);
         }
+    }
+
+    public Ingredient getIngredient(int ingredientID) {
+        Ingredient ingredient = null;
+        boolean ingredientFound = false;
+        for (int i = 0; i < ingredientList.size() && ingredientFound == false; i++) {
+            if (ingredientList.get(i).getId() == ingredientID) {
+                ingredient = ingredientList.get(i);
+                ingredientFound = true;
+            }
+        }
+        return ingredient;
     }
 
     public ArrayList<Ingredient> getIngredientList() {

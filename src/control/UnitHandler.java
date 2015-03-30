@@ -8,8 +8,6 @@ package control;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.Unit;
 
 /**
@@ -35,6 +33,18 @@ public class UnitHandler {
         } catch (SQLException ex) {
             System.out.println("SQL FEJL" + ex);
         }
+    }
+
+    public Unit getUnit(int unitID) {
+        Unit unit = null;
+        boolean unitFound = false;
+        for (int i = 0; i < unitList.size() && unitFound == false; i++) {
+            if (unitList.get(i).getId() == unitID) {
+                unit = unitList.get(i);
+                unitFound = true;
+            }
+        }
+        return unit;
     }
 
     public ArrayList<Unit> getUnitList() {

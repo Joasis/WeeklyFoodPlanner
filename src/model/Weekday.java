@@ -5,10 +5,53 @@
  */
 package model;
 
+import java.util.Calendar;
+
 /**
  *
  * @author Jonas
  */
 public class Weekday {
-    
+
+    private int id;
+    private Recipe recipe;
+    private Calendar cal;
+    private int weekNumber;
+
+    public Weekday(int id, Recipe recipe, Calendar cal, int weekNumber) {
+        this.id = id;
+        this.recipe = recipe;
+        this.cal = cal;
+        this.weekNumber = weekNumber;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public Recipe getRecipe() {
+        return recipe;
+    }
+
+    public String getDate() {
+        long time = cal.getTimeInMillis() / 1000;
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+        int month = cal.get(Calendar.MONTH);
+        int year = cal.get(Calendar.YEAR);
+
+        String dayZero = "";
+        String monthZero = "";
+        if (day < 10) {
+            dayZero = "0";
+        }
+        if (month < 10) {
+            monthZero = "0";
+        }
+        String date = dayZero + day + "-" + monthZero + month + "-" + year;
+        return date;
+    }
+
+    public int getWeek() {
+        return weekNumber;
+    }
 }
