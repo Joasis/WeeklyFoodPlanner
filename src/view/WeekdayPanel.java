@@ -24,15 +24,15 @@ public class WeekdayPanel extends javax.swing.JPanel {
         this.wkday = wkday;
         weekRecipe = wkday.getRecipe();
         initComponents();
-        setSize(148, 100);
+        setSize(148, 120);
         setWeekday();
     }
 
     public void setWeekday() {
-        jLabelDate.setText(wkday.getDate());
-        jLabelDescription.setText(getWeekRecipe().getDescription());
+        jLabelDate.setText("<html>" + wkday.getDate() + "<html>");
+        jLabelDescription.setText("<html>" + getWeekRecipe().getDescription() + "<html>");
         jLabelOpskriftNavn.setText(getWeekRecipe().getName());
-        jLabelCookingTime.setText(getWeekRecipe().getCookingtime() + "");
+        jLabelCookingTime.setText(getWeekRecipe().getCookingtime() + " min");
         jLabelPortions.setText(getWeekRecipe().getPortions() + "");
     }
 
@@ -52,7 +52,6 @@ public class WeekdayPanel extends javax.swing.JPanel {
         jLabelOpskriftNavn = new javax.swing.JLabel();
         jLabelDescription = new javax.swing.JLabel();
         jLabelDate = new javax.swing.JLabel();
-        jButtonInfo = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabelCookingTime = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -66,13 +65,6 @@ public class WeekdayPanel extends javax.swing.JPanel {
         jLabelDate.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabelDate.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelDate.setText("25-05-2015");
-
-        jButtonInfo.setText("I");
-        jButtonInfo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonInfoActionPerformed(evt);
-            }
-        });
 
         jLabel3.setText("Tilberedningstid:");
 
@@ -88,12 +80,6 @@ public class WeekdayPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabelDescription, javax.swing.GroupLayout.Alignment.TRAILING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelOpskriftNavn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabelDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
@@ -103,15 +89,14 @@ public class WeekdayPanel extends javax.swing.JPanel {
                     .addComponent(jLabelCookingTime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabelPortions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jLabelDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabelOpskriftNavn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabelDate))
-                    .addComponent(jButtonInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap()
+                .addComponent(jLabelDate)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelOpskriftNavn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -127,13 +112,8 @@ public class WeekdayPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInfoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonInfoActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonInfo;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabelCookingTime;

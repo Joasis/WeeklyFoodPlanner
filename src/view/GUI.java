@@ -5,42 +5,43 @@
  */
 package view;
 
-import java.awt.FlowLayout;
-import java.awt.Font;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.UIManager;
+import java.util.ArrayList;
+import model.Week;
 
 /**
  *
  * @author Jonas
  */
 public class GUI extends javax.swing.JFrame {
+    
+    private ArrayList<Week> weekList;
 
     /**
      * Creates new form GUI
      */
-    public GUI() {
+    public GUI(ArrayList<Week> weekList) {
+        this.weekList = weekList;
         /*
          Font font = new Font("OCR A Std", 2, 12);
          UIManager.put("Label.font", font);
          */
         initComponents();
-        jPanelWeek.setSize(750, 443);
-
+        
+        jPanelAddRecipe.setVisible(false);
+        
         int x = 10;
         int y = 10;
-
-//        for (int i = 0; i < 7; i++) {
-//            if (i == 3) {
-//                y = 130;
-//                x = 10;
-//            }
-//            WeekdayPanel wdp = new WeekdayPanel();
-//            wdp.setLocation(x, y);
-//            jPanelWeek.add(wdp);
-//            x += 158;
-//        }
+        
+        for (int i = 0; i < 7; i++) {
+            if (i == 3) {
+                y = 150;
+                x = 10;
+            }
+            WeekdayPanel wdp = new WeekdayPanel(weekList.get(0).getWeekdays()[i]);
+            wdp.setLocation(x, y);
+            jPanelWeek.add(wdp);
+            x += 158;
+        }
     }
 
     /**
@@ -55,8 +56,11 @@ public class GUI extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanelContent = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
+        jPanelAddRecipe = new javax.swing.JPanel();
         jPanelWeek = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
+        jButtonAddRecipe = new javax.swing.JButton();
+        jButtonGoBack = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -66,22 +70,45 @@ public class GUI extends javax.swing.JFrame {
 
         jButton1.setText("Generer madplan");
 
+        jPanelAddRecipe.setBackground(new java.awt.Color(0, 0, 204));
+        jPanelAddRecipe.setLayout(null);
+
         jPanelWeek.setBackground(new java.awt.Color(150, 0, 150));
         jPanelWeek.setLayout(null);
 
         jButton2.setText("Indkøbsliste");
+
+        jButtonAddRecipe.setText("Tilføj opskrift");
+        jButtonAddRecipe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAddRecipeActionPerformed(evt);
+            }
+        });
+
+        jButtonGoBack.setText("Gå tilbage");
+        jButtonGoBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonGoBackActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelContentLayout = new javax.swing.GroupLayout(jPanelContent);
         jPanelContent.setLayout(jPanelContentLayout);
         jPanelContentLayout.setHorizontalGroup(
             jPanelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelContentLayout.createSequentialGroup()
-                .addGap(276, 276, 276)
+                .addContainerGap()
+                .addComponent(jButtonAddRecipe)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonGoBack)
+                .addGap(114, 114, 114)
                 .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 260, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 230, Short.MAX_VALUE)
                 .addComponent(jButton2)
                 .addContainerGap())
             .addComponent(jPanelWeek, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jPanelAddRecipe, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 750, Short.MAX_VALUE))
         );
         jPanelContentLayout.setVerticalGroup(
             jPanelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -90,8 +117,14 @@ public class GUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(jButton2)
+                    .addComponent(jButtonAddRecipe)
+                    .addComponent(jButtonGoBack))
                 .addContainerGap())
+            .addGroup(jPanelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanelContentLayout.createSequentialGroup()
+                    .addComponent(jPanelAddRecipe, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 45, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -111,6 +144,16 @@ public class GUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonAddRecipeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddRecipeActionPerformed
+        jPanelAddRecipe.setVisible(true);
+        jPanelWeek.setVisible(false);
+    }//GEN-LAST:event_jButtonAddRecipeActionPerformed
+
+    private void jButtonGoBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGoBackActionPerformed
+        jPanelAddRecipe.setVisible(false);
+        jPanelWeek.setVisible(true);
+    }//GEN-LAST:event_jButtonGoBackActionPerformed
 
     /**
      * @param args the command line arguments
@@ -142,7 +185,6 @@ public class GUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new GUI().setVisible(true);
             }
         });
     }
@@ -150,7 +192,10 @@ public class GUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButtonAddRecipe;
+    private javax.swing.JButton jButtonGoBack;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanelAddRecipe;
     private javax.swing.JPanel jPanelContent;
     private javax.swing.JPanel jPanelWeek;
     // End of variables declaration//GEN-END:variables

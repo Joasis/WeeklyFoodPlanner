@@ -17,22 +17,20 @@ import model.Weekday;
  * @author Jonas
  */
 public class WeekdayHandler {
-    
+
     private ArrayList<Weekday> weekdays;
-    
+
     public WeekdayHandler() {
         weekdays = new ArrayList<>();
         getWeekDaysFromDB();
     }
-    
+
     public void getWeekDaysFromDB() {
         try {
             ResultSet rs = Start.dbh.selectAll("wkday");
             while (rs.next()) {
                 Calendar cal = Calendar.getInstance();
-                System.out.println(cal.getTimeInMillis());
                 cal.setTimeInMillis(rs.getLong("wkd_date"));
-                System.out.println(cal.getTimeInMillis());
                 Recipe recipe = Start.rh.getRecipe(rs.getInt("fk_recipe"));
                 Weekday weekday = new Weekday(rs.getInt("wkd_id"), recipe, cal, rs.getInt("fk_week"));
                 weekdays.add(weekday);
@@ -41,7 +39,7 @@ public class WeekdayHandler {
             System.out.println("SQL FEJL " + ex);
         }
     }
-    
+
     public ArrayList<Weekday> getWeekdays() {
         return weekdays;
     }
