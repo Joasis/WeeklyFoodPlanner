@@ -24,7 +24,7 @@ public class WeekdayPanel extends javax.swing.JPanel {
         this.wkday = wkday;
         weekRecipe = wkday.getRecipe();
         initComponents();
-        setSize(148, 120);
+        setSize(142, 400);
         setWeekday();
     }
 
@@ -51,66 +51,130 @@ public class WeekdayPanel extends javax.swing.JPanel {
 
         jLabelOpskriftNavn = new javax.swing.JLabel();
         jLabelDescription = new javax.swing.JLabel();
-        jLabelDate = new javax.swing.JLabel();
+        jLabelDay = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabelCookingTime = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabelPortions = new javax.swing.JLabel();
+        jLabelDate = new javax.swing.JLabel();
+        jLabelExclude = new javax.swing.JLabel();
+        jLabelReplace = new javax.swing.JLabel();
+
+        setBackground(new java.awt.Color(102, 204, 0));
 
         jLabelOpskriftNavn.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabelOpskriftNavn.setForeground(new java.awt.Color(255, 255, 255));
         jLabelOpskriftNavn.setText("Stor fed skinke");
 
-        jLabelDescription.setText("<html>Smid skinken i ovnen<br>, og vent 30 min... </html>");
+        jLabelDescription.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jLabelDescription.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelDescription.setText("<html>Sæt 250g spaghetti over. Hak løg i små tern og pølser i små circler. Steg pølserne i olie på pande og tilsæt løg. Når spaghettien er færdig, hældes vandet fra og løg, pølser og</html>");
+        jLabelDescription.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        jLabelDate.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabelDate.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelDate.setText("25-05-2015");
+        jLabelDay.setFont(new java.awt.Font("Verdana", 0, 30)); // NOI18N
+        jLabelDay.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelDay.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelDay.setText("Mandag");
 
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Tilberedningstid:");
 
+        jLabelCookingTime.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelCookingTime.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelCookingTime.setText("30 min");
+        jLabelCookingTime.setToolTipText("");
 
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Antal personer");
 
+        jLabelPortions.setForeground(new java.awt.Color(255, 255, 255));
         jLabelPortions.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelPortions.setText("4");
+
+        jLabelDate.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jLabelDate.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelDate.setText("06-04-2015");
+
+        jLabelExclude.setBackground(new java.awt.Color(0, 0, 0));
+        jLabelExclude.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        jLabelExclude.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelExclude.setText("            Undlad");
+        jLabelExclude.setOpaque(true);
+        jLabelExclude.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelExcludeMouseClicked(evt);
+            }
+        });
+
+        jLabelReplace.setBackground(new java.awt.Color(200, 58, 20));
+        jLabelReplace.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        jLabelReplace.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelReplace.setText("            Udskift");
+        jLabelReplace.setOpaque(true);
+        jLabelReplace.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelReplaceMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabelDescription, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(jLabelDay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabelOpskriftNavn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabelDate, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jLabelDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(jLabelExclude, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabelReplace, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabelCookingTime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabelPortions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(jLabelDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLabelOpskriftNavn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabelCookingTime, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabelPortions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addComponent(jLabelDay)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelDate)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabelOpskriftNavn)
+                .addComponent(jLabelOpskriftNavn, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabelDescription, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addComponent(jLabelDescription, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jLabelPortions))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jLabelCookingTime)))
+                    .addComponent(jLabelCookingTime))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelReplace, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelExclude, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
+
+        jLabelDescription.getAccessibleContext().setAccessibleName("<html style=\"padding-left:5px;\">Smid skinken i ovnen<br>, og vent 30 min... </html>");
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jLabelReplaceMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelReplaceMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabelReplaceMouseClicked
+
+    private void jLabelExcludeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelExcludeMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabelExcludeMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -118,8 +182,11 @@ public class WeekdayPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabelCookingTime;
     private javax.swing.JLabel jLabelDate;
+    private javax.swing.JLabel jLabelDay;
     private javax.swing.JLabel jLabelDescription;
+    private javax.swing.JLabel jLabelExclude;
     private javax.swing.JLabel jLabelOpskriftNavn;
     private javax.swing.JLabel jLabelPortions;
+    private javax.swing.JLabel jLabelReplace;
     // End of variables declaration//GEN-END:variables
 }
