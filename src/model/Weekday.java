@@ -6,6 +6,7 @@
 package model;
 
 import java.util.Calendar;
+import java.util.Locale;
 
 /**
  *
@@ -31,6 +32,13 @@ public class Weekday {
 
     public Recipe getRecipe() {
         return recipe;
+    }
+
+    public String getWeekName() {
+        String weekName;
+        weekName = cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
+        weekName = Character.toUpperCase(weekName.charAt(0)) + weekName.substring(1);
+        return weekName;
     }
 
     public String getDate() {

@@ -5,6 +5,7 @@
  */
 package view;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import model.Week;
 
@@ -13,8 +14,10 @@ import model.Week;
  * @author Jonas
  */
 public class GUI extends javax.swing.JFrame {
-    
+
     private ArrayList<Week> weekList;
+    protected final static Color weekPanelColor = new Color(132, 153, 204);
+    protected final static Color mainColor = new Color(51, 70, 102);
 
     /**
      * Creates new form GUI
@@ -26,16 +29,12 @@ public class GUI extends javax.swing.JFrame {
          UIManager.put("Label.font", font);
          */
         initComponents();
-        
-        
+        jPanelContent.setBackground(mainColor);
+
         int x = 2;
         int y = 0;
-        
+
         for (int i = 0; i < 7; i++) {
-//            if (i == 3) {
-//                y = 142;
-//                x = 0;
-//            }
             WeekdayPanel wdp = new WeekdayPanel(weekList.get(0).getWeekdays()[i]);
             wdp.setLocation(x, y);
             jPanelWeek.add(wdp);

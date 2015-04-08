@@ -37,7 +37,7 @@ public class WeekdayPanel extends javax.swing.JPanel {
     }
     
     public void setWeekday() {
-        jLabelDay.setText(Character.toUpperCase(wkday.getWeekName().charAt(0)) + wkday.getWeekName().substring(1));
+        jLabelDay.setText(wkday.getWeekName());
         jLabelDate.setText("<html>" + wkday.getDate() + "</html>");
         jLabelDescription.setText(getWeekRecipe().getDescription());
         jLabelOpskriftNavn.setText("<html>" + getWeekRecipe().getName() + "</html>");
