@@ -14,14 +14,26 @@ import model.Week;
 public class WeekPanel extends javax.swing.JPanel {
 
     private WeekdayPanel[] weekdays;
-    
+    private Week week;
+
     /**
      * Creates new form WeekPanel
      */
     public WeekPanel(Week week) {
         weekdays = new WeekdayPanel[7];
         initComponents();
-        setSize(60, 300);
+        setBackground(GUI.mainColor);
+        setSize(1000, 400);
+
+        int x = 0;
+        int y = 0;
+
+        for (int i = 0; i < 7; i++) {
+            WeekdayPanel wdp = new WeekdayPanel(week.getWeekdays()[i]);
+            wdp.setLocation(x, y);
+            jPanelWeekDays.add(wdp);
+            x += 143;
+        }
     }
 
     public WeekdayPanel[] getWeekdays() {
@@ -37,19 +49,39 @@ public class WeekPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanelWeekDays = new javax.swing.JPanel();
+
+        jPanelWeekDays.setOpaque(false);
+
+        javax.swing.GroupLayout jPanelWeekDaysLayout = new javax.swing.GroupLayout(jPanelWeekDays);
+        jPanelWeekDays.setLayout(jPanelWeekDaysLayout);
+        jPanelWeekDaysLayout.setHorizontalGroup(
+            jPanelWeekDaysLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1000, Short.MAX_VALUE)
+        );
+        jPanelWeekDaysLayout.setVerticalGroup(
+            jPanelWeekDaysLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanelWeekDays, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 900, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanelWeekDays, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 300, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel jPanelWeekDays;
     // End of variables declaration//GEN-END:variables
 }
