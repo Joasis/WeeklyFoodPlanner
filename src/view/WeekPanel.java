@@ -12,7 +12,7 @@ import model.Week;
  * @author Jonas
  */
 public class WeekPanel extends javax.swing.JPanel {
-
+    
     private WeekdayPanel[] weekdays;
     private Week week;
 
@@ -24,10 +24,10 @@ public class WeekPanel extends javax.swing.JPanel {
         initComponents();
         setBackground(GUI.mainColor);
         setSize(1000, 400);
-
+        
         int x = 0;
         int y = 0;
-
+        
         for (int i = 0; i < 7; i++) {
             WeekdayPanel wdp = new WeekdayPanel(week.getWeekdays()[i]);
             wdp.setLocation(x, y);
@@ -35,7 +35,7 @@ public class WeekPanel extends javax.swing.JPanel {
             x += 143;
         }
     }
-
+    
     public WeekdayPanel[] getWeekdays() {
         return weekdays;
     }
@@ -50,6 +50,8 @@ public class WeekPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanelWeekDays = new javax.swing.JPanel();
+
+        jPanelWeekDays.setBackground(GUI.mainColor);
 
         javax.swing.GroupLayout jPanelWeekDaysLayout = new javax.swing.GroupLayout(jPanelWeekDays);
         jPanelWeekDays.setLayout(jPanelWeekDaysLayout);
@@ -66,15 +68,11 @@ public class WeekPanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanelWeekDays, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 900, Short.MAX_VALUE))
+            .addComponent(jPanelWeekDays, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanelWeekDays, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 300, Short.MAX_VALUE))
+            .addComponent(jPanelWeekDays, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
