@@ -6,9 +6,8 @@
 package view;
 
 import java.awt.Color;
-import java.awt.Graphics;
 import java.util.ArrayList;
-import javax.swing.DefaultListCellRenderer;
+import java.util.Calendar;
 import javax.swing.plaf.basic.BasicComboBoxUI;
 import model.Week;
 
@@ -17,15 +16,19 @@ import model.Week;
  * @author Jonas
  */
 public class GUI extends javax.swing.JFrame {
-
+    
     private ArrayList<Week> weekList;
     protected final static Color weekPanelColor = new Color(132, 153, 204);
     protected final static Color mainColor = new Color(51, 70, 102);
+    private boolean currentWeekSat;
+    private boolean firstRun;
 
     /**
      * Creates new form GUI
      */
     public GUI(ArrayList<Week> weekList) {
+        currentWeekSat = false;
+        firstRun = true;
         this.weekList = weekList;
         BasicComboBoxUI bcb = new BasicComboBoxUI();
 
@@ -34,16 +37,23 @@ public class GUI extends javax.swing.JFrame {
          UIManager.put("Label.font", font);
          */
         initComponents();
-        jComboBox1.setUI(bcb);
+        jComboWeek.setUI(bcb);
         jPanelContent.setBackground(mainColor);
-
-        try {
-            Week week = weekList.get(1);
-            WeekPanel wp = new WeekPanel(week);
-            jPanelWeek.add(wp);
-        } catch (IndexOutOfBoundsException ex) {
-            System.out.println("Der er ingen uge");
+        
+        addWeeks();
+        Calendar cal = Calendar.getInstance();
+        for (Week tempWeek : weekList) {
+            if (cal.get(Calendar.WEEK_OF_YEAR) == tempWeek.getDate()) {
+                currentWeekSat = true;
+            }
         }
+    }
+    
+    public void addWeeks() {
+        for (Week week : weekList) {
+            jComboWeek.addItem(week);
+        }
+        firstRun = false;
     }
 
     /**
@@ -64,9 +74,9 @@ public class GUI extends javax.swing.JFrame {
         jButtonGenerate = new javax.swing.JButton();
         jButtonBack = new javax.swing.JButton();
         jButtonShop = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
+        jPanelWeekNumbers = new javax.swing.JPanel();
         jButtonDateForward1 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox();
+        jComboWeek = new javax.swing.JComboBox();
         jLabel2 = new javax.swing.JLabel();
         jButtonDateForward = new javax.swing.JButton();
 
@@ -87,7 +97,7 @@ public class GUI extends javax.swing.JFrame {
         jLabelNoWeek.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
         jLabelNoWeek.setForeground(new java.awt.Color(255, 255, 255));
         jLabelNoWeek.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelNoWeek.setText("Ingen ugeplan fundet. ");
+        jLabelNoWeek.setText("Ingen ugeplan fundet ");
         jLabelNoWeek.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         jLabelNoWeek.setOpaque(true);
 
@@ -162,7 +172,7 @@ public class GUI extends javax.swing.JFrame {
         jButtonShop.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButtonShop.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
-        jPanel1.setBackground(mainColor);
+        jPanelWeekNumbers.setBackground(mainColor);
 
         jButtonDateForward1.setBackground(mainColor);
         jButtonDateForward1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/back.png"))); // NOI18N
@@ -174,16 +184,20 @@ public class GUI extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "52 (2015)", "12 (2015)", "53 (2015)", "22 (2015)" }));
-        jComboBox1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jComboBox1.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
-        jComboBox1.setFocusable(false);
-        jComboBox1.setOpaque(false);
-        jComboBox1.setRequestFocusEnabled(false);
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        jComboWeek.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        jComboWeek.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jComboWeek.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
+        jComboWeek.setFocusable(false);
+        jComboWeek.setOpaque(false);
+        jComboWeek.setRequestFocusEnabled(false);
+        jComboWeek.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboWeekItemStateChanged(evt);
+            }
+        });
+        jComboWeek.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                jComboWeekActionPerformed(evt);
             }
         });
 
@@ -197,31 +211,31 @@ public class GUI extends javax.swing.JFrame {
         jButtonDateForward.setBorder(null);
         jButtonDateForward.setFocusPainted(false);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanelWeekNumbersLayout = new javax.swing.GroupLayout(jPanelWeekNumbers);
+        jPanelWeekNumbers.setLayout(jPanelWeekNumbersLayout);
+        jPanelWeekNumbersLayout.setHorizontalGroup(
+            jPanelWeekNumbersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelWeekNumbersLayout.createSequentialGroup()
                 .addComponent(jButtonDateForward1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanelWeekNumbersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jComboWeek, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonDateForward, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        jPanelWeekNumbersLayout.setVerticalGroup(
+            jPanelWeekNumbersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelWeekNumbersLayout.createSequentialGroup()
+                .addGroup(jPanelWeekNumbersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButtonDateForward1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelWeekNumbersLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButtonDateForward, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(jPanelWeekNumbersLayout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(0, 0, 0)
-                        .addComponent(jComboBox1)))
+                        .addComponent(jComboWeek)))
                 .addGap(0, 0, 0))
         );
 
@@ -244,7 +258,7 @@ public class GUI extends javax.swing.JFrame {
             .addGroup(jPanelContentLayout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 760, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanelWeekNumbers, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelContentLayout.setVerticalGroup(
@@ -254,7 +268,7 @@ public class GUI extends javax.swing.JFrame {
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanelContentLayout.createSequentialGroup()
                         .addGap(20, 20, 20)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jPanelWeekNumbers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addComponent(jPanelWeek, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addGroup(jPanelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -284,23 +298,26 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonAddActionPerformed
 
     private void jButtonBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBackActionPerformed
-        try {
-            Week week = weekList.get(0);
-            WeekPanel wp = new WeekPanel(week);
-            jPanelWeek.add(wp);
-            jLabelNoWeek.setVisible(false);
-        } catch (IndexOutOfBoundsException ex) {
-            System.out.println("Der er ingen uge");
-        }
+
     }//GEN-LAST:event_jButtonBackActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        System.out.println(jComboBox1.getSelectedItem().toString());
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    private void jComboWeekActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboWeekActionPerformed
+        if (!firstRun) {
+            jLabelNoWeek.setVisible(false);
+            jPanelWeek.removeAll();
+            Week week = (Week) jComboWeek.getSelectedItem();
+            WeekPanel wp = new WeekPanel(week);
+            jPanelWeek.add(wp);
+        }
+    }//GEN-LAST:event_jComboWeekActionPerformed
 
     private void jButtonDateForward1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDateForward1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonDateForward1ActionPerformed
+
+    private void jComboWeekItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboWeekItemStateChanged
+
+    }//GEN-LAST:event_jComboWeekItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -316,16 +333,21 @@ public class GUI extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+                    
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUI.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUI.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUI.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUI.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -344,12 +366,12 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JButton jButtonGenerate;
     private javax.swing.JButton jButtonShop;
     private javax.swing.JButton jButtonUpdate;
-    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JComboBox jComboWeek;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelNoWeek;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelContent;
     private javax.swing.JPanel jPanelWeek;
+    private javax.swing.JPanel jPanelWeekNumbers;
     // End of variables declaration//GEN-END:variables
 }

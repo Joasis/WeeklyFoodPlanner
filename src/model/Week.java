@@ -41,4 +41,8 @@ public class Week {
         return weekdays;
     }
 
+    @Override
+    public String toString() {
+        return getDate() + " (" + cal.get(Calendar.YEAR) + ")";
+    }
 }

@@ -51,8 +51,6 @@ public class WeekPanel extends javax.swing.JPanel {
 
         jPanelWeekDays = new javax.swing.JPanel();
 
-        jPanelWeekDays.setOpaque(false);
-
         javax.swing.GroupLayout jPanelWeekDaysLayout = new javax.swing.GroupLayout(jPanelWeekDays);
         jPanelWeekDays.setLayout(jPanelWeekDaysLayout);
         jPanelWeekDaysLayout.setHorizontalGroup(
