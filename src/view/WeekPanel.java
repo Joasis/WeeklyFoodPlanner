@@ -23,7 +23,6 @@ public class WeekPanel extends javax.swing.JPanel {
         weekdays = new WeekdayPanel[7];
         initComponents();
         setBackground(GUI.mainColor);
-        setSize(1000, 400);
         
         int x = 0;
         int y = 0;
