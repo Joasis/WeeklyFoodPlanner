@@ -23,7 +23,6 @@ public class GUI extends javax.swing.JFrame {
     protected final static Color mainColor = new Color(51, 70, 102);
     private boolean currentWeekSat;
     private boolean firstRun;
-    private String activePageClass;
 
     /**
      * Creates new form GUI
@@ -61,7 +60,6 @@ public class GUI extends javax.swing.JFrame {
 
     public void changeTo(Component page) {
         hidePages();
-        activePageClass = page.getClass().getSimpleName();
         jPanelWeek.add(page);
         page.setSize(1000, 400);
         jPanelWeek.revalidate();
@@ -331,22 +329,9 @@ public class GUI extends javax.swing.JFrame {
 
     private void jComboWeekActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboWeekActionPerformed
         if (!firstRun) {
-            hidePages();
             Week week = (Week) jComboWeek.getSelectedItem();
-            if (activePageClass == null) {
-                activePageClass = "WeekPanel";
-            }
-            switch (activePageClass) {
-                case "ShopPanel":
-                    ShopPanel sp = new ShopPanel(week);
-                    changeTo(sp);
-                    break;
-                case "WeekPanel":
-                default:
-                    WeekPanel wp = new WeekPanel(week);
-                    changeTo(wp);
-                    break;
-            }
+            WeekPanel wp = new WeekPanel(week);
+            changeTo(wp);
         }
     }//GEN-LAST:event_jComboWeekActionPerformed
 

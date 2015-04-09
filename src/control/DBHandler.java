@@ -48,7 +48,7 @@ public class DBHandler {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://localhost:3306/wfoodplanner";
-            conn = DriverManager.getConnection(url, "root", "root");
+            conn = DriverManager.getConnection(url, "root", "");
             stmt = conn.createStatement();
         } catch (SQLException ex) {
             String errMsg = "Ukendt fejl " + ex.getErrorCode() + ", prøv igen senere";;
