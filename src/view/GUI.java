@@ -23,6 +23,7 @@ public class GUI extends javax.swing.JFrame {
     protected final static Color mainColor = new Color(51, 70, 102);
     private boolean currentWeekSat;
     private boolean firstRun;
+    private String chooseWeek;
 
     /**
      * Creates new form GUI
@@ -30,6 +31,7 @@ public class GUI extends javax.swing.JFrame {
     public GUI(ArrayList<Week> weekList) {
         currentWeekSat = false;
         firstRun = true;
+        chooseWeek = "Vælg uge";
         this.weekList = weekList;
         BasicComboBoxUI bcb = new BasicComboBoxUI();
 
@@ -42,33 +44,97 @@ public class GUI extends javax.swing.JFrame {
         jPanelContent.setBackground(mainColor);
 
         addWeeks();
-        Calendar cal = Calendar.getInstance();
-        for (Week tempWeek : weekList) {
-            if (cal.get(Calendar.WEEK_OF_YEAR) == tempWeek.getDate()) {
-                currentWeekSat = true;
-                jComboWeek.setSelectedItem(tempWeek);
-            }
-        }
+
     }
 
     public void addWeeks() {
+        Week tempweek = null;
+        Calendar cal = Calendar.getInstance();
+        jComboWeek.addItem(chooseWeek);
         for (Week week : weekList) {
             jComboWeek.addItem(week);
+            if (cal.get(Calendar.WEEK_OF_YEAR) == week.getDate()) {
+                currentWeekSat = true;
+                tempweek = week;
+            }
+        }
+
+        if (currentWeekSat) {
+            jComboWeek.removeItem(chooseWeek);
+            jComboWeek.setSelectedItem(tempweek);
+            changeTo(getSelectedWeekPanel());
         }
         firstRun = false;
+    }
+
+    public WeekPanel getSelectedWeekPanel() {
+        WeekPanel wp = null;
+        if (jComboWeek.getSelectedItem() != chooseWeek) {
+            Week week = (Week) jComboWeek.getSelectedItem();
+            wp = new WeekPanel(week);
+        }
+        return wp;
     }
 
     public void changeTo(Component page) {
         hidePages();
         jPanelWeek.add(page);
         page.setSize(1000, 400);
+
+        if (page.getClass().getSimpleName().equals("WeekPanel")) {
+            enableWeekChooser();
+            enableShop();
+            enableWeekGen();
+            disableBack();
+        }
+        if (page.getClass().getSimpleName().equals("ShopPanel")) {
+            disableWeekChooser();
+            disableShop();
+            disableWeekGen();
+            enableBack();
+        }
         jPanelWeek.revalidate();
         jPanelWeek.repaint();
     }
 
     public void hidePages() {
-        jLabelNoWeek.setVisible(false);
         jPanelWeek.removeAll();
+    }
+
+    public void disableWeekChooser() {
+        jButtonDatePrevious.setEnabled(false);
+        jButtonDateNext.setEnabled(false);
+        jComboWeek.setEnabled(false);
+    }
+
+    public void enableWeekChooser() {
+        jButtonDatePrevious.setEnabled(true);
+        jButtonDateNext.setEnabled(true);
+        jComboWeek.setEnabled(true);
+    }
+
+    public void enableShop() {
+        jButtonShop.setEnabled(true);
+    }
+
+    public void disableShop() {
+        jButtonShop.setEnabled(false);
+    }
+
+    public void enableWeekGen() {
+        jButtonGenerate.setEnabled(true);
+    }
+
+    public void disableWeekGen() {
+        jButtonGenerate.setEnabled(false);
+    }
+
+    public void enableBack() {
+        jButtonBack.setEnabled(true);
+    }
+
+    public void disableBack() {
+        jButtonBack.setEnabled(false);
     }
 
     /**
@@ -86,14 +152,14 @@ public class GUI extends javax.swing.JFrame {
         jLabelNoWeek = new javax.swing.JLabel();
         jButtonAdd = new javax.swing.JButton();
         jButtonUpdate = new javax.swing.JButton();
-        jButtonGenerate = new javax.swing.JButton();
         jButtonBack = new javax.swing.JButton();
+        jButtonGenerate = new javax.swing.JButton();
         jButtonShop = new javax.swing.JButton();
         jPanelWeekNumbers = new javax.swing.JPanel();
-        jButtonDateForward1 = new javax.swing.JButton();
+        jButtonDatePrevious = new javax.swing.JButton();
         jComboWeek = new javax.swing.JComboBox();
         jLabel2 = new javax.swing.JLabel();
-        jButtonDateForward = new javax.swing.JButton();
+        jButtonDateNext = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -154,11 +220,27 @@ public class GUI extends javax.swing.JFrame {
         jButtonUpdate.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButtonUpdate.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
+        jButtonBack.setBackground(mainColor);
+        jButtonBack.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        jButtonBack.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/home.png"))); // NOI18N
+        jButtonBack.setText("Tilbage");
+        jButtonBack.setBorder(null);
+        jButtonBack.setEnabled(false);
+        jButtonBack.setFocusPainted(false);
+        jButtonBack.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonBack.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBackActionPerformed(evt);
+            }
+        });
+
         jButtonGenerate.setBackground(mainColor);
-        jButtonGenerate.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        jButtonGenerate.setFont(new java.awt.Font("Verdana", 0, 20)); // NOI18N
         jButtonGenerate.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonGenerate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/home.png"))); // NOI18N
-        jButtonGenerate.setText("Tilbage");
+        jButtonGenerate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/generate.png"))); // NOI18N
+        jButtonGenerate.setText("Generér madplan");
         jButtonGenerate.setBorder(null);
         jButtonGenerate.setFocusPainted(false);
         jButtonGenerate.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -166,21 +248,6 @@ public class GUI extends javax.swing.JFrame {
         jButtonGenerate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonGenerateActionPerformed(evt);
-            }
-        });
-
-        jButtonBack.setBackground(mainColor);
-        jButtonBack.setFont(new java.awt.Font("Verdana", 0, 20)); // NOI18N
-        jButtonBack.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/generate.png"))); // NOI18N
-        jButtonBack.setText("Generér madplan");
-        jButtonBack.setBorder(null);
-        jButtonBack.setFocusPainted(false);
-        jButtonBack.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButtonBack.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButtonBack.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonBackActionPerformed(evt);
             }
         });
 
@@ -201,13 +268,13 @@ public class GUI extends javax.swing.JFrame {
 
         jPanelWeekNumbers.setBackground(mainColor);
 
-        jButtonDateForward1.setBackground(mainColor);
-        jButtonDateForward1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/back.png"))); // NOI18N
-        jButtonDateForward1.setBorder(null);
-        jButtonDateForward1.setFocusPainted(false);
-        jButtonDateForward1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonDatePrevious.setBackground(mainColor);
+        jButtonDatePrevious.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/back.png"))); // NOI18N
+        jButtonDatePrevious.setBorder(null);
+        jButtonDatePrevious.setFocusPainted(false);
+        jButtonDatePrevious.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonDateForward1ActionPerformed(evt);
+                jButtonDatePreviousActionPerformed(evt);
             }
         });
 
@@ -217,11 +284,6 @@ public class GUI extends javax.swing.JFrame {
         jComboWeek.setFocusable(false);
         jComboWeek.setOpaque(false);
         jComboWeek.setRequestFocusEnabled(false);
-        jComboWeek.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jComboWeekItemStateChanged(evt);
-            }
-        });
         jComboWeek.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboWeekActionPerformed(evt);
@@ -233,32 +295,37 @@ public class GUI extends javax.swing.JFrame {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Uge");
 
-        jButtonDateForward.setBackground(mainColor);
-        jButtonDateForward.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/forward.png"))); // NOI18N
-        jButtonDateForward.setBorder(null);
-        jButtonDateForward.setFocusPainted(false);
+        jButtonDateNext.setBackground(mainColor);
+        jButtonDateNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/forward.png"))); // NOI18N
+        jButtonDateNext.setBorder(null);
+        jButtonDateNext.setFocusPainted(false);
+        jButtonDateNext.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDateNextActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelWeekNumbersLayout = new javax.swing.GroupLayout(jPanelWeekNumbers);
         jPanelWeekNumbers.setLayout(jPanelWeekNumbersLayout);
         jPanelWeekNumbersLayout.setHorizontalGroup(
             jPanelWeekNumbersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelWeekNumbersLayout.createSequentialGroup()
-                .addComponent(jButtonDateForward1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonDatePrevious, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelWeekNumbersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jComboWeek, 0, 108, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonDateForward, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jButtonDateNext, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanelWeekNumbersLayout.setVerticalGroup(
             jPanelWeekNumbersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelWeekNumbersLayout.createSequentialGroup()
                 .addGroup(jPanelWeekNumbersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonDateForward1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonDatePrevious, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelWeekNumbersLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButtonDateForward, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jButtonDateNext, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanelWeekNumbersLayout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(0, 0, 0)
@@ -276,9 +343,9 @@ public class GUI extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addComponent(jButtonUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(200, 200, 200)
-                .addComponent(jButtonBack, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonGenerate, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(200, 200, 200)
-                .addComponent(jButtonGenerate, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonBack, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(jButtonShop, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(jPanelContentLayout.createSequentialGroup()
@@ -300,8 +367,8 @@ public class GUI extends javax.swing.JFrame {
                 .addGroup(jPanelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jButtonAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonGenerate, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonBack, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonGenerate, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonShop, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
@@ -323,37 +390,46 @@ public class GUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonAddActionPerformed
 
-    private void jButtonBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBackActionPerformed
+    private void jButtonGenerateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGenerateActionPerformed
 
-    }//GEN-LAST:event_jButtonBackActionPerformed
+    }//GEN-LAST:event_jButtonGenerateActionPerformed
 
     private void jComboWeekActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboWeekActionPerformed
         if (!firstRun) {
-            Week week = (Week) jComboWeek.getSelectedItem();
-            WeekPanel wp = new WeekPanel(week);
-            changeTo(wp);
+            if (jComboWeek.getSelectedItem().toString() != "Vælg uge") {
+                changeTo(getSelectedWeekPanel());
+            } else {
+                changeTo(jLabelNoWeek);
+            }
         }
     }//GEN-LAST:event_jComboWeekActionPerformed
 
-    private void jButtonDateForward1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDateForward1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonDateForward1ActionPerformed
-
-    private void jComboWeekItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboWeekItemStateChanged
-
-    }//GEN-LAST:event_jComboWeekItemStateChanged
+    private void jButtonDatePreviousActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDatePreviousActionPerformed
+        if (jComboWeek.getSelectedIndex() > 0) {
+            jComboWeek.setSelectedIndex(jComboWeek.getSelectedIndex() - 1);
+        }
+    }//GEN-LAST:event_jButtonDatePreviousActionPerformed
 
     private void jButtonShopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonShopActionPerformed
-        Week week = (Week) jComboWeek.getSelectedItem();
-        ShopPanel sp = new ShopPanel(week);
-        changeTo(sp);
+        if (getSelectedWeekPanel() != null) {
+            Week week = (Week) jComboWeek.getSelectedItem();
+            ShopPanel sp = new ShopPanel(week);
+            changeTo(sp);
+        }
     }//GEN-LAST:event_jButtonShopActionPerformed
 
-    private void jButtonGenerateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGenerateActionPerformed
-        Week week = (Week) jComboWeek.getSelectedItem();
-        WeekPanel wp = new WeekPanel(week);
-        changeTo(wp);
-    }//GEN-LAST:event_jButtonGenerateActionPerformed
+    private void jButtonBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBackActionPerformed
+        if (getSelectedWeekPanel() != null) {
+            changeTo(getSelectedWeekPanel());
+        }
+    }//GEN-LAST:event_jButtonBackActionPerformed
+
+    private void jButtonDateNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDateNextActionPerformed
+        int selectedIndexPlus1 = jComboWeek.getSelectedIndex() + 1;
+        if (selectedIndexPlus1 < jComboWeek.getItemCount()) {
+            jComboWeek.setSelectedIndex(selectedIndexPlus1);
+        }
+    }//GEN-LAST:event_jButtonDateNextActionPerformed
 
     /**
      * @param args the command line arguments
@@ -397,8 +473,8 @@ public class GUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAdd;
     private javax.swing.JButton jButtonBack;
-    private javax.swing.JButton jButtonDateForward;
-    private javax.swing.JButton jButtonDateForward1;
+    private javax.swing.JButton jButtonDateNext;
+    private javax.swing.JButton jButtonDatePrevious;
     private javax.swing.JButton jButtonGenerate;
     private javax.swing.JButton jButtonShop;
     private javax.swing.JButton jButtonUpdate;

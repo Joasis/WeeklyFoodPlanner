@@ -50,9 +50,9 @@
                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                   <Component id="jButtonUpdate" min="-2" pref="100" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="200" max="-2" attributes="0"/>
-                  <Component id="jButtonBack" min="-2" pref="200" max="-2" attributes="0"/>
+                  <Component id="jButtonGenerate" min="-2" pref="200" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="200" max="-2" attributes="0"/>
-                  <Component id="jButtonGenerate" min="-2" pref="100" max="-2" attributes="0"/>
+                  <Component id="jButtonBack" min="-2" pref="100" max="-2" attributes="0"/>
                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                   <Component id="jButtonShop" min="-2" pref="100" max="-2" attributes="0"/>
               </Group>
@@ -79,8 +79,8 @@
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="jButtonAdd" min="-2" pref="100" max="-2" attributes="0"/>
                       <Component id="jButtonUpdate" min="-2" pref="100" max="-2" attributes="0"/>
-                      <Component id="jButtonGenerate" alignment="1" min="-2" pref="100" max="-2" attributes="0"/>
                       <Component id="jButtonBack" alignment="1" min="-2" pref="100" max="-2" attributes="0"/>
+                      <Component id="jButtonGenerate" alignment="1" min="-2" pref="100" max="-2" attributes="0"/>
                       <Component id="jButtonShop" alignment="1" min="-2" pref="100" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -198,7 +198,7 @@
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jButtonGenerate">
+        <Component class="javax.swing.JButton" name="jButtonBack">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="mainColor" type="code"/>
@@ -216,15 +216,16 @@
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="null"/>
             </Property>
+            <Property name="enabled" type="boolean" value="false"/>
             <Property name="focusPainted" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonGenerateActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonBackActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButtonBack">
+        <Component class="javax.swing.JButton" name="jButtonGenerate">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="mainColor" type="code"/>
@@ -247,7 +248,7 @@
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonBackActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonGenerateActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButtonShop">
@@ -287,14 +288,14 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="jButtonDateForward1" min="-2" pref="45" max="-2" attributes="0"/>
+                      <Component id="jButtonDatePrevious" min="-2" pref="45" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jComboWeek" pref="108" max="32767" attributes="0"/>
                           <Component id="jLabel2" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButtonDateForward" min="-2" pref="45" max="-2" attributes="0"/>
+                      <Component id="jButtonDateNext" min="-2" pref="45" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -302,10 +303,10 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jButtonDateForward1" alignment="1" max="32767" attributes="0"/>
+                          <Component id="jButtonDatePrevious" alignment="1" max="32767" attributes="0"/>
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              <Component id="jButtonDateForward" min="-2" pref="45" max="-2" attributes="0"/>
+                              <Component id="jButtonDateNext" min="-2" pref="45" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
@@ -319,7 +320,7 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JButton" name="jButtonDateForward1">
+            <Component class="javax.swing.JButton" name="jButtonDatePrevious">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="mainColor" type="code"/>
@@ -333,7 +334,7 @@
                 <Property name="focusPainted" type="boolean" value="false"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonDateForward1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonDatePreviousActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JComboBox" name="jComboWeek">
@@ -355,7 +356,6 @@
                 <Property name="requestFocusEnabled" type="boolean" value="false"/>
               </Properties>
               <Events>
-                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jComboWeekItemStateChanged"/>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboWeekActionPerformed"/>
               </Events>
             </Component>
@@ -371,7 +371,7 @@
                 <Property name="text" type="java.lang.String" value="Uge"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="jButtonDateForward">
+            <Component class="javax.swing.JButton" name="jButtonDateNext">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="mainColor" type="code"/>
@@ -384,6 +384,9 @@
                 </Property>
                 <Property name="focusPainted" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonDateNextActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

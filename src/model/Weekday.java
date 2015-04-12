@@ -44,7 +44,7 @@ public class Weekday {
     public String getDate() {
         long time = cal.getTimeInMillis() / 1000;
         int day = cal.get(Calendar.DAY_OF_MONTH);
-        int month = cal.get(Calendar.MONTH);
+        int month = cal.get(Calendar.MONTH) + 1;
         int year = cal.get(Calendar.YEAR);
 
         String dayZero = "";
