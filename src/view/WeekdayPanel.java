@@ -36,7 +36,6 @@ public class WeekdayPanel extends javax.swing.JPanel {
     }
 
     public void setColors() {
-        setBackground(GUI.weekPanelColor);
         jLabelDescription.setBackground(GUI.weekPanelColor);
         jPanel1.setBackground(GUI.weekPanelColor);
     }

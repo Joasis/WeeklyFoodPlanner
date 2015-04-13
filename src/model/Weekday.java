@@ -18,12 +18,22 @@ public class Weekday {
     private Recipe recipe;
     private Calendar cal;
     private int weekNumber;
+    private boolean active;
 
-    public Weekday(int id, Recipe recipe, Calendar cal, int weekNumber) {
+    public Weekday(int id, Recipe recipe, Calendar cal, int weekNumber, boolean active) {
         this.id = id;
         this.recipe = recipe;
         this.cal = cal;
         this.weekNumber = weekNumber;
+        this.active = active;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public int getId() {

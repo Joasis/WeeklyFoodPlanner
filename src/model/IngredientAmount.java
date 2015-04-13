@@ -10,7 +10,7 @@ package model;
  * @author Jonas
  */
 public class IngredientAmount {
-    
+
     private Unit unit;
     private Ingredient ingredient;
     private double amount;
@@ -31,5 +31,9 @@ public class IngredientAmount {
 
     public double getAmount() {
         return amount;
+    }
+
+    public String toString() {
+        return ingredient.getName();
     }
 }

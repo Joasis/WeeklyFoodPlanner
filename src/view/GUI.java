@@ -10,6 +10,8 @@ import java.awt.Component;
 import java.util.ArrayList;
 import java.util.Calendar;
 import javax.swing.plaf.basic.BasicComboBoxUI;
+import model.Recipe;
+import model.Unit;
 import model.Week;
 
 /**
@@ -19,6 +21,8 @@ import model.Week;
 public class GUI extends javax.swing.JFrame {
 
     private ArrayList<Week> weekList;
+    private static ArrayList<Recipe> recipeList;
+    private static ArrayList<Unit> unitList;
     protected final static Color weekPanelColor = new Color(132, 153, 204);
     protected final static Color mainColor = new Color(51, 70, 102);
     private boolean currentWeekSat;
@@ -28,11 +32,13 @@ public class GUI extends javax.swing.JFrame {
     /**
      * Creates new form GUI
      */
-    public GUI(ArrayList<Week> weekList) {
+    public GUI(ArrayList<Week> weekList, ArrayList<Recipe> recipeList, ArrayList<Unit> unitList) {
         currentWeekSat = false;
         firstRun = true;
         chooseWeek = "Vælg uge";
         this.weekList = weekList;
+        this.recipeList = recipeList;
+        this.unitList = unitList;
         BasicComboBoxUI bcb = new BasicComboBoxUI();
 
         /*
@@ -46,6 +52,14 @@ public class GUI extends javax.swing.JFrame {
 
         addWeeks();
 
+    }
+
+    protected static ArrayList<Recipe> getRecipeList() {
+        return recipeList;
+    }
+
+    protected static ArrayList<Unit> getUnitList() {
+        return unitList;
     }
 
     public void addWeeks() {
@@ -95,6 +109,12 @@ public class GUI extends javax.swing.JFrame {
         }
         if (page.getClass().getSimpleName().equals("JLabel")) {
             disableShop();
+        }
+        if (page.getClass().getSimpleName().equals("EditPanel")) {
+            disableWeekChooser();
+            disableShop();
+            disableWeekGen();
+            enableBack();
         }
         jPanelWeek.revalidate();
         jPanelWeek.repaint();
@@ -222,6 +242,11 @@ public class GUI extends javax.swing.JFrame {
         jButtonUpdate.setFocusPainted(false);
         jButtonUpdate.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButtonUpdate.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonUpdateActionPerformed(evt);
+            }
+        });
 
         jButtonBack.setBackground(mainColor);
         jButtonBack.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
@@ -434,6 +459,11 @@ public class GUI extends javax.swing.JFrame {
             jComboWeek.setSelectedIndex(selectedIndexPlus1);
         }
     }//GEN-LAST:event_jButtonDateNextActionPerformed
+
+    private void jButtonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUpdateActionPerformed
+        EditPanel ep = new EditPanel();
+        changeTo(ep);
+    }//GEN-LAST:event_jButtonUpdateActionPerformed
 
     /**
      * @param args the command line arguments

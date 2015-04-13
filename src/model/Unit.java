@@ -10,7 +10,7 @@ package model;
  * @author Jonas
  */
 public class Unit {
-    
+
     private int id;
     private String name;
     private String shortname;
@@ -19,7 +19,7 @@ public class Unit {
         this.id = id;
         this.name = name;
         this.shortname = shortname;
-    }  
+    }
 
     public int getId() {
         return id;
@@ -32,7 +32,8 @@ public class Unit {
     public String getShortname() {
         return shortname;
     }
-    
-    
-    
+
+    public String toString() {
+        return getName();
+    }
 }

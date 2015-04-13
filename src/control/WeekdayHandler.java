@@ -27,12 +27,12 @@ public class WeekdayHandler {
 
     public void getWeekDaysFromDB() {
         try {
-            ResultSet rs = Start.dbh.selectAll("wkday");
+            ResultSet rs = Start.dbh.selectAll("wkday order by wkd_date");
             while (rs.next()) {
                 Calendar cal = Calendar.getInstance();
                 cal.setTimeInMillis(rs.getLong("wkd_date"));
                 Recipe recipe = Start.rh.getRecipe(rs.getInt("fk_recipe"));
-                Weekday weekday = new Weekday(rs.getInt("wkd_id"), recipe, cal, rs.getInt("fk_week"));
+                Weekday weekday = new Weekday(rs.getInt("wkd_id"), recipe, cal, rs.getInt("fk_week"), rs.getBoolean("wkd_active"));
                 weekdays.add(weekday);
             }
         } catch (SQLException ex) {
