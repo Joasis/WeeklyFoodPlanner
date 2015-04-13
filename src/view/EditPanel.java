@@ -8,6 +8,8 @@ package view;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import model.IngredientAmount;
@@ -19,7 +21,7 @@ import model.Unit;
  * @author Jonas
  */
 public class EditPanel extends javax.swing.JPanel {
-    
+
     private ArrayList<Recipe> recipeList;
     private ArrayList<Unit> unitList;
     private int offset;
@@ -40,40 +42,41 @@ public class EditPanel extends javax.swing.JPanel {
         initComponents();
         jListEditRecipeIngredients.setModel(model);
         setSize(400, 1000);
-        
-        doListener();
+
+        setTextFieldListener(jTextFieldName, jPicRecipeFound, "Recipe");
+        setTextFieldListener(jTextFieldName1, jPicIngredientFound, "Ingredient");
         setUnits();
     }
-    
+
     public void setUnits() {
         jComboBoxEditRecipeUnit.removeAllItems();
         for (Unit unit : unitList) {
             jComboBoxEditRecipeUnit.addItem(unit);
         }
     }
-    
-    public void doListener() {
-        jTextFieldName.getDocument().addDocumentListener(new DocumentListener() {
-            
+
+    public void setTextFieldListener(JTextField textField, JLabel jPic, String clearPanel) {
+        textField.getDocument().addDocumentListener(new DocumentListener() {
+
             @Override
             public void insertUpdate(DocumentEvent e) {
                 setOffset(e);
             }
-            
+
             @Override
             public void removeUpdate(DocumentEvent e) {
                 setOffset(e);
             }
-            
+
             @Override
             public void changedUpdate(DocumentEvent e) {
                 setOffset(e);
             }
-            
+
             public void setOffset(DocumentEvent value) {
-                if (jPicFound.getIcon() != uncheckedImg) {
-                    jPicFound.setIcon(uncheckedImg);
-                    clearRecipeSelections();
+                if (jPic.getIcon() != uncheckedImg) {
+                    jPic.setIcon(uncheckedImg);
+                    clearSelection(clearPanel);
                 }
                 if (value.getLength() == 1) {
                     offset = value.getOffset() + 1;
@@ -111,11 +114,15 @@ public class EditPanel extends javax.swing.JPanel {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jTextFieldEditRecipeAmount = new javax.swing.JTextField();
-        jPicFound = new javax.swing.JLabel();
+        jPicRecipeFound = new javax.swing.JLabel();
         jComboBoxEditRecipeUnit = new javax.swing.JComboBox();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextAreaDescription = new javax.swing.JTextArea();
         jPanelEditIngredient = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        jTextFieldName1 = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        jPicIngredientFound = new javax.swing.JLabel();
 
         jPanel1.setBackground(new java.awt.Color(100, 50, 0));
 
@@ -182,7 +189,7 @@ public class EditPanel extends javax.swing.JPanel {
 
         jTextFieldEditRecipeAmount.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
 
-        jPicFound.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/unchecked.png"))); // NOI18N
+        jPicRecipeFound.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/unchecked.png"))); // NOI18N
 
         jComboBoxEditRecipeUnit.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
 
@@ -222,7 +229,7 @@ public class EditPanel extends javax.swing.JPanel {
                                 .addGroup(jPanelEditRecipeLayout.createSequentialGroup()
                                     .addComponent(jTextFieldName, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jPicFound, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                    .addComponent(jPicRecipeFound, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelEditRecipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanelEditRecipeLayout.createSequentialGroup()
@@ -250,7 +257,7 @@ public class EditPanel extends javax.swing.JPanel {
                 .addGroup(jPanelEditRecipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jTextFieldCookingTime, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jTextFieldName, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPicFound, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPicRecipeFound, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelEditRecipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -282,15 +289,57 @@ public class EditPanel extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
+        jLabel9.setFont(new java.awt.Font("Verdana", 1, 22)); // NOI18N
+        jLabel9.setText("Ret ingrediens");
+
+        jTextFieldName1.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jTextFieldName1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldName1ActionPerformed(evt);
+            }
+        });
+        jTextFieldName1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextFieldName1KeyReleased(evt);
+            }
+        });
+
+        jLabel10.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        jLabel10.setText("Navn");
+
+        jPicIngredientFound.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/unchecked.png"))); // NOI18N
+
         javax.swing.GroupLayout jPanelEditIngredientLayout = new javax.swing.GroupLayout(jPanelEditIngredient);
         jPanelEditIngredient.setLayout(jPanelEditIngredientLayout);
         jPanelEditIngredientLayout.setHorizontalGroup(
             jPanelEditIngredientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 500, Short.MAX_VALUE)
+            .addGroup(jPanelEditIngredientLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanelEditIngredientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelEditIngredientLayout.createSequentialGroup()
+                        .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(220, 220, 220))
+                    .addGroup(jPanelEditIngredientLayout.createSequentialGroup()
+                        .addGroup(jPanelEditIngredientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel10)
+                            .addGroup(jPanelEditIngredientLayout.createSequentialGroup()
+                                .addComponent(jTextFieldName1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jPicIngredientFound, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanelEditIngredientLayout.setVerticalGroup(
             jPanelEditIngredientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanelEditIngredientLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel9)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelEditIngredientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTextFieldName1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPicIngredientFound, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -336,7 +385,7 @@ public class EditPanel extends javax.swing.JPanel {
                         found = true;
                         jTextFieldName.setText(recipeList.get(i).getName());
                         jTextFieldName.select(offset, jTextFieldName.getText().length());
-                        jPicFound.setIcon(checkedImg);
+                        jPicRecipeFound.setIcon(checkedImg);
                         setRecipe(recipeList.get(i));
                     }
                 }
@@ -352,7 +401,15 @@ public class EditPanel extends javax.swing.JPanel {
         }
 
     }//GEN-LAST:event_jListEditRecipeIngredientsValueChanged
-    
+
+    private void jTextFieldName1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldName1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldName1ActionPerformed
+
+    private void jTextFieldName1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldName1KeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldName1KeyReleased
+
     public void setRecipe(Recipe recipe) {
         model.clear();
         for (IngredientAmount ingr : recipe.getIngredientList()) {
@@ -362,14 +419,18 @@ public class EditPanel extends javax.swing.JPanel {
         jTextFieldPortions.setText(recipe.getPortions() + "");
         jTextAreaDescription.setText(recipe.getDescription());
     }
-    
-    public void clearRecipeSelections() {
-        model.clear();
-        jTextFieldEditRecipeAmount.setText("");
-        jComboBoxEditRecipeUnit.setSelectedIndex(0);
-        jTextFieldCookingTime.setText("");
-        jTextFieldPortions.setText("");
-        jTextAreaDescription.setText("");
+
+    public void clearSelection(String clearPanel) {
+        if (clearPanel == "Recipe") {
+            model.clear();
+            jTextFieldEditRecipeAmount.setText("");
+            jComboBoxEditRecipeUnit.setSelectedIndex(0);
+            jTextFieldCookingTime.setText("");
+            jTextFieldPortions.setText("");
+            jTextAreaDescription.setText("");
+        } else {
+
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -379,6 +440,7 @@ public class EditPanel extends javax.swing.JPanel {
     private javax.swing.JButton jButton4;
     private javax.swing.JComboBox jComboBoxEditRecipeUnit;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -386,17 +448,20 @@ public class EditPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JList jListEditRecipeIngredients;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelEditIngredient;
     private javax.swing.JPanel jPanelEditRecipe;
-    private javax.swing.JLabel jPicFound;
+    private javax.swing.JLabel jPicIngredientFound;
+    private javax.swing.JLabel jPicRecipeFound;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextAreaDescription;
     private javax.swing.JTextField jTextFieldCookingTime;
     private javax.swing.JTextField jTextFieldEditRecipeAmount;
     private javax.swing.JTextField jTextFieldName;
+    private javax.swing.JTextField jTextFieldName1;
     private javax.swing.JTextField jTextFieldPortions;
     // End of variables declaration//GEN-END:variables
 

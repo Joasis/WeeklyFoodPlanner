@@ -5,6 +5,7 @@
  */
 package view;
 
+import control.DBHandler;
 import java.awt.Color;
 import java.awt.Component;
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class GUI extends javax.swing.JFrame {
     private ArrayList<Week> weekList;
     private static ArrayList<Recipe> recipeList;
     private static ArrayList<Unit> unitList;
+    private static DBHandler dbh;
     protected final static Color weekPanelColor = new Color(132, 153, 204);
     protected final static Color mainColor = new Color(51, 70, 102);
     private boolean currentWeekSat;
@@ -32,13 +34,14 @@ public class GUI extends javax.swing.JFrame {
     /**
      * Creates new form GUI
      */
-    public GUI(ArrayList<Week> weekList, ArrayList<Recipe> recipeList, ArrayList<Unit> unitList) {
+    public GUI(ArrayList<Week> weekList, ArrayList<Recipe> recipeList, ArrayList<Unit> unitList, DBHandler dbh) {
         currentWeekSat = false;
         firstRun = true;
         chooseWeek = "Vælg uge";
         this.weekList = weekList;
         this.recipeList = recipeList;
         this.unitList = unitList;
+        this.dbh = dbh;
         BasicComboBoxUI bcb = new BasicComboBoxUI();
 
         /*
@@ -52,6 +55,10 @@ public class GUI extends javax.swing.JFrame {
 
         addWeeks();
 
+    }
+
+    protected static DBHandler getDbh() {
+        return dbh;
     }
 
     protected static ArrayList<Recipe> getRecipeList() {

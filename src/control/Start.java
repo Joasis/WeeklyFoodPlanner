@@ -56,7 +56,7 @@ public class Start {
         for (Week week : wh.getWeekList()) {
             System.out.println("\tWeek of year: " + week.getDate());
         }
-        GUI gui = new GUI(wh.getWeekList(), rh.getRecipeList(), uh.getUnitList());
+        GUI gui = new GUI(wh.getWeekList(), rh.getRecipeList(), uh.getUnitList(), dbh);
         gui.setVisible(true);
     }
 }
