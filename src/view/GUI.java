@@ -41,6 +41,7 @@ public class GUI extends javax.swing.JFrame {
          */
         initComponents();
         jComboWeek.setUI(bcb);
+
         jPanelContent.setBackground(mainColor);
 
         addWeeks();

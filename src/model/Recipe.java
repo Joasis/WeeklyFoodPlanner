@@ -18,15 +18,25 @@ public class Recipe {
     private String description;
     private int portions;
     private int cookingtime;
+    private boolean active;
     private ArrayList<IngredientAmount> ingredientList;
 
-    public Recipe(int id, String name, String description, int portions, int cookingtime, ArrayList<IngredientAmount> ingredientList) {
+    public Recipe(int id, String name, String description, int portions, int cookingtime, boolean active, ArrayList<IngredientAmount> ingredientList) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.portions = portions;
         this.cookingtime = cookingtime;
+        this.active = active;
         this.ingredientList = ingredientList;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public int getId() {
