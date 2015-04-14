@@ -28,7 +28,7 @@ public class WeekHandler {
 
     public void getWeeksFromDB() {
         try {
-            ResultSet rs = Start.dbh.selectAll("wk");
+            ResultSet rs = ControlHandler.getDbh().selectAll("wk");
             while (rs.next()) {
                 Calendar cal = Calendar.getInstance();
                 cal.setTimeInMillis(rs.getLong("wk_date"));
@@ -44,7 +44,7 @@ public class WeekHandler {
     public Weekday[] gettWeekdays(int weekID) {
         Weekday[] weekdaysForWeek = new Weekday[7];
         int day = 0;
-        for (Weekday weekday : Start.wdh.getWeekdays()) {
+        for (Weekday weekday : ControlHandler.getWdh().getWeekdays()) {
             if (weekday.getWeek() == weekID) {
                 weekdaysForWeek[day] = weekday;
                 day++;

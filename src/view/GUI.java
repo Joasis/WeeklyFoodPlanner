@@ -5,14 +5,12 @@
  */
 package view;
 
-import control.DBHandler;
+import control.ControlHandler;
 import java.awt.Color;
 import java.awt.Component;
 import java.util.ArrayList;
 import java.util.Calendar;
 import javax.swing.plaf.basic.BasicComboBoxUI;
-import model.Recipe;
-import model.Unit;
 import model.Week;
 
 /**
@@ -22,9 +20,7 @@ import model.Week;
 public class GUI extends javax.swing.JFrame {
 
     private ArrayList<Week> weekList;
-    private static ArrayList<Recipe> recipeList;
-    private static ArrayList<Unit> unitList;
-    private static DBHandler dbh;
+    private static ControlHandler ch;
     protected final static Color weekPanelColor = new Color(132, 153, 204);
     protected final static Color mainColor = new Color(51, 70, 102);
     private boolean currentWeekSat;
@@ -34,14 +30,12 @@ public class GUI extends javax.swing.JFrame {
     /**
      * Creates new form GUI
      */
-    public GUI(ArrayList<Week> weekList, ArrayList<Recipe> recipeList, ArrayList<Unit> unitList, DBHandler dbh) {
+    public GUI(ControlHandler ch) {
         currentWeekSat = false;
+        this.ch = ch;
         firstRun = true;
         chooseWeek = "Vælg uge";
-        this.weekList = weekList;
-        this.recipeList = recipeList;
-        this.unitList = unitList;
-        this.dbh = dbh;
+        this.weekList = ch.getWh().getWeekList();
         BasicComboBoxUI bcb = new BasicComboBoxUI();
 
         /*
@@ -57,16 +51,8 @@ public class GUI extends javax.swing.JFrame {
 
     }
 
-    protected static DBHandler getDbh() {
-        return dbh;
-    }
-
-    protected static ArrayList<Recipe> getRecipeList() {
-        return recipeList;
-    }
-
-    protected static ArrayList<Unit> getUnitList() {
-        return unitList;
+    protected static ControlHandler getCh() {
+        return ch;
     }
 
     public void addWeeks() {
@@ -107,6 +93,7 @@ public class GUI extends javax.swing.JFrame {
             enableShop();
             enableWeekGen();
             disableBack();
+            disableWeekGen();
         }
         if (page.getClass().getSimpleName().equals("ShopPanel")) {
             disableWeekChooser();
@@ -116,6 +103,10 @@ public class GUI extends javax.swing.JFrame {
         }
         if (page.getClass().getSimpleName().equals("JLabel")) {
             disableShop();
+            disableBack();
+            enableWeekChooser();
+            enableShop();
+            enableWeekGen();
         }
         if (page.getClass().getSimpleName().equals("EditPanel")) {
             disableWeekChooser();
@@ -457,6 +448,8 @@ public class GUI extends javax.swing.JFrame {
     private void jButtonBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBackActionPerformed
         if (getSelectedWeekPanel() != null) {
             changeTo(getSelectedWeekPanel());
+        } else {
+            changeTo(jLabelNoWeek);
         }
     }//GEN-LAST:event_jButtonBackActionPerformed
 

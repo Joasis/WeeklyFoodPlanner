@@ -25,7 +25,7 @@ public class IngredientHandler {
 
     public void getIngredientsFromDB() {
         try {
-            ResultSet rs = Start.dbh.selectAll("ingr");
+            ResultSet rs = ControlHandler.getDbh().selectAll("ingr");
             while (rs.next()) {
                 Ingredient ing = new Ingredient(rs.getInt("in_id"), rs.getString("in_name"));
                 ingredientList.add(ing);

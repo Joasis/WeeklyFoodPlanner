@@ -25,7 +25,7 @@ public class UnitHandler {
 
     public void getUnitsFromDB() {
         try {
-            ResultSet rs = Start.dbh.selectAll("Unit");
+            ResultSet rs = ControlHandler.getDbh().selectAll("Unit");
             while (rs.next()) {
                 Unit unit = new Unit(rs.getInt("un_id"), rs.getString("un_name"), rs.getString("un_shortname"));
                 unitList.add(unit);

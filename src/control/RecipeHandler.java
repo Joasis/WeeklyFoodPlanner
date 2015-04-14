@@ -28,7 +28,7 @@ public class RecipeHandler {
 
     public void getRecipesFromDB() {
         try {
-            ResultSet rs = Start.dbh.selectAll("amount inner join recipe on fk_recipe = re_id");
+            ResultSet rs = ControlHandler.getDbh().selectAll("amount inner join recipe on fk_recipe = re_id");
 
             ArrayList<IngredientAmount> ingList = new ArrayList<>();;
             IngredientAmount ingAm;
@@ -42,8 +42,8 @@ public class RecipeHandler {
                     Recipe rec = new Recipe(rs.getInt("re_id"), rs.getString("re_name"), rs.getString("re_description"), rs.getInt("re_portions"), rs.getInt("re_cooktime"), rs.getBoolean("re_active"), ingList);
                     recipeList.add(rec);
                 }
-                unit = Start.uh.getUnit(rs.getInt("fk_am_unittype"));
-                ing = Start.ih.getIngredient(rs.getInt("fk_ingr"));
+                unit = ControlHandler.getUh().getUnit(rs.getInt("fk_am_unittype"));
+                ing = ControlHandler.getIh().getIngredient(rs.getInt("fk_ingr"));
                 ingAm = new IngredientAmount(unit, ing, rs.getDouble("am_amount"));
                 ingList.add(ingAm);
                 currentID = rs.getInt("re_id");

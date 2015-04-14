@@ -18,45 +18,33 @@ import view.GUI;
  */
 public class Start {
 
-    protected static DBHandler dbh;
-    protected static UnitHandler uh;
-    protected static IngredientHandler ih;
-    protected static RecipeHandler rh;
-    protected static WeekHandler wh;
-    protected static WeekdayHandler wdh;
-
     public Start() {
-        dbh = new DBHandler();
-        uh = new UnitHandler();
-        ih = new IngredientHandler();
-        rh = new RecipeHandler();
-        wdh = new WeekdayHandler();
-        wh = new WeekHandler();
+        ControlHandler ch = new ControlHandler();
 
         System.out.println("List of all unittypes:");
-        for (Unit un : uh.getUnitList()) {
+        for (Unit un : ch.getUh().getUnitList()) {
             System.out.println("\t" + un.getName() + " (" + un.getShortname() + ")");
         }
         System.out.println("\nList of all ingredients:");
-        for (Ingredient in : ih.getIngredientList()) {
+        for (Ingredient in : ch.getIh().getIngredientList()) {
             System.out.println("\t" + in.getName());
         }
 
         System.out.println("\nList of all recipes:");
-        for (Recipe rec : rh.getRecipeList()) {
+        for (Recipe rec : ch.getRh().getRecipeList()) {
             System.out.println("\t" + rec.getName());
         }
 
         System.out.println("\nList of all Weekdays:");
-        for (Weekday weekday : wdh.getWeekdays()) {
+        for (Weekday weekday : ch.getWdh().getWeekdays()) {
             System.out.println("\t" + weekday.getDate());
         }
 
         System.out.println("\nList of all Weeks:");
-        for (Week week : wh.getWeekList()) {
+        for (Week week : ch.getWh().getWeekList()) {
             System.out.println("\tWeek of year: " + week.getDate());
         }
-        GUI gui = new GUI(wh.getWeekList(), rh.getRecipeList(), uh.getUnitList(), dbh);
+        GUI gui = new GUI(ch);
         gui.setVisible(true);
     }
 }
