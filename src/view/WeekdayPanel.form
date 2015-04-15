@@ -40,6 +40,9 @@
           <Connection code="GUI.dayColor" type="code"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jPanel1MouseReleased"/>
+      </Events>
 
       <Layout>
         <DimensionLayout dim="0">
@@ -208,6 +211,9 @@
             </Property>
             <Property name="focusable" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabelDescriptionMouseReleased"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButtonReplace">
           <Properties>

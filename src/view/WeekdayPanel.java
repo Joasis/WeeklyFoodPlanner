@@ -93,6 +93,11 @@ public class WeekdayPanel extends javax.swing.JPanel {
         setBackground(new java.awt.Color(105, 135, 186));
 
         jPanel1.setBackground(GUI.dayColor);
+        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jPanel1MouseReleased(evt);
+            }
+        });
 
         jLabelOpskriftNavn.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jLabelOpskriftNavn.setForeground(new java.awt.Color(255, 255, 255));
@@ -138,6 +143,11 @@ public class WeekdayPanel extends javax.swing.JPanel {
         jLabelDescription.setAutoscrolls(false);
         jLabelDescription.setBorder(null);
         jLabelDescription.setFocusable(false);
+        jLabelDescription.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jLabelDescriptionMouseReleased(evt);
+            }
+        });
 
         jButtonReplace.setBackground(GUI.replaceDayColor);
         jButtonReplace.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
@@ -231,14 +241,20 @@ public class WeekdayPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonReplaceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReplaceActionPerformed
-        switchDay();
+        //GENERER DENNE DAG IGEN
     }//GEN-LAST:event_jButtonReplaceActionPerformed
 
     private void jButtonDisableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDisableActionPerformed
         setColors(Color.darkGray);
     }//GEN-LAST:event_jButtonDisableActionPerformed
 
+    private void jPanel1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseReleased
+        switchDay();
+    }//GEN-LAST:event_jPanel1MouseReleased
 
+    private void jLabelDescriptionMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelDescriptionMouseReleased
+        switchDay();
+    }//GEN-LAST:event_jLabelDescriptionMouseReleased
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonDisable;
     private javax.swing.JButton jButtonReplace;
