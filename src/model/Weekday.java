@@ -12,7 +12,7 @@ import java.util.Locale;
  *
  * @author Jonas
  */
-public class Weekday {
+public class Weekday implements Comparable {
 
     private int id;
     private Recipe recipe;
@@ -69,7 +69,31 @@ public class Weekday {
         return date;
     }
 
+    public Calendar getDateByCal() {
+        return cal;
+    }
+
+    public void setDateByCal(Calendar cal) {
+        this.cal = cal;
+    }
+
     public int getWeek() {
         return weekNumber;
+    }
+
+    @Override
+    public int compareTo(Object t) {
+        Weekday w = (Weekday) t;
+        final int BEFORE = -1;
+        final int EQUAL = 0;
+        final int AFTER = 1;
+
+        if (this.cal.getTimeInMillis() < w.cal.getTimeInMillis()) {
+            return BEFORE;
+        } else if (this.cal.getTimeInMillis() > w.cal.getTimeInMillis()) {
+            return AFTER;
+        }else{
+            return EQUAL;
+        }
     }
 }

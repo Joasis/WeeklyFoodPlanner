@@ -36,8 +36,8 @@
   <SubComponents>
     <Container class="javax.swing.JPanel" name="jPanelContent">
       <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="66" green="0" red="33" type="rgb"/>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="mainColor" type="code"/>
         </Property>
       </Properties>
 

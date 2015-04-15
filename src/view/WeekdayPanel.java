@@ -5,12 +5,10 @@
  */
 package view;
 
+import control.ControlHandler;
+import control.WeekHandler;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Toolkit;
-import javax.swing.JPanel;
 import model.Recipe;
 import model.Weekday;
 
@@ -22,22 +20,26 @@ public class WeekdayPanel extends javax.swing.JPanel {
 
     private Weekday wkday;
     private Recipe weekRecipe;
+    private WeekHandler wh;
+    private GUI gui;
 
     /**
      * Creates new form WeekdayPanel
      */
-    public WeekdayPanel(Weekday wkday) {
+    public WeekdayPanel(GUI gui, Weekday wkday) {
+        wh = ControlHandler.getWh();
+        this.gui = gui;
         this.wkday = wkday;
         weekRecipe = wkday.getRecipe();
         initComponents();
         setSize(142, 400);
         setWeekday();
-        setColors();
+        setColors(GUI.weekPanelColor);
     }
 
-    public void setColors() {
-        jLabelDescription.setBackground(GUI.weekPanelColor);
-        jPanel1.setBackground(GUI.weekPanelColor);
+    public void setColors(Color col) {
+        jLabelDescription.setBackground(col);
+        jPanel1.setBackground(col);
     }
 
     public void setWeekday() {
@@ -51,6 +53,13 @@ public class WeekdayPanel extends javax.swing.JPanel {
 
     public Recipe getWeekRecipe() {
         return wkday.getRecipe();
+    }
+
+    public void switchDay() {
+        setColors(GUI.daySwitchColor);
+        if (wh.swicthDays(wkday) > 0) {
+            gui.changeTo(gui.getSelectedWeekPanel());
+        }
     }
 
     public void draw(Graphics g) {
@@ -222,11 +231,11 @@ public class WeekdayPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonReplaceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReplaceActionPerformed
-        // TODO add your handling code here:
+        switchDay();
     }//GEN-LAST:event_jButtonReplaceActionPerformed
 
     private void jButtonDisableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDisableActionPerformed
-        // TODO add your handling code here:
+        setColors(Color.darkGray);
     }//GEN-LAST:event_jButtonDisableActionPerformed
 
 

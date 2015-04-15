@@ -25,6 +25,7 @@ public class GUI extends javax.swing.JFrame {
     protected final static Color mainColor = new Color(51, 70, 102);
     protected final static Color buttonHoverColor = new Color(75, 100, 145);
     protected final static Color dayColor = new Color(105, 135, 186);
+    protected final static Color daySwitchColor = new Color(135, 186, 105);
     protected final static Color legendaryDayColor = new Color(255, 150, 0);
     protected final static Color replaceDayColor = new Color(204,51,0);
     protected final static Color disableDayColor = new Color(16,16,16);
@@ -84,7 +85,7 @@ public class GUI extends javax.swing.JFrame {
 	WeekPanel wp = null;
 	if (jComboWeek.getSelectedItem() != chooseWeek) {
 	    Week week = (Week) jComboWeek.getSelectedItem();
-	    wp = new WeekPanel(week);
+	    wp = new WeekPanel(this,week);
 	}
 	return wp;
     }
@@ -190,7 +191,7 @@ public class GUI extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
-        jPanelContent.setBackground(new java.awt.Color(51, 0, 102));
+        jPanelContent.setBackground(mainColor);
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 60)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));

@@ -5,6 +5,7 @@
  */
 package view;
 
+import java.util.Arrays;
 import model.Week;
 
 /**
@@ -19,7 +20,7 @@ public class WeekPanel extends javax.swing.JPanel {
     /**
      * Creates new form WeekPanel
      */
-    public WeekPanel(Week week) {
+    public WeekPanel(GUI gui,Week week) {
         weekdays = new WeekdayPanel[7];
         initComponents();
         setBackground(GUI.mainColor);
@@ -28,7 +29,8 @@ public class WeekPanel extends javax.swing.JPanel {
         int y = 0;
         
         for (int i = 0; i < 7; i++) {
-            WeekdayPanel wdp = new WeekdayPanel(week.getWeekdays()[i]);
+            Arrays.sort(week.getWeekdays());
+            WeekdayPanel wdp = new WeekdayPanel(gui,week.getWeekdays()[i]);
             wdp.setLocation(x, y);
             jPanelWeekDays.add(wdp);
             x += 143;
