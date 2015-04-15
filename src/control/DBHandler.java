@@ -10,7 +10,11 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import javax.swing.JLabel;
+import model.Ingredient;
+import model.IngredientAmount;
+import model.Recipe;
 
 /**
  *
@@ -72,5 +76,47 @@ public class DBHandler {
             rs = stmt.executeQuery(sql);
         }
         return rs;
+    }
+
+    public void deleteRecipe(Recipe recipe) throws SQLException {
+        String sql = "UPDATE recipe SET re_active = false where re_id = " + recipe.getId();
+        if (stmt != null) {
+            stmt.execute(sql);
+        }
+    }
+
+    public void deleteIngredientFromRecipe(Recipe recipe, Ingredient ingredient) throws SQLException {
+        String sql = "DELETE from amount where fk_recipe = " + recipe.getId() + " and fk_ingr = " + ingredient.getId();
+        if (stmt != null) {
+            stmt.execute(sql);
+        }
+    }
+
+    public void update(Recipe recipe) throws SQLException {
+        ArrayList<String> sqlQueries;
+        sqlQueries = new ArrayList<>();
+        String sql;
+        for (IngredientAmount ingAm : recipe.getIngredientList()) {
+            sql = "UPDATE amount set am_amount = " + ingAm.getAmount() + " where fk_recipe = " + recipe.getId() + " and fk_ingr = " + ingAm.getIngredient().getId();
+            sqlQueries.add(sql);
+            sql = "UPDATE amount set fk_am_unittype = " + ingAm.getUnit().getId() + " where fk_recipe = " + recipe.getId() + " and fk_ingr = " + ingAm.getIngredient().getId();
+            sqlQueries.add(sql);
+        }
+
+        sql = "UPDATE recipe SET re_name = '" + recipe.getName() + "' where re_id = " + recipe.getId();
+        sqlQueries.add(sql);
+        sql = "UPDATE recipe SET re_description = '" + recipe.getDescription() + "' where re_id = " + recipe.getId();
+        sqlQueries.add(sql);
+        sql = "UPDATE recipe SET re_portions = " + recipe.getPortions() + " where re_id = " + recipe.getId();
+        sqlQueries.add(sql);
+        sql = "UPDATE recipe SET re_cooktime = " + recipe.getCookingtime() + " where re_id = " + recipe.getId();
+        sqlQueries.add(sql);
+        System.out.println("antal queries" + sqlQueries.size());
+        for (String sqlQuery : sqlQueries) {
+            stmt.addBatch(sqlQuery);
+        }
+        if (stmt != null) {
+            stmt.executeBatch();
+        }
     }
 }

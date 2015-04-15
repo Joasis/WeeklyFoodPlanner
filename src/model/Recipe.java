@@ -63,6 +63,26 @@ public class Recipe {
         return ingredientList;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setPortions(int portions) {
+        this.portions = portions;
+    }
+
+    public void setCookingtime(int cookingtime) {
+        this.cookingtime = cookingtime;
+    }
+
+    public void setIngredientList(ArrayList<IngredientAmount> ingredientList) {
+        this.ingredientList = ingredientList;
+    }
+
     @Override
     public String toString() {
         return getName();

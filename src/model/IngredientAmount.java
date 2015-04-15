@@ -33,6 +33,14 @@ public class IngredientAmount {
         return amount;
     }
 
+    public void setUnit(Unit unit) {
+        this.unit = unit;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
     public String toString() {
         return ingredient.getName();
     }

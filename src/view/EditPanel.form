@@ -65,7 +65,7 @@
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
                           <Component id="jLabel1" alignment="0" max="32767" attributes="0"/>
                           <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jButton3" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jButtonRemoveIngredient" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jTextFieldRecipeSearch" min="-2" pref="244" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
@@ -96,9 +96,9 @@
                                       </Group>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jButtonDeleteRecipe" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jButton2" pref="0" max="32767" attributes="0"/>
+                                      <Component id="jButtonSaveRecipe" pref="0" max="32767" attributes="0"/>
                                   </Group>
                                   <Component id="jLabel4" alignment="0" max="32767" attributes="0"/>
                                   <Component id="jTextFieldPortions" alignment="0" max="32767" attributes="0"/>
@@ -164,9 +164,9 @@
                       </Group>
                       <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jButton3" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jButtonRemoveIngredient" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jButtonSaveRecipe" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jButtonDeleteRecipe" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -214,6 +214,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Verdana" size="12" style="0"/>
                 </Property>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel4">
@@ -229,6 +230,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Verdana" size="12" style="0"/>
                 </Property>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel5">
@@ -239,21 +241,29 @@
                 <Property name="text" type="java.lang.String" value="Tilberedningstid"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton1">
+            <Component class="javax.swing.JButton" name="jButtonDeleteRecipe">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Verdana" size="12" style="0"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Slet opskrift"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonDeleteRecipeActionPerformed"/>
+              </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton2">
+            <Component class="javax.swing.JButton" name="jButtonSaveRecipe">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Verdana" size="12" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Gem opskrift"/>
+                <Property name="text" type="java.lang.String" value="Gem"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonSaveRecipeActionPerformed"/>
+              </Events>
             </Component>
             <Container class="javax.swing.JScrollPane" name="jScrollPane2">
               <AuxValues>
@@ -271,6 +281,7 @@
                       <StringArray count="0"/>
                     </Property>
                     <Property name="selectionMode" type="int" value="0"/>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                   <Events>
                     <EventHandler event="valueChanged" listener="javax.swing.event.ListSelectionListener" parameters="javax.swing.event.ListSelectionEvent" handler="jListEditRecipeIngredientsValueChanged"/>
@@ -278,13 +289,17 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JButton" name="jButton3">
+            <Component class="javax.swing.JButton" name="jButtonRemoveIngredient">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Verdana" size="12" style="0"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Fjern ingrediens"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonRemoveIngredientActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel7">
               <Properties>
@@ -307,6 +322,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Verdana" size="12" style="0"/>
                 </Property>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jPicRecipeFound">
@@ -324,6 +340,7 @@
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="0"/>
                 </Property>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Container class="javax.swing.JScrollPane" name="jScrollPane1">
@@ -344,6 +361,7 @@
                         <LineBorder/>
                       </Border>
                     </Property>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                 </Component>
               </SubComponents>
@@ -361,6 +379,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Verdana" size="12" style="0"/>
                 </Property>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel6">
@@ -384,9 +403,9 @@
                           <Component id="jLabel11" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jTextFieldIngredientNewName" alignment="1" max="32767" attributes="0"/>
                           <Group type="102" alignment="1" attributes="0">
-                              <Component id="jButton6" min="-2" max="-2" attributes="0"/>
+                              <Component id="jButtonDeleteIngredient" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="jButton5" min="-2" max="-2" attributes="0"/>
+                              <Component id="jButtonSaveIngredient" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
                               <Component id="jLabel10" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -420,8 +439,8 @@
                       <Component id="jTextFieldIngredientNewName" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jButton6" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jButton5" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jButtonDeleteIngredient" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jButtonSaveIngredient" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
@@ -478,12 +497,12 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton5">
+            <Component class="javax.swing.JButton" name="jButtonSaveIngredient">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Gem"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton6">
+            <Component class="javax.swing.JButton" name="jButtonDeleteIngredient">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Slet ingrediens"/>
               </Properties>
