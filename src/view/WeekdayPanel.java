@@ -83,7 +83,7 @@ public class WeekdayPanel extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(105, 135, 186));
 
-        jPanel1.setBackground(new java.awt.Color(105, 135, 186));
+        jPanel1.setBackground(GUI.dayColor);
 
         jLabelOpskriftNavn.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jLabelOpskriftNavn.setForeground(new java.awt.Color(255, 255, 255));
@@ -118,7 +118,7 @@ public class WeekdayPanel extends javax.swing.JPanel {
         jLabelDate.setText("06-04-2015");
 
         jLabelDescription.setEditable(false);
-        jLabelDescription.setBackground(new java.awt.Color(105, 135, 186));
+        jLabelDescription.setBackground(GUI.dayColor);
         jLabelDescription.setColumns(20);
         jLabelDescription.setFont(new java.awt.Font("Verdana", 2, 11)); // NOI18N
         jLabelDescription.setForeground(new java.awt.Color(255, 255, 255));
@@ -130,7 +130,7 @@ public class WeekdayPanel extends javax.swing.JPanel {
         jLabelDescription.setBorder(null);
         jLabelDescription.setFocusable(false);
 
-        jButtonReplace.setBackground(new java.awt.Color(204, 51, 0));
+        jButtonReplace.setBackground(GUI.replaceDayColor);
         jButtonReplace.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jButtonReplace.setForeground(new java.awt.Color(255, 255, 255));
         jButtonReplace.setText("Udskift");
@@ -143,7 +143,7 @@ public class WeekdayPanel extends javax.swing.JPanel {
             }
         });
 
-        jButtonDisable.setBackground(new java.awt.Color(16, 16, 16));
+        jButtonDisable.setBackground(GUI.disableDayColor);
         jButtonDisable.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jButtonDisable.setForeground(new java.awt.Color(255, 255, 255));
         jButtonDisable.setText("Undlad");

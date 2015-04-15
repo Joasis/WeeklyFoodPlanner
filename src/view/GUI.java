@@ -23,6 +23,11 @@ public class GUI extends javax.swing.JFrame {
     private static ControlHandler ch;
     protected final static Color weekPanelColor = new Color(132, 153, 204);
     protected final static Color mainColor = new Color(51, 70, 102);
+    protected final static Color buttonHoverColor = new Color(75, 100, 145);
+    protected final static Color dayColor = new Color(105, 135, 186);
+    protected final static Color legendaryDayColor = new Color(255, 150, 0);
+    protected final static Color replaceDayColor = new Color(204,51,0);
+    protected final static Color disableDayColor = new Color(16,16,16);
     private boolean currentWeekSat;
     private boolean firstRun;
     private String chooseWeek;
@@ -31,131 +36,131 @@ public class GUI extends javax.swing.JFrame {
      * Creates new form GUI
      */
     public GUI(ControlHandler ch) {
-        currentWeekSat = false;
-        this.ch = ch;
-        firstRun = true;
-        chooseWeek = "Vælg uge";
-        this.weekList = ch.getWh().getWeekList();
-        BasicComboBoxUI bcb = new BasicComboBoxUI();
+	currentWeekSat = false;
+	this.ch = ch;
+	firstRun = true;
+	chooseWeek = "Vælg uge";
+	this.weekList = ch.getWh().getWeekList();
+	BasicComboBoxUI bcb = new BasicComboBoxUI();
 
-        /*
-         Font font = new Font("Verdana", 2, 12);
-         UIManager.put("Label.font", font);
-         */
-        initComponents();
-        jComboWeek.setUI(bcb);
+	/*
+	 Font font = new Font("Verdana", 2, 12);
+	 UIManager.put("Label.font", font);
+	 */
+	initComponents();
+	jComboWeek.setUI(bcb);
 
-        jPanelContent.setBackground(mainColor);
+	jPanelContent.setBackground(mainColor);
 
-        addWeeks();
+	addWeeks();
 
     }
 
     protected static ControlHandler getCh() {
-        return ch;
+	return ch;
     }
 
     public void addWeeks() {
-        Week tempweek = null;
-        Calendar cal = Calendar.getInstance();
-        jComboWeek.addItem(chooseWeek);
-        for (Week week : weekList) {
-            jComboWeek.addItem(week);
-            if (cal.get(Calendar.WEEK_OF_YEAR) == week.getDate()) {
-                currentWeekSat = true;
-                tempweek = week;
-            }
-        }
+	Week tempweek = null;
+	Calendar cal = Calendar.getInstance();
+	jComboWeek.addItem(chooseWeek);
+	for (Week week : weekList) {
+	    jComboWeek.addItem(week);
+	    if (cal.get(Calendar.WEEK_OF_YEAR) == week.getDate()) {
+		currentWeekSat = true;
+		tempweek = week;
+	    }
+	}
 
-        if (currentWeekSat) {
-            jComboWeek.removeItem(chooseWeek);
-            jComboWeek.setSelectedItem(tempweek);
-            changeTo(getSelectedWeekPanel());
-        }
-        firstRun = false;
+	if (currentWeekSat) {
+	    jComboWeek.removeItem(chooseWeek);
+	    jComboWeek.setSelectedItem(tempweek);
+	    changeTo(getSelectedWeekPanel());
+	}
+	firstRun = false;
     }
 
     public WeekPanel getSelectedWeekPanel() {
-        WeekPanel wp = null;
-        if (jComboWeek.getSelectedItem() != chooseWeek) {
-            Week week = (Week) jComboWeek.getSelectedItem();
-            wp = new WeekPanel(week);
-        }
-        return wp;
+	WeekPanel wp = null;
+	if (jComboWeek.getSelectedItem() != chooseWeek) {
+	    Week week = (Week) jComboWeek.getSelectedItem();
+	    wp = new WeekPanel(week);
+	}
+	return wp;
     }
 
     public void changeTo(Component page) {
-        hidePages();
-        jPanelWeek.add(page);
-        page.setSize(1000, 400);
-        if (page.getClass().getSimpleName().equals("WeekPanel")) {
-            enableWeekChooser();
-            enableShop();
-            enableWeekGen();
-            disableBack();
-            disableWeekGen();
-        }
-        if (page.getClass().getSimpleName().equals("ShopPanel")) {
-            disableWeekChooser();
-            disableShop();
-            disableWeekGen();
-            enableBack();
-        }
-        if (page.getClass().getSimpleName().equals("JLabel")) {
-            disableShop();
-            disableBack();
-            enableWeekChooser();
-            enableShop();
-            enableWeekGen();
-        }
-        if (page.getClass().getSimpleName().equals("EditPanel")) {
-            disableWeekChooser();
-            disableShop();
-            disableWeekGen();
-            enableBack();
-        }
-        jPanelWeek.revalidate();
-        jPanelWeek.repaint();
+	hidePages();
+	jPanelWeek.add(page);
+	page.setSize(1000, 400);
+	if (page.getClass().getSimpleName().equals("WeekPanel")) {
+	    enableWeekChooser();
+	    enableShop();
+	    enableWeekGen();
+	    disableBack();
+	    disableWeekGen();
+	}
+	if (page.getClass().getSimpleName().equals("ShopPanel")) {
+	    disableWeekChooser();
+	    disableShop();
+	    disableWeekGen();
+	    enableBack();
+	}
+	if (page.getClass().getSimpleName().equals("JLabel")) {
+	    disableShop();
+	    disableBack();
+	    enableWeekChooser();
+	    enableShop();
+	    enableWeekGen();
+	}
+	if (page.getClass().getSimpleName().equals("EditPanel")) {
+	    disableWeekChooser();
+	    disableShop();
+	    disableWeekGen();
+	    enableBack();
+	}
+	jPanelWeek.revalidate();
+	jPanelWeek.repaint();
     }
 
     public void hidePages() {
-        jPanelWeek.removeAll();
+	jPanelWeek.removeAll();
     }
 
     public void disableWeekChooser() {
-        jButtonDatePrevious.setEnabled(false);
-        jButtonDateNext.setEnabled(false);
-        jComboWeek.setEnabled(false);
+	jButtonDatePrevious.setEnabled(false);
+	jButtonDateNext.setEnabled(false);
+	jComboWeek.setEnabled(false);
     }
 
     public void enableWeekChooser() {
-        jButtonDatePrevious.setEnabled(true);
-        jButtonDateNext.setEnabled(true);
-        jComboWeek.setEnabled(true);
+	jButtonDatePrevious.setEnabled(true);
+	jButtonDateNext.setEnabled(true);
+	jComboWeek.setEnabled(true);
     }
 
     public void enableShop() {
-        jButtonShop.setEnabled(true);
+	jButtonShop.setEnabled(true);
     }
 
     public void disableShop() {
-        jButtonShop.setEnabled(false);
+	jButtonShop.setEnabled(false);
     }
 
     public void enableWeekGen() {
-        jButtonGenerate.setEnabled(true);
+	jButtonGenerate.setEnabled(true);
     }
 
     public void disableWeekGen() {
-        jButtonGenerate.setEnabled(false);
+	jButtonGenerate.setEnabled(false);
     }
 
     public void enableBack() {
-        jButtonBack.setEnabled(true);
+	jButtonBack.setEnabled(true);
     }
 
     public void disableBack() {
-        jButtonBack.setEnabled(false);
+	jButtonBack.setEnabled(false);
     }
 
     /**
@@ -225,6 +230,14 @@ public class GUI extends javax.swing.JFrame {
         jButtonAdd.setFocusPainted(false);
         jButtonAdd.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButtonAdd.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonAdd.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButtonAddMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButtonAddMouseExited(evt);
+            }
+        });
         jButtonAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonAddActionPerformed(evt);
@@ -240,6 +253,14 @@ public class GUI extends javax.swing.JFrame {
         jButtonUpdate.setFocusPainted(false);
         jButtonUpdate.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButtonUpdate.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonUpdate.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButtonUpdateMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButtonUpdateMouseExited(evt);
+            }
+        });
         jButtonUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonUpdateActionPerformed(evt);
@@ -256,6 +277,14 @@ public class GUI extends javax.swing.JFrame {
         jButtonBack.setFocusPainted(false);
         jButtonBack.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButtonBack.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonBack.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButtonBackMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButtonBackMouseExited(evt);
+            }
+        });
         jButtonBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonBackActionPerformed(evt);
@@ -271,6 +300,14 @@ public class GUI extends javax.swing.JFrame {
         jButtonGenerate.setFocusPainted(false);
         jButtonGenerate.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButtonGenerate.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonGenerate.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButtonGenerateMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButtonGenerateMouseExited(evt);
+            }
+        });
         jButtonGenerate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonGenerateActionPerformed(evt);
@@ -287,6 +324,14 @@ public class GUI extends javax.swing.JFrame {
         jButtonShop.setFocusPainted(false);
         jButtonShop.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButtonShop.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonShop.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButtonShopMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButtonShopMouseExited(evt);
+            }
+        });
         jButtonShop.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonShopActionPerformed(evt);
@@ -299,6 +344,14 @@ public class GUI extends javax.swing.JFrame {
         jButtonDatePrevious.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/back.png"))); // NOI18N
         jButtonDatePrevious.setBorder(null);
         jButtonDatePrevious.setFocusPainted(false);
+        jButtonDatePrevious.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButtonDatePreviousMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButtonDatePreviousMouseExited(evt);
+            }
+        });
         jButtonDatePrevious.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonDatePreviousActionPerformed(evt);
@@ -326,6 +379,14 @@ public class GUI extends javax.swing.JFrame {
         jButtonDateNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/forward.png"))); // NOI18N
         jButtonDateNext.setBorder(null);
         jButtonDateNext.setFocusPainted(false);
+        jButtonDateNext.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButtonDateNextMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButtonDateNextMouseExited(evt);
+            }
+        });
         jButtonDateNext.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonDateNextActionPerformed(evt);
@@ -414,7 +475,7 @@ public class GUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
-        // TODO add your handling code here:
+	// TODO add your handling code here:
     }//GEN-LAST:event_jButtonAddActionPerformed
 
     private void jButtonGenerateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGenerateActionPerformed
@@ -422,86 +483,158 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonGenerateActionPerformed
 
     private void jComboWeekActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboWeekActionPerformed
-        if (!firstRun) {
-            if (jComboWeek.getSelectedItem().toString() != "Vælg uge") {
-                changeTo(getSelectedWeekPanel());
-            } else {
-                changeTo(jLabelNoWeek);
-            }
-        }
+	if (!firstRun) {
+	    if (jComboWeek.getSelectedItem().toString() != "Vælg uge") {
+		changeTo(getSelectedWeekPanel());
+		enableShop();
+	    } else {
+		changeTo(jLabelNoWeek);
+		disableShop();
+	    }
+	}
     }//GEN-LAST:event_jComboWeekActionPerformed
 
     private void jButtonDatePreviousActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDatePreviousActionPerformed
-        if (jComboWeek.getSelectedIndex() > 0) {
-            jComboWeek.setSelectedIndex(jComboWeek.getSelectedIndex() - 1);
-        }
+	if (jComboWeek.getSelectedIndex() > 0) {
+	    jComboWeek.setSelectedIndex(jComboWeek.getSelectedIndex() - 1);
+	}
     }//GEN-LAST:event_jButtonDatePreviousActionPerformed
 
     private void jButtonShopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonShopActionPerformed
-        if (getSelectedWeekPanel() != null) {
-            Week week = (Week) jComboWeek.getSelectedItem();
-            ShopPanel sp = new ShopPanel(week);
-            changeTo(sp);
-        }
+	if (getSelectedWeekPanel() != null) {
+	    Week week = (Week) jComboWeek.getSelectedItem();
+	    ShopPanel sp = new ShopPanel(week);
+	    changeTo(sp);
+	}
     }//GEN-LAST:event_jButtonShopActionPerformed
 
     private void jButtonBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBackActionPerformed
-        if (getSelectedWeekPanel() != null) {
-            changeTo(getSelectedWeekPanel());
-        } else {
-            changeTo(jLabelNoWeek);
-        }
+	if (getSelectedWeekPanel() != null) {
+	    changeTo(getSelectedWeekPanel());
+	} else {
+	    changeTo(jLabelNoWeek);
+	}
     }//GEN-LAST:event_jButtonBackActionPerformed
 
     private void jButtonDateNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDateNextActionPerformed
-        int selectedIndexPlus1 = jComboWeek.getSelectedIndex() + 1;
-        if (selectedIndexPlus1 < jComboWeek.getItemCount()) {
-            jComboWeek.setSelectedIndex(selectedIndexPlus1);
-        }
+	int selectedIndexPlus1 = jComboWeek.getSelectedIndex() + 1;
+	if (selectedIndexPlus1 < jComboWeek.getItemCount()) {
+	    jComboWeek.setSelectedIndex(selectedIndexPlus1);
+	}
     }//GEN-LAST:event_jButtonDateNextActionPerformed
 
     private void jButtonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUpdateActionPerformed
-        EditPanel ep = new EditPanel();
-        changeTo(ep);
+	EditPanel ep = new EditPanel();
+	changeTo(ep);
     }//GEN-LAST:event_jButtonUpdateActionPerformed
+
+    private void jButtonAddMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonAddMouseEntered
+	if (jButtonAdd.isEnabled()) {
+	    jButtonAdd.setBackground(buttonHoverColor);
+	}
+    }//GEN-LAST:event_jButtonAddMouseEntered
+
+    private void jButtonUpdateMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonUpdateMouseEntered
+	if (jButtonUpdate.isEnabled()) {
+	    jButtonUpdate.setBackground(buttonHoverColor);
+	}
+    }//GEN-LAST:event_jButtonUpdateMouseEntered
+
+    private void jButtonGenerateMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonGenerateMouseEntered
+	if (jButtonGenerate.isEnabled()) {
+	    jButtonGenerate.setBackground(buttonHoverColor);
+	}
+    }//GEN-LAST:event_jButtonGenerateMouseEntered
+
+    private void jButtonBackMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonBackMouseEntered
+	if (jButtonBack.isEnabled()) {
+	    jButtonBack.setBackground(buttonHoverColor);
+	}
+    }//GEN-LAST:event_jButtonBackMouseEntered
+
+    private void jButtonShopMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonShopMouseEntered
+	if (jButtonShop.isEnabled()) {
+	    jButtonShop.setBackground(buttonHoverColor);
+	}
+    }//GEN-LAST:event_jButtonShopMouseEntered
+
+    private void jButtonDatePreviousMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonDatePreviousMouseEntered
+	if (jButtonDatePrevious.isEnabled()) {
+	    jButtonDatePrevious.setBackground(buttonHoverColor);
+	}
+    }//GEN-LAST:event_jButtonDatePreviousMouseEntered
+
+    private void jButtonDateNextMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonDateNextMouseEntered
+	if (jButtonDateNext.isEnabled()) {
+	    jButtonDateNext.setBackground(buttonHoverColor);
+	}
+    }//GEN-LAST:event_jButtonDateNextMouseEntered
+
+    private void jButtonAddMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonAddMouseExited
+	jButtonAdd.setBackground(mainColor);
+    }//GEN-LAST:event_jButtonAddMouseExited
+
+    private void jButtonUpdateMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonUpdateMouseExited
+	jButtonUpdate.setBackground(mainColor);
+    }//GEN-LAST:event_jButtonUpdateMouseExited
+
+    private void jButtonGenerateMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonGenerateMouseExited
+	jButtonGenerate.setBackground(mainColor);
+    }//GEN-LAST:event_jButtonGenerateMouseExited
+
+    private void jButtonBackMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonBackMouseExited
+	jButtonBack.setBackground(mainColor);
+    }//GEN-LAST:event_jButtonBackMouseExited
+
+    private void jButtonShopMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonShopMouseExited
+	jButtonShop.setBackground(mainColor);
+    }//GEN-LAST:event_jButtonShopMouseExited
+
+    private void jButtonDatePreviousMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonDatePreviousMouseExited
+	jButtonDatePrevious.setBackground(mainColor);
+    }//GEN-LAST:event_jButtonDatePreviousMouseExited
+
+    private void jButtonDateNextMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonDateNextMouseExited
+	jButtonDateNext.setBackground(mainColor);
+    }//GEN-LAST:event_jButtonDateNextMouseExited
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+	/* Set the Nimbus look and feel */
+	//<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
+	 * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+	 */
+	try {
+	    for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+		if ("Nimbus".equals(info.getName())) {
+		    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+		    break;
 
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GUI.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GUI.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GUI.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GUI.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+		}
+	    }
+	} catch (ClassNotFoundException ex) {
+	    java.util.logging.Logger.getLogger(GUI.class
+		    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+	} catch (InstantiationException ex) {
+	    java.util.logging.Logger.getLogger(GUI.class
+		    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+	} catch (IllegalAccessException ex) {
+	    java.util.logging.Logger.getLogger(GUI.class
+		    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+	} catch (javax.swing.UnsupportedLookAndFeelException ex) {
+	    java.util.logging.Logger.getLogger(GUI.class
+		    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+	}
+	//</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-            }
-        });
+	/* Create and display the form */
+	java.awt.EventQueue.invokeLater(new Runnable() {
+	    public void run() {
+	    }
+	});
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

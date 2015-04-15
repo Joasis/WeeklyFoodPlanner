@@ -5,7 +5,10 @@
  */
 package view;
 
+import java.awt.Color;
+import static java.awt.Color.WHITE;
 import java.util.ArrayList;
+import javax.swing.JViewport;
 import javax.swing.table.DefaultTableModel;
 import model.IngredientAmount;
 import model.Week;
@@ -21,6 +24,7 @@ public class ShopPanel extends javax.swing.JPanel {
     private ArrayList<IngredientAmount> ingredientList;
     private ArrayList<ArrayList> data;
     private boolean alreadyThere;
+    private JViewport jShoppingParent;
 
     /**
      * Creates new form ShopPanel
@@ -31,6 +35,9 @@ public class ShopPanel extends javax.swing.JPanel {
         ingredientList = new ArrayList<>();
         loadData();
         initComponents();
+	jShoppingParent = (JViewport) jShoppingList.getParent();
+	jShoppingParent.setBackground(GUI.mainColor);
+	jShoppingParent.setBorder(null);
         setBackground(GUI.mainColor);
         model = (DefaultTableModel) jShoppingList.getModel();
         dataToTable();
@@ -48,7 +55,17 @@ public class ShopPanel extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         jShoppingList = new javax.swing.JTable();
 
-        jShoppingList.setBackground(new java.awt.Color(255, 0, 255));
+        setBackground(GUI.mainColor);
+        setForeground(new java.awt.Color(255, 255, 255));
+        setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
+
+        jScrollPane1.setBackground(GUI.mainColor);
+        jScrollPane1.setBorder(null);
+        jScrollPane1.setForeground(new java.awt.Color(255, 255, 255));
+        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        jScrollPane1.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
+
+        jShoppingList.setBackground(GUI.mainColor);
         jShoppingList.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jShoppingList.setForeground(new java.awt.Color(255, 255, 255));
         jShoppingList.setModel(new javax.swing.table.DefaultTableModel(
@@ -67,6 +84,9 @@ public class ShopPanel extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        jShoppingList.setGridColor(GUI.mainColor);
+        jShoppingList.setSelectionBackground(GUI.buttonHoverColor);
+        jShoppingList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(jShoppingList);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -111,10 +131,11 @@ public class ShopPanel extends javax.swing.JPanel {
     }
 
     private void dataToTable() {
+	//jShoppingTextArea.setVisible(false);
         for (int i = 0; i < data.size(); i++) {
             ArrayList iaData = data.get(i);
-            Object[] test = {iaData.get(0) + " " + iaData.get(2) + " " + iaData.get(1)};
-            model.addRow(test);
+            Object[] iaRow = {iaData.get(0) + " " + iaData.get(2) + " " + iaData.get(1)};
+		model.addRow(iaRow);
         }
     }
 }
