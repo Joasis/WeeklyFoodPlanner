@@ -92,7 +92,7 @@ public class Weekday implements Comparable {
             return BEFORE;
         } else if (this.cal.getTimeInMillis() > w.cal.getTimeInMillis()) {
             return AFTER;
-        }else{
+        } else {
             return EQUAL;
         }
     }

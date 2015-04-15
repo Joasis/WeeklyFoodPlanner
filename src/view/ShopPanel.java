@@ -5,8 +5,6 @@
  */
 package view;
 
-import java.awt.Color;
-import static java.awt.Color.WHITE;
 import java.util.ArrayList;
 import javax.swing.JViewport;
 import javax.swing.table.DefaultTableModel;
@@ -35,9 +33,9 @@ public class ShopPanel extends javax.swing.JPanel {
         ingredientList = new ArrayList<>();
         loadData();
         initComponents();
-	jShoppingParent = (JViewport) jShoppingList.getParent();
-	jShoppingParent.setBackground(GUI.mainColor);
-	jShoppingParent.setBorder(null);
+        jShoppingParent = (JViewport) jShoppingList.getParent();
+        jShoppingParent.setBackground(GUI.mainColor);
+        jShoppingParent.setBorder(null);
         setBackground(GUI.mainColor);
         model = (DefaultTableModel) jShoppingList.getModel();
         dataToTable();
@@ -131,11 +129,11 @@ public class ShopPanel extends javax.swing.JPanel {
     }
 
     private void dataToTable() {
-	//jShoppingTextArea.setVisible(false);
+        //jShoppingTextArea.setVisible(false);
         for (int i = 0; i < data.size(); i++) {
             ArrayList iaData = data.get(i);
             Object[] iaRow = {iaData.get(0) + " " + iaData.get(2) + " " + iaData.get(1)};
-		model.addRow(iaRow);
+            model.addRow(iaRow);
         }
     }
 }

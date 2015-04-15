@@ -13,30 +13,30 @@ import model.Week;
  * @author Jonas
  */
 public class WeekPanel extends javax.swing.JPanel {
-    
+
     private WeekdayPanel[] weekdays;
     private Week week;
 
     /**
      * Creates new form WeekPanel
      */
-    public WeekPanel(GUI gui,Week week) {
+    public WeekPanel(GUI gui, Week week) {
         weekdays = new WeekdayPanel[7];
         initComponents();
         setBackground(GUI.mainColor);
-        
+
         int x = 0;
         int y = 0;
-        
+
         for (int i = 0; i < 7; i++) {
             Arrays.sort(week.getWeekdays());
-            WeekdayPanel wdp = new WeekdayPanel(gui,week.getWeekdays()[i]);
+            WeekdayPanel wdp = new WeekdayPanel(gui, week.getWeekdays()[i]);
             wdp.setLocation(x, y);
             jPanelWeekDays.add(wdp);
             x += 143;
         }
     }
-    
+
     public WeekdayPanel[] getWeekdays() {
         return weekdays;
     }

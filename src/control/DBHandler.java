@@ -55,7 +55,7 @@ public class DBHandler {
             conn = DriverManager.getConnection(url, "root", "root");
             stmt = conn.createStatement();
         } catch (SQLException ex) {
-            String errMsg = "Ukendt fejl " + ex.getErrorCode() + ", prøv igen senere";;
+            String errMsg = "Ukendt fejl " + ex.getErrorCode() + ", prøv igen senere";
             if (ex.getErrorCode() == 0) {
                 errMsg = "Forbindelsen blev ikke fundet, kontroller at 'Host' og 'Port' er korrekt";
             } else if (ex.getErrorCode() == 1045) {
