@@ -93,6 +93,59 @@ public class EditPanel extends javax.swing.JPanel {
         });
     }
 
+    public void autoFillRecipe(java.awt.event.KeyEvent evt, JTextField textField, ArrayList list, JLabel jPic, int offset) {
+        if (textField.getText().length() > 0) {
+            if (Character.isAlphabetic(evt.getKeyChar()) || evt.getKeyCode() == 32) {
+                boolean found = false;
+                for (int i = 0; i < list.size() && !found; i++) {
+                    if (list.get(i).toString().toLowerCase().startsWith(textField.getText().toLowerCase())) {
+                        found = true;
+                        textField.setText(list.get(i).toString());
+                        textField.select(offset, textField.getText().length());
+                        setObject(list.get(i));
+                        jPic.setIcon(checkedImg);
+                    }
+                }
+            }
+        }
+    }
+
+    public void setObject(Object sentObj) {
+        if ("Recipe".equals(sentObj.getClass().getSimpleName()) || "Ingredient".equals(sentObj.getClass().getSimpleName())) {
+
+            if ("Ingredient".equals(sentObj.getClass().getSimpleName())) {
+                Ingredient ing = (Ingredient) sentObj;
+                jTextFieldIngredientNewName.setText(ing.getName());
+            }
+            if ("Recipe".equals(sentObj.getClass().getSimpleName())) {
+                Recipe recipe = (Recipe) sentObj;
+                model.clear();
+                for (IngredientAmount ingr : recipe.getIngredientList()) {
+                    model.addElement(ingr);
+                }
+                jTextFieldRecipeNewName.setText(recipe.getName());
+                jTextFieldCookingTime.setText(recipe.getCookingtime() + "");
+                jTextFieldPortions.setText(recipe.getPortions() + "");
+                jTextAreaDescription.setText(recipe.getDescription());
+            }
+        }
+    }
+
+    public void clearSelection(String clearPanel) {
+        if (clearPanel.equals("Recipe")) {
+            model.clear();
+            jTextFieldRecipeNewName.setText("");
+            jTextFieldEditRecipeAmount.setText("");
+            jComboBoxEditRecipeUnit.setSelectedIndex(0);
+            jTextFieldCookingTime.setText("");
+            jTextFieldPortions.setText("");
+            jTextAreaDescription.setText("");
+        }
+        if (clearPanel.equals("Ingredient")) {
+            jTextFieldIngredientNewName.setText("");
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -419,20 +472,7 @@ public class EditPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jTextFieldRecipeSearchActionPerformed
 
     private void jTextFieldRecipeSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldRecipeSearchKeyReleased
-        if (jTextFieldRecipeSearch.getText().length() > 0) {
-            if (Character.isAlphabetic(evt.getKeyChar()) || evt.getKeyCode() == 32) {
-                boolean found = false;
-                for (int i = 0; i < recipeList.size() && !found; i++) {
-                    if (recipeList.get(i).getName().toLowerCase().startsWith(jTextFieldRecipeSearch.getText().toLowerCase())) {
-                        found = true;
-                        jTextFieldRecipeSearch.setText(recipeList.get(i).getName());
-                        jTextFieldRecipeSearch.select(recipeOffset, jTextFieldRecipeSearch.getText().length());
-                        jPicRecipeFound.setIcon(checkedImg);
-                        setRecipe(recipeList.get(i));
-                    }
-                }
-            }
-        }
+        autoFillRecipe(evt, (JTextField) evt.getSource(), recipeList, jPicRecipeFound, recipeOffset);
     }//GEN-LAST:event_jTextFieldRecipeSearchKeyReleased
 
     private void jListEditRecipeIngredientsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListEditRecipeIngredientsValueChanged
@@ -441,58 +481,15 @@ public class EditPanel extends javax.swing.JPanel {
             jTextFieldEditRecipeAmount.setText(ing.getAmount() + "");
             jComboBoxEditRecipeUnit.setSelectedItem(ing.getUnit());
         }
-
     }//GEN-LAST:event_jListEditRecipeIngredientsValueChanged
 
     private void jTextFieldIngredientSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldIngredientSearchActionPerformed
-        // TODO add your handling code here:
+        jTextFieldIngredientSearch.setCaretPosition(jTextFieldIngredientSearch.getText().length());
     }//GEN-LAST:event_jTextFieldIngredientSearchActionPerformed
 
     private void jTextFieldIngredientSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldIngredientSearchKeyReleased
-        if (jTextFieldIngredientSearch.getText().length() > 0) {
-            if (Character.isAlphabetic(evt.getKeyChar()) || evt.getKeyCode() == 32) {
-                boolean found = false;
-                for (int i = 0; i < ingredientList.size() && !found; i++) {
-                    if (ingredientList.get(i).getName().toLowerCase().startsWith(jTextFieldIngredientSearch.getText().toLowerCase())) {
-                        found = true;
-                        jTextFieldIngredientSearch.setText(ingredientList.get(i).getName());
-                        jTextFieldIngredientSearch.select(IngredientOffset, jTextFieldIngredientSearch.getText().length());
-                        jPicIngredientFound.setIcon(checkedImg);
-                        setIngredient(ingredientList.get(i));
-                    }
-                }
-            }
-        }
+        autoFillRecipe(evt, (JTextField) evt.getSource(), ingredientList, jPicIngredientFound, IngredientOffset);
     }//GEN-LAST:event_jTextFieldIngredientSearchKeyReleased
-
-    public void setIngredient(Ingredient ing) {
-        jTextFieldIngredientNewName.setText(ing.getName());
-    }
-
-    public void setRecipe(Recipe recipe) {
-        model.clear();
-        for (IngredientAmount ingr : recipe.getIngredientList()) {
-            model.addElement(ingr);
-        }
-        jTextFieldRecipeNewName.setText(recipe.getName());
-        jTextFieldCookingTime.setText(recipe.getCookingtime() + "");
-        jTextFieldPortions.setText(recipe.getPortions() + "");
-        jTextAreaDescription.setText(recipe.getDescription());
-    }
-
-    public void clearSelection(String clearPanel) {
-        if (clearPanel == "Recipe") {
-            model.clear();
-            jTextFieldRecipeNewName.setText("");
-            jTextFieldEditRecipeAmount.setText("");
-            jComboBoxEditRecipeUnit.setSelectedIndex(0);
-            jTextFieldCookingTime.setText("");
-            jTextFieldPortions.setText("");
-            jTextAreaDescription.setText("");
-        } else {
-            jTextFieldIngredientNewName.setText("");
-        }
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
