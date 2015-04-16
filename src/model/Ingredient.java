@@ -18,6 +18,9 @@ public class Ingredient {
         this.id = id;
         this.name = name;
     }
+    public Ingredient(String name) {
+        this.name = name;
+    }
 
     public int getId() {
         return id;
