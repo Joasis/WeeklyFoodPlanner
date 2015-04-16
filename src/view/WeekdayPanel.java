@@ -5,10 +5,9 @@
  */
 package view;
 
-import control.ControlHandler;
-import control.WeekHandler;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Toolkit;
 import model.Recipe;
 import model.Weekday;
 
@@ -54,24 +53,23 @@ public class WeekdayPanel extends javax.swing.JPanel {
     }
 
     public void switchDay() {
-//        int swap = GUI.getCh().getWh().switchDays(wkday);
-//        System.out.println("Before swap: " + wkday.getDate());
-//        if (swap == 0) {
-//            setColors(Color.RED);
-//        }
-//        if (swap == 1) {
-//            setColors(GUI.weekPanelColor);
-//        }
-//
-//        if (swap == 2) {
-//            //makeASwap
-//        }
-//        System.out.println("after swap: " + wkday.getDate());
         setColors(GUI.daySwitchColor);
         if (GUI.getCh().getWh().swicthDays(wkday) > 0) {
             gui.changeTo(gui.getSelectedWeekPanel());
         }
+    }
 
+    public void switchDay2() {
+        int swap = GUI.getCh().getWdh().switchDays(wkday);
+        if (swap == 0) {
+            setColors(GUI.daySwitchColor);
+        }
+        if (swap == 1) {
+            setColors(GUI.weekPanelColor);
+        }
+        if (swap == 2) {
+            gui.changeTo(gui.getSelectedWeekPanel());
+        }
     }
 
     public void draw(Graphics g) {

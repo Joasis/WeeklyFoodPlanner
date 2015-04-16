@@ -19,8 +19,10 @@ import model.Weekday;
 public class WeekdayHandler {
 
     private ArrayList<Weekday> weekdays;
+    private Weekday selectedWeekday;
 
     public WeekdayHandler() {
+        selectedWeekday = null;
         weekdays = new ArrayList<>();
         getWeekDaysFromDB();
     }
@@ -42,5 +44,22 @@ public class WeekdayHandler {
 
     public ArrayList<Weekday> getWeekdays() {
         return weekdays;
+    }
+
+    public int switchDays(Weekday wd) {
+        int swap = 0;
+        if (selectedWeekday == null) {
+            selectedWeekday = wd;
+        } else if (selectedWeekday == wd) {
+            swap = 1;
+            selectedWeekday = null;
+        } else {
+            Calendar selectedWeekCal = selectedWeekday.getDateByCal();
+            selectedWeekday.setCal(wd.getDateByCal());
+            wd.setCal(selectedWeekCal);
+            selectedWeekday = null;
+            swap = 2;
+        }
+        return swap;
     }
 }

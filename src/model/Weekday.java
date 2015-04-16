@@ -88,16 +88,18 @@ public class Weekday implements Comparable {
     @Override
     public int compareTo(Object t) {
         Weekday w = (Weekday) t;
+        int value;
         final int BEFORE = -1;
         final int EQUAL = 0;
         final int AFTER = 1;
 
         if (this.cal.getTimeInMillis() < w.cal.getTimeInMillis()) {
-            return BEFORE;
+            value = BEFORE;
         } else if (this.cal.getTimeInMillis() > w.cal.getTimeInMillis()) {
-            return AFTER;
+            value = AFTER;
         } else {
-            return EQUAL;
+            value = EQUAL;
         }
+        return value;
     }
 }
