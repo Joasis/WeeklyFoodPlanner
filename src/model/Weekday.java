@@ -81,6 +81,10 @@ public class Weekday implements Comparable {
         return weekNumber;
     }
 
+    public void setCal(Calendar cal) {
+        this.cal = cal;
+    }
+
     @Override
     public int compareTo(Object t) {
         Weekday w = (Weekday) t;

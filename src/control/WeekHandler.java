@@ -20,8 +20,10 @@ public class WeekHandler {
 
     private ArrayList<Week> weekList;
     private Weekday[] weekdaysToSwitch = new Weekday[2];
+    private Weekday selectedWeekday;
 
     public WeekHandler() {
+        selectedWeekday = null;
         weekList = new ArrayList<>();
         getWeeksFromDB();
     }
@@ -73,4 +75,23 @@ public class WeekHandler {
         }
         return result;
     }
+//    
+//    public int switchDays(Weekday wd) {
+//        int swap = 0;
+//        if (selectedWeekday == null) {
+//            selectedWeekday = wd;
+//        } else if (selectedWeekday == wd) {
+//            swap = 1;
+//            selectedWeekday = null;
+//        } else {
+//            Calendar selectedWeekCal = selectedWeekday.getDateByCal();
+//            Calendar swapWeekCal = wd.getDateByCal();
+//
+//            selectedWeekday.setCal(swapWeekCal);
+//            wd.setCal(selectedWeekCal);
+//            selectedWeekday = null;
+//            swap = 2;
+//        }
+//        return swap;
+//    }
 }

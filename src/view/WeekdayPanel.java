@@ -20,14 +20,12 @@ public class WeekdayPanel extends javax.swing.JPanel {
 
     private Weekday wkday;
     private Recipe weekRecipe;
-    private WeekHandler wh;
     private GUI gui;
 
     /**
      * Creates new form WeekdayPanel
      */
     public WeekdayPanel(GUI gui, Weekday wkday) {
-        wh = ControlHandler.getWh();
         this.gui = gui;
         this.wkday = wkday;
         weekRecipe = wkday.getRecipe();
@@ -56,10 +54,24 @@ public class WeekdayPanel extends javax.swing.JPanel {
     }
 
     public void switchDay() {
+//        int swap = GUI.getCh().getWh().switchDays(wkday);
+//        System.out.println("Before swap: " + wkday.getDate());
+//        if (swap == 0) {
+//            setColors(Color.RED);
+//        }
+//        if (swap == 1) {
+//            setColors(GUI.weekPanelColor);
+//        }
+//
+//        if (swap == 2) {
+//            //makeASwap
+//        }
+//        System.out.println("after swap: " + wkday.getDate());
         setColors(GUI.daySwitchColor);
-        if (wh.swicthDays(wkday) > 0) {
+        if (GUI.getCh().getWh().swicthDays(wkday) > 0) {
             gui.changeTo(gui.getSelectedWeekPanel());
         }
+
     }
 
     public void draw(Graphics g) {
