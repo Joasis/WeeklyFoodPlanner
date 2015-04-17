@@ -29,6 +29,8 @@ public class GUI extends javax.swing.JFrame {
     protected final static Color legendaryDayColor = new Color(255, 150, 0);
     protected final static Color replaceDayColor = new Color(204, 51, 0);
     protected final static Color disableDayColor = new Color(16, 16, 16);
+    protected final static Color deletedColor = new Color(0, 0, 0, 80);
+    protected final static Color omittedColor = new Color(118, 118, 118);
     private boolean currentWeekSat;
     private boolean firstRun;
     private String chooseWeek;
@@ -54,7 +56,6 @@ public class GUI extends javax.swing.JFrame {
         jPanelContent.setBackground(mainColor);
 
         addWeeks();
-
     }
 
     protected static ControlHandler getCh() {

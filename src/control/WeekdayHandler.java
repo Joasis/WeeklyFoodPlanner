@@ -34,7 +34,7 @@ public class WeekdayHandler {
                 Calendar cal = Calendar.getInstance();
                 cal.setTimeInMillis(rs.getLong("wkd_date"));
                 Recipe recipe = ControlHandler.getRh().getRecipe(rs.getInt("fk_recipe"));
-                Weekday weekday = new Weekday(rs.getInt("wkd_id"), recipe, cal, rs.getInt("fk_week"), rs.getBoolean("wkd_active"));
+                Weekday weekday = new Weekday(rs.getInt("wkd_id"), recipe, cal, rs.getInt("fk_week"), rs.getBoolean("wkd_omit"));
                 weekdays.add(weekday);
             }
         } catch (SQLException ex) {

@@ -16,20 +16,25 @@ public class WeekPanel extends javax.swing.JPanel {
 
     private WeekdayPanel[] weekdays;
     private Week week;
+    private GUI gui;
 
     /**
      * Creates new form WeekPanel
      */
     public WeekPanel(GUI gui, Week week) {
+        this.gui = gui;
+        this.week = week;
         weekdays = new WeekdayPanel[7];
         initComponents();
         setBackground(GUI.mainColor);
+        setWeekDays();
+    }
 
+    public void setWeekDays() {
         int x = 0;
         int y = 0;
-
+        Arrays.sort(week.getWeekdays());
         for (int i = 0; i < 7; i++) {
-            Arrays.sort(week.getWeekdays());
             WeekdayPanel wdp = new WeekdayPanel(gui, week.getWeekdays()[i]);
             wdp.setLocation(x, y);
             jPanelWeekDays.add(wdp);

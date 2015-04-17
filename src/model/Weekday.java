@@ -18,22 +18,22 @@ public class Weekday implements Comparable {
     private Recipe recipe;
     private Calendar cal;
     private int weekNumber;
-    private boolean active;
+    private boolean omit;
 
     public Weekday(int id, Recipe recipe, Calendar cal, int weekNumber, boolean active) {
         this.id = id;
         this.recipe = recipe;
         this.cal = cal;
         this.weekNumber = weekNumber;
-        this.active = active;
+        this.omit = active;
     }
 
-    public boolean isActive() {
-        return active;
+    public boolean isOmit() {
+        return omit;
     }
 
-    public void setActive(boolean active) {
-        this.active = active;
+    public void setOmit(boolean omit) {
+        this.omit = omit;
     }
 
     public int getId() {

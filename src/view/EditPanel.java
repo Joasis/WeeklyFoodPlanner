@@ -5,6 +5,8 @@
  */
 package view;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
@@ -53,6 +55,13 @@ public class EditPanel extends javax.swing.JPanel {
         setTextFieldListener(jTextFieldRecipeSearch, jPicRecipeFound, "Recipe");
         setTextFieldListener(jTextFieldIngredientSearch, jPicIngredientFound, "Ingredient");
         setUnits();
+        setColors();
+    }
+
+    public void setColors() {
+        jPanel1.setBackground(GUI.mainColor);
+        jPanelEditIngredient.setBackground(GUI.mainColor);
+        jPanelEditRecipe.setBackground(GUI.mainColor);
     }
 
     public void setUnits() {
@@ -207,13 +216,16 @@ public class EditPanel extends javax.swing.JPanel {
         jTextFieldIngredientNewName = new javax.swing.JTextField();
         jButtonSaveIngredient = new javax.swing.JButton();
         jButtonDeleteIngredient = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(100, 50, 0));
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 22)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Ret opskrift");
 
         jLabel2.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Søg opskrift");
 
         jTextFieldRecipeSearch.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
@@ -229,18 +241,21 @@ public class EditPanel extends javax.swing.JPanel {
         });
 
         jLabel3.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Ingredienser");
 
         jTextFieldPortions.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jTextFieldPortions.setEnabled(false);
 
         jLabel4.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Antal personer");
 
         jTextFieldCookingTime.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jTextFieldCookingTime.setEnabled(false);
 
         jLabel5.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Tilberedningstid");
 
         jButtonDeleteRecipe.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
@@ -281,9 +296,11 @@ public class EditPanel extends javax.swing.JPanel {
         });
 
         jLabel7.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Antal");
 
         jLabel8.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Enhed");
 
         jTextFieldEditRecipeAmount.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
@@ -304,12 +321,14 @@ public class EditPanel extends javax.swing.JPanel {
         jScrollPane1.setViewportView(jTextAreaDescription);
 
         jLabel12.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("Navn");
 
         jTextFieldRecipeNewName.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jTextFieldRecipeNewName.setEnabled(false);
 
         jLabel6.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Beskrivelse");
 
         javax.swing.GroupLayout jPanelEditRecipeLayout = new javax.swing.GroupLayout(jPanelEditRecipe);
@@ -408,6 +427,7 @@ public class EditPanel extends javax.swing.JPanel {
         );
 
         jLabel9.setFont(new java.awt.Font("Verdana", 1, 22)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("Ret ingrediens");
 
         jTextFieldIngredientSearch.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
@@ -423,11 +443,13 @@ public class EditPanel extends javax.swing.JPanel {
         });
 
         jLabel10.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Søg ingrediens");
 
         jPicIngredientFound.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/unchecked.png"))); // NOI18N
 
         jLabel11.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("Navn");
 
         jTextFieldIngredientNewName.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
@@ -435,6 +457,8 @@ public class EditPanel extends javax.swing.JPanel {
         jButtonSaveIngredient.setText("Gem");
 
         jButtonDeleteIngredient.setText("Slet ingrediens");
+
+        jButton1.setText("Tilføj til opskrift");
 
         javax.swing.GroupLayout jPanelEditIngredientLayout = new javax.swing.GroupLayout(jPanelEditIngredient);
         jPanelEditIngredient.setLayout(jPanelEditIngredientLayout);
@@ -445,17 +469,19 @@ public class EditPanel extends javax.swing.JPanel {
                 .addGroup(jPanelEditIngredientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel11)
                     .addComponent(jTextFieldIngredientNewName, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelEditIngredientLayout.createSequentialGroup()
-                        .addComponent(jButtonDeleteIngredient)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButtonSaveIngredient))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelEditIngredientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jLabel10)
                         .addGroup(jPanelEditIngredientLayout.createSequentialGroup()
                             .addComponent(jTextFieldIngredientSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jPicIngredientFound, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanelEditIngredientLayout.createSequentialGroup()
+                        .addGroup(jPanelEditIngredientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton1)
+                            .addComponent(jButtonDeleteIngredient))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonSaveIngredient)))
                 .addContainerGap(220, Short.MAX_VALUE))
         );
         jPanelEditIngredientLayout.setVerticalGroup(
@@ -477,6 +503,8 @@ public class EditPanel extends javax.swing.JPanel {
                 .addGroup(jPanelEditIngredientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonDeleteIngredient)
                     .addComponent(jButtonSaveIngredient))
+                .addGap(41, 41, 41)
+                .addComponent(jButton1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -614,6 +642,7 @@ public class EditPanel extends javax.swing.JPanel {
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonDeleteIngredient;
     private javax.swing.JButton jButtonDeleteRecipe;
     private javax.swing.JButton jButtonRemoveIngredient;

@@ -7,6 +7,7 @@ package view;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Toolkit;
 import model.Recipe;
 import model.Weekday;
@@ -46,6 +47,12 @@ public class WeekdayPanel extends javax.swing.JPanel {
         jLabelOpskriftNavn.setText("<html>" + getWeekRecipe().getName() + "</html>");
         jLabelCookingTime.setText(getWeekRecipe().getCookingtime() + " min");
         jLabelPortions.setText(getWeekRecipe().getPortions() + "");
+        if (!wkday.getRecipe().isActive()) {
+            disableButtons();
+        }
+        if (wkday.isOmit() && wkday.getRecipe().isActive()) {
+            jButtonDisable.setText("Genaktiver");
+        }
     }
 
     public Recipe getWeekRecipe() {
@@ -53,13 +60,6 @@ public class WeekdayPanel extends javax.swing.JPanel {
     }
 
     public void switchDay() {
-        setColors(GUI.daySwitchColor);
-        if (GUI.getCh().getWh().swicthDays(wkday) > 0) {
-            gui.changeTo(gui.getSelectedWeekPanel());
-        }
-    }
-
-    public void switchDay2() {
         int swap = GUI.getCh().getWdh().switchDays(wkday);
         if (swap == 0) {
             setColors(GUI.daySwitchColor);
@@ -74,8 +74,31 @@ public class WeekdayPanel extends javax.swing.JPanel {
 
     public void draw(Graphics g) {
         if (!wkday.getRecipe().isActive()) {
-//            Image img = Toolkit.getDefaultToolkit().getImage("src\\view\\images\\removed.png");
-//            g.drawImage(img, 0, 0, this);
+            Image img = Toolkit.getDefaultToolkit().getImage("src\\view\\images\\deletedred.png");
+            g.setColor(GUI.deletedColor);
+            g.fillRect(0, 0, getWidth(), getHeight());
+            g.drawImage(img, ((getWidth() / 2) - (img.getWidth(this) / 2)), ((getHeight() / 2) - (img.getHeight(this) / 2)), this);
+            setColors(GUI.omittedColor);
+        }
+        if (wkday.isOmit() && jPanel1.getBackground() != GUI.daySwitchColor) {
+            setColors(GUI.omittedColor);
+        }
+    }
+
+    public void disableButtons() {
+        jButtonDisable.setEnabled(false);
+        jButtonReplace.setEnabled(false);
+    }
+
+    public void toggleOmit() {
+        if (wkday.isOmit()) {
+            setColors(GUI.weekPanelColor);
+            wkday.setOmit(false);
+            jButtonDisable.setText("Undlad");
+        } else {
+            setColors(GUI.omittedColor);
+            wkday.setOmit(true);
+            jButtonDisable.setText("Genaktiver");
         }
     }
 
@@ -88,7 +111,12 @@ public class WeekdayPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel() {
+            public void paint(Graphics g) {
+                super.paint(g);
+                draw(g);
+            }
+        };
         jLabelOpskriftNavn = new javax.swing.JLabel();
         jLabelDay = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -103,6 +131,7 @@ public class WeekdayPanel extends javax.swing.JPanel {
         setBackground(new java.awt.Color(105, 135, 186));
 
         jPanel1.setBackground(GUI.dayColor);
+        jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 jPanel1MouseReleased(evt);
@@ -152,7 +181,11 @@ public class WeekdayPanel extends javax.swing.JPanel {
         jLabelDescription.setWrapStyleWord(true);
         jLabelDescription.setAutoscrolls(false);
         jLabelDescription.setBorder(null);
+        jLabelDescription.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabelDescription.setFocusable(false);
+        jLabelDescription.setOpaque(false);
+        jLabelDescription.setRequestFocusEnabled(false);
+        jLabelDescription.setVerifyInputWhenFocusTarget(false);
         jLabelDescription.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 jLabelDescriptionMouseReleased(evt);
@@ -255,7 +288,7 @@ public class WeekdayPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jButtonReplaceActionPerformed
 
     private void jButtonDisableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDisableActionPerformed
-        setColors(Color.darkGray);
+        toggleOmit();
     }//GEN-LAST:event_jButtonDisableActionPerformed
 
     private void jPanel1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseReleased

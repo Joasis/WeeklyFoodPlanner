@@ -37,18 +37,16 @@ public class RecipeHandler {
 
             int currentID = 0;
             while (rs.next()) {
-                if (rs.getBoolean("re_active")) {
-                    if (currentID != rs.getInt("re_id")) {
-                        ingList = new ArrayList<>();
-                        Recipe rec = new Recipe(rs.getInt("re_id"), rs.getString("re_name"), rs.getString("re_description"), rs.getInt("re_portions"), rs.getInt("re_cooktime"), rs.getBoolean("re_active"), ingList);
-                        recipeList.add(rec);
-                    }
-                    unit = ControlHandler.getUh().getUnit(rs.getInt("fk_am_unittype"));
-                    ing = ControlHandler.getIh().getIngredient(rs.getInt("fk_ingr"));
-                    ingAm = new IngredientAmount(unit, ing, rs.getDouble("am_amount"));
-                    ingList.add(ingAm);
-                    currentID = rs.getInt("re_id");
+                if (currentID != rs.getInt("re_id")) {
+                    ingList = new ArrayList<>();
+                    Recipe rec = new Recipe(rs.getInt("re_id"), rs.getString("re_name"), rs.getString("re_description"), rs.getInt("re_portions"), rs.getInt("re_cooktime"), rs.getBoolean("re_active"), ingList);
+                    recipeList.add(rec);
                 }
+                unit = ControlHandler.getUh().getUnit(rs.getInt("fk_am_unittype"));
+                ing = ControlHandler.getIh().getIngredient(rs.getInt("fk_ingr"));
+                ingAm = new IngredientAmount(unit, ing, rs.getDouble("am_amount"));
+                ingList.add(ingAm);
+                currentID = rs.getInt("re_id");
             }
         } catch (SQLException ex) {
             System.out.println("SQL FEJL " + ex);

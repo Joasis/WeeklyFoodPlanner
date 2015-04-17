@@ -56,21 +56,4 @@ public class WeekHandler {
     public ArrayList<Week> getWeekList() {
         return weekList;
     }
-
-    public int swicthDays(Weekday wd) {
-        int result = -1;
-        if (weekdaysToSwitch[0] == null) {
-            result = 0;
-            weekdaysToSwitch[0] = wd;
-        } else if (weekdaysToSwitch[1] == null) {
-            result = 1;
-            weekdaysToSwitch[1] = wd;
-            Calendar tempDate = weekdaysToSwitch[0].getDateByCal();
-            weekdaysToSwitch[0].setDateByCal(weekdaysToSwitch[1].getDateByCal());
-            weekdaysToSwitch[1].setDateByCal(tempDate);
-            weekdaysToSwitch[0] = null;
-            weekdaysToSwitch[1] = null;
-        }
-        return result;
-    }
 }
