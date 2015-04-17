@@ -505,7 +505,7 @@ public class GUI extends javax.swing.JFrame {
     private void jButtonShopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonShopActionPerformed
         if (getSelectedWeekPanel() != null) {
             Week week = (Week) jComboWeek.getSelectedItem();
-            ShopPanel sp = new ShopPanel(week);
+            ShopPanel sp = new ShopPanel(this);
             changeTo(sp);
         }
     }//GEN-LAST:event_jButtonShopActionPerformed

@@ -42,6 +42,6 @@ public class IngredientAmount {
     }
 
     public String toString() {
-        return ingredient.getName();
+        return getAmount()+" "+getUnit().getShortname()+" - "+ingredient.getName();
     }
 }

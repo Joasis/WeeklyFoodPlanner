@@ -6,10 +6,11 @@
 package view;
 
 import java.util.ArrayList;
+import javax.swing.DefaultListModel;
 import javax.swing.JViewport;
-import javax.swing.table.DefaultTableModel;
 import model.IngredientAmount;
 import model.Week;
+import model.Weekday;
 
 /**
  *
@@ -18,27 +19,23 @@ import model.Week;
 public class ShopPanel extends javax.swing.JPanel {
 
     private Week week;
-    private DefaultTableModel model;
-    private ArrayList<IngredientAmount> ingredientList;
-    private ArrayList<ArrayList> data;
+    private DefaultListModel model;
     private boolean alreadyThere;
     private JViewport jShoppingParent;
 
     /**
      * Creates new form ShopPanel
      */
-    public ShopPanel(Week week) {
-        this.week = week;
-        data = new ArrayList<>();
-        ingredientList = new ArrayList<>();
-        loadData();
-        initComponents();
-        jShoppingParent = (JViewport) jShoppingList.getParent();
-        jShoppingParent.setBackground(GUI.mainColor);
-        jShoppingParent.setBorder(null);
-        setBackground(GUI.mainColor);
-        model = (DefaultTableModel) jShoppingList.getModel();
-        dataToTable();
+    public ShopPanel(GUI gui) {
+	this.week = gui.getSelectedWeekPanel().getWeek();
+	initComponents();
+	jShoppingParent = (JViewport) jListShop.getParent();
+	jShoppingParent.setBackground(GUI.mainColor);
+	jShoppingParent.setBorder(null);
+	setBackground(GUI.mainColor);
+	model = new DefaultListModel();
+	jListShop.setModel(model);
+	dataToTable();
     }
 
     /**
@@ -50,90 +47,41 @@ public class ShopPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jShoppingList = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jListShop = new javax.swing.JList();
 
         setBackground(GUI.mainColor);
         setForeground(new java.awt.Color(255, 255, 255));
         setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
 
-        jScrollPane1.setBackground(GUI.mainColor);
-        jScrollPane1.setBorder(null);
-        jScrollPane1.setForeground(new java.awt.Color(255, 255, 255));
-        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-        jScrollPane1.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
-
-        jShoppingList.setBackground(GUI.mainColor);
-        jShoppingList.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        jShoppingList.setForeground(new java.awt.Color(255, 255, 255));
-        jShoppingList.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Indkøbsliste"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jShoppingList.setGridColor(GUI.mainColor);
-        jShoppingList.setSelectionBackground(GUI.buttonHoverColor);
-        jShoppingList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jScrollPane1.setViewportView(jShoppingList);
+        jListShop.setBackground(GUI.buttonHoverColor);
+        jListShop.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
+        jListShop.setForeground(new java.awt.Color(255, 255, 255));
+        jScrollPane2.setViewportView(jListShop);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 471, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jShoppingList;
+    private javax.swing.JList jListShop;
+    private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
 
-    private void loadData() {
-        for (int i = 0; i < 7; i++) {
-            ArrayList<IngredientAmount> originalList = (ArrayList<IngredientAmount>) week.getWeekdays()[i].getRecipe().getIngredientList().clone();
-            ingredientList = new ArrayList<>(originalList);
-            for (IngredientAmount ingredientAmount : ingredientList) {
-                alreadyThere = false;
-                for (int j = 0; j < data.size(); j++) {
-                    if (data.get(j).get(1) == ingredientAmount.getIngredient().getName()) {
-                        data.get(j).set(0, ((double) data.get(j).get(0) + ingredientAmount.getAmount()));
-                        alreadyThere = true;
-                    }
-                }
-                if (!alreadyThere) {
-                    ArrayList<Object> a = new ArrayList<>();
-                    a.add(ingredientAmount.getAmount());
-                    a.add(ingredientAmount.getIngredient().getName());
-                    a.add(ingredientAmount.getUnit().getShortname());
-                    data.add(a);
-                }
-            }
-        }
-    }
-
     private void dataToTable() {
-        //jShoppingTextArea.setVisible(false);
-        for (int i = 0; i < data.size(); i++) {
-            ArrayList iaData = data.get(i);
-            Object[] iaRow = {iaData.get(0) + " " + iaData.get(2) + " " + iaData.get(1)};
-            model.addRow(iaRow);
-        }
+	for (Weekday wd : week.getWeekdays()) {
+	    for (IngredientAmount ingAm : wd.getRecipe().getIngredientList()) {
+		model.addElement(ingAm);
+	    }
+	}
     }
 }
