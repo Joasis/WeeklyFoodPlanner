@@ -112,7 +112,6 @@ public class GUI extends javax.swing.JFrame {
             disableShop();
             disableBack();
             enableWeekChooser();
-            enableShop();
             enableWeekGen();
         }
         if (page.getClass().getSimpleName().equals("EditPanel")) {
@@ -249,7 +248,7 @@ public class GUI extends javax.swing.JFrame {
         jButtonUpdate.setBackground(mainColor);
         jButtonUpdate.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jButtonUpdate.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/update.png"))); // NOI18N
+        jButtonUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/edit.png"))); // NOI18N
         jButtonUpdate.setText("Ret");
         jButtonUpdate.setBorder(null);
         jButtonUpdate.setFocusPainted(false);
