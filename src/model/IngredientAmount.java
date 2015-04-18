@@ -5,6 +5,8 @@
  */
 package model;
 
+import java.text.DecimalFormat;
+
 /**
  *
  * @author Jonas
@@ -14,6 +16,7 @@ public class IngredientAmount {
     private Unit unit;
     private Ingredient ingredient;
     private double amount;
+    private final DecimalFormat df = new DecimalFormat("###.##");
 
     public IngredientAmount(Unit unit, Ingredient ingredient, double amount) {
         this.unit = unit;
@@ -33,6 +36,10 @@ public class IngredientAmount {
         return amount;
     }
 
+    public String getAmountString() {
+        return df.format(getAmount());
+    }
+
     public void setUnit(Unit unit) {
         this.unit = unit;
     }
@@ -42,6 +49,6 @@ public class IngredientAmount {
     }
 
     public String toString() {
-        return getAmount()+" "+getUnit().getShortname()+" - "+ingredient.getName();
+        return getAmountString() + " " + getUnit().getShortname() + " - " + ingredient.getName();
     }
 }

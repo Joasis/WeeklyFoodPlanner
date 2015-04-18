@@ -92,7 +92,22 @@ public class DBHandler {
         }
     }
 
-    public void update(Recipe recipe) throws SQLException {
+    public void updateIngredient(Ingredient ing) throws SQLException {
+        String sql = "update ingr SET in_name = '" + ing.getName() + "' where in_id = " + ing.getId();
+        if (stmt != null) {
+            stmt.execute(sql);
+            System.out.println(sql);
+        }
+    }
+
+    public void deleteIngredient(Ingredient ing) throws SQLException {
+        String sql = "DELETE from ingr where in_id = " + ing.getId();
+        if (stmt != null) {
+            stmt.execute(sql);
+        }
+    }
+
+    public void updateRecipe(Recipe recipe) throws SQLException {
         ArrayList<String> sqlQueries;
         sqlQueries = new ArrayList<>();
         String sql;
@@ -117,6 +132,16 @@ public class DBHandler {
         }
         if (stmt != null) {
             stmt.executeBatch();
+        }
+    }
+
+    public void insertIngredientToRecipe(Recipe recipe, IngredientAmount ingAm) throws SQLException {
+        String sql = "INSERT into amount values "
+                + "(" + recipe.getId() + ", " + ingAm.getIngredient().getId()
+                + ", " + ingAm.getAmount() + ", " + ingAm.getUnit().getId() + ");";
+        if (stmt != null) {
+            System.out.println(sql);
+            stmt.execute(sql);
         }
     }
 }

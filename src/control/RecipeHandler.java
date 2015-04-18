@@ -22,11 +22,11 @@ public class RecipeHandler {
     private ArrayList<Recipe> recipeList;
 
     public RecipeHandler() {
-        recipeList = new ArrayList<>();
         getRecipesFromDB();
     }
 
     public void getRecipesFromDB() {
+        recipeList = new ArrayList<>();
         try {
             ResultSet rs = ControlHandler.getDbh().selectAll("amount inner join recipe on fk_recipe = re_id");
 
@@ -63,6 +63,16 @@ public class RecipeHandler {
             }
         }
         return recipe;
+    }
+
+    public boolean isIngredientFound(Recipe recipe, IngredientAmount ingAm) {
+        boolean ingredientFound = false;
+        for (int i = 0; i < recipe.getIngredientList().size() && !ingredientFound; i++) {
+            if (ingAm.getIngredient().getName().equals(recipe.getIngredientList().get(i).getIngredient().getName()) && ingAm.getUnit() == recipe.getIngredientList().get(i).getUnit()) {
+                ingredientFound = true;
+            }
+        }
+        return ingredientFound;
     }
 
     public ArrayList<Recipe> getRecipeList() {
