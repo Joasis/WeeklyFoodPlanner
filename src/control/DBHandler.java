@@ -123,6 +123,33 @@ public class DBHandler {
         }
     }
 
+    public int getNextRecipeNumber() throws SQLException, NullPointerException {
+        int nextInvoiceNumber = -1;
+        String table = "recipe";
+
+        String sql = "select AUTO_INCREMENT as AI from INFORMATION_SCHEMA.TABLES "
+                + "where TABLE_SCHEMA = '" + db + "' "
+                + "and TABLE_NAME = '" + table + "'";
+        ResultSet rs = stmt.executeQuery(sql);
+
+        rs.next();
+        nextInvoiceNumber = rs.getInt("AI");
+        return nextInvoiceNumber;
+    }
+
+    public void insertRecipe(Recipe recipe) throws SQLException {
+        // INSERT into recipe (re_name, re_description, re_portions, re_cooktime) values ("Pizza", "Just-eat - meget nemmere", 1, 10)
+        String sql = "INSERT into recipe (re_id, re_name, re_description, re_portions, re_cooktime) values (" + recipe.getId() + ",'" + recipe.getName() + "', '" + recipe.getDescription() + "', " + recipe.getPortions() + ", " + recipe.getCookingtime() + ")";
+        if (stmt != null) {
+            stmt.addBatch(sql);
+            for (IngredientAmount tempIngAm : recipe.getIngredientList()) {
+                String sqlIng = "INSERT into amount values (" + recipe.getId() + ", " + tempIngAm.getIngredient().getId() + ", " + tempIngAm.getAmount() + ", " + tempIngAm.getUnit().getId() + ")";
+                stmt.addBatch(sqlIng);
+            }
+            stmt.executeBatch();
+        }
+    }
+
     public void updateRecipe(Recipe recipe) throws SQLException {
         ArrayList<String> sqlQueries;
         sqlQueries = new ArrayList<>();

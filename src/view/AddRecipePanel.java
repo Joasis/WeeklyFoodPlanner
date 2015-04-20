@@ -5,7 +5,11 @@
  */
 package view;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.scene.shape.Arc;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -13,6 +17,9 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import model.Ingredient;
+import model.IngredientAmount;
+import model.Recipe;
+import model.Unit;
 
 /**
  *
@@ -22,6 +29,7 @@ public class AddRecipePanel extends javax.swing.JPanel {
 
     private DefaultListModel list;
     private ArrayList<Ingredient> ingredientList;
+    private ArrayList<Unit> unitList;
     private int offset;
     private final ImageIcon checkedImg = new ImageIcon("src\\view\\images\\checked.png");
     private final ImageIcon uncheckedImg = new ImageIcon("src\\view\\images\\unchecked.png");
@@ -30,11 +38,13 @@ public class AddRecipePanel extends javax.swing.JPanel {
     public AddRecipePanel() {
         offset = 0;
         ingredientList = GUI.getCh().getIh().getIngredientList();
+        unitList = GUI.getCh().getUh().getUnitList();
         initComponents();
         selectedIngredient = null;
         list = new DefaultListModel();
         jListIngredients.setModel(list);
         setTextFieldListener(jTextField_searchIngredient, jPic, "Ingredient");
+        setUnits();
     }
 
     /**
@@ -65,8 +75,8 @@ public class AddRecipePanel extends javax.swing.JPanel {
         jListIngredients = new javax.swing.JList();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jTextFieldEditRecipeAmount = new javax.swing.JTextField();
-        jComboBoxEditRecipeUnit = new javax.swing.JComboBox();
+        jTextFieldRecipeAmount = new javax.swing.JTextField();
+        jComboBoxRecipeUnit = new javax.swing.JComboBox();
 
         setBackground(view.GUI.mainColor);
 
@@ -136,10 +146,9 @@ public class AddRecipePanel extends javax.swing.JPanel {
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Enhed");
 
-        jTextFieldEditRecipeAmount.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jTextFieldRecipeAmount.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
 
-        jComboBoxEditRecipeUnit.setEditable(true);
-        jComboBoxEditRecipeUnit.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jComboBoxRecipeUnit.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -167,10 +176,10 @@ public class AddRecipePanel extends javax.swing.JPanel {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jTextFieldEditRecipeAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jTextFieldRecipeAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jComboBoxEditRecipeUnit, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jComboBoxRecipeUnit, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton_addIngredient, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -225,8 +234,8 @@ public class AddRecipePanel extends javax.swing.JPanel {
                             .addComponent(jLabel8))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jComboBoxEditRecipeUnit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextFieldEditRecipeAmount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBoxRecipeUnit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldRecipeAmount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton_addIngredient))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -237,17 +246,20 @@ public class AddRecipePanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton_saveRecipeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_saveRecipeActionPerformed
-        String name = jTextField_name.getText();
-        String portion = jTextField_portion.getText();
-        String cookTime = jTextField_cooktime.getText();
-        String description = jTextArea_description.getText();
-
+        try {
+            addRecipe();
+        } catch (SQLException ex) {
+            System.out.println("Sqlfejl ved getNextRecipeNumber");;
+        }
     }//GEN-LAST:event_jButton_saveRecipeActionPerformed
 
     private void jButton_addIngredientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_addIngredientActionPerformed
         if (selectedIngredient != null) {
-            list.addElement(selectedIngredient);
+            IngredientAmount ingAm = new IngredientAmount((Unit) jComboBoxRecipeUnit.getSelectedItem(), selectedIngredient, Double.parseDouble(jTextFieldRecipeAmount.getText()));
+            list.addElement(ingAm);
+
         }
+
         // 
     }//GEN-LAST:event_jButton_addIngredientActionPerformed
 
@@ -259,7 +271,7 @@ public class AddRecipePanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_addIngredient;
     private javax.swing.JButton jButton_saveRecipe;
-    private javax.swing.JComboBox jComboBoxEditRecipeUnit;
+    private javax.swing.JComboBox jComboBoxRecipeUnit;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -273,7 +285,7 @@ public class AddRecipePanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextArea jTextArea_description;
-    private javax.swing.JTextField jTextFieldEditRecipeAmount;
+    private javax.swing.JTextField jTextFieldRecipeAmount;
     private javax.swing.JTextField jTextField_cooktime;
     private javax.swing.JTextField jTextField_name;
     private javax.swing.JTextField jTextField_portion;
@@ -328,5 +340,35 @@ public class AddRecipePanel extends javax.swing.JPanel {
                 }
             }
         });
+    }
+
+    public void addRecipe() throws SQLException {
+        String name = jTextField_name.getText();
+        int portion = Integer.parseInt(jTextField_portion.getText());
+        int cookTime = Integer.parseInt(jTextField_cooktime.getText());
+        String description = jTextArea_description.getText();
+        int recipeID = GUI.getCh().getDbh().getNextRecipeNumber();
+        if (recipeID != -1) {
+            ArrayList<IngredientAmount> ingAmList = new ArrayList<>();
+            for (int i = 0; i < list.getSize(); i++) {
+                ingAmList.add((IngredientAmount) list.getElementAt(i));
+            }
+
+            Recipe newRecipe = new Recipe(recipeID, name, description, portion, cookTime, true, ingAmList);
+            GUI.getCh().getDbh().insertRecipe(newRecipe);
+            GUI.getCh().getRh().getRecipeList().add(newRecipe);
+            System.out.println("Name: " + newRecipe.getName());
+            System.out.println("Descr: " + newRecipe.getDescription());
+            System.out.println("Cook: " + newRecipe.getCookingtime());
+            System.out.println("Personer: " + newRecipe.getPortions());
+            System.out.println("ing: " + newRecipe.getIngredientList().size());
+        }
+    }
+
+    public void setUnits() {
+        jComboBoxRecipeUnit.removeAllItems();
+        for (Unit unit : unitList) {
+            jComboBoxRecipeUnit.addItem(unit);
+        }
     }
 }
