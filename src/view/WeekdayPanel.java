@@ -9,6 +9,9 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Recipe;
 import model.Weekday;
 
@@ -99,6 +102,11 @@ public class WeekdayPanel extends javax.swing.JPanel {
             setColors(GUI.omittedColor);
             wkday.setOmit(true);
             jButtonDisable.setText("Genaktiver");
+        }
+        try {
+            GUI.getCh().getDbh().updateWeekdayOmit(wkday);
+        } catch (SQLException ex) {
+            System.out.println("FEJL VED OPDATERING AF OMIT PÅ WEEKDAY" + ex);
         }
     }
 

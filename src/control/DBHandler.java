@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import model.Ingredient;
 import model.IngredientAmount;
 import model.Recipe;
+import model.Weekday;
 
 /**
  *
@@ -66,6 +67,21 @@ public class DBHandler {
             System.out.println(errMsg);
         } catch (ClassNotFoundException ex) {
             System.out.println("Fejl i driver til databasen, kontakt din programmør");
+        }
+    }
+
+    public void updateWeekdayOmit(Weekday weekday) throws SQLException {
+        String sql = "UPDATE wkday set wkd_omit = " + weekday.isOmit() + " where wkd_id = " + weekday.getId();
+        if (stmt != null) {
+            stmt.execute(sql);
+        }
+    }
+
+    public void updateWeekdayDate(Weekday weekday) throws SQLException {
+        String sql = "UPDATE wkday set wkd_date = " + weekday.getDateByCal().getTimeInMillis() + " where wkd_id = " + weekday.getId();
+        if (stmt != null) {
+            System.out.println(sql);
+            stmt.execute(sql);
         }
     }
 

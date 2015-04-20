@@ -9,6 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Recipe;
 import model.Weekday;
 
@@ -55,8 +57,14 @@ public class WeekdayHandler {
             selectedWeekday = null;
         } else {
             Calendar selectedWeekCal = selectedWeekday.getDateByCal();
-            selectedWeekday.setCal(wd.getDateByCal());
-            wd.setCal(selectedWeekCal);
+            try {
+                selectedWeekday.setCal(wd.getDateByCal());
+                wd.setCal(selectedWeekCal);
+                ControlHandler.getDbh().updateWeekdayDate(wd);
+                ControlHandler.getDbh().updateWeekdayDate(selectedWeekday);
+            } catch (SQLException ex) {
+                System.out.println("FEJL VED OPDATERING AF WEEKDAY DATE VED OMBYTNING");
+            }
             selectedWeekday = null;
             swap = 2;
         }
