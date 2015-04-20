@@ -55,6 +55,7 @@ public class DBHandler {
             String url = "jdbc:mysql://localhost:3306/wfoodplanner";
             conn = DriverManager.getConnection(url, "root", "root");
             stmt = conn.createStatement();
+            db = "wfoodplanner";
         } catch (SQLException ex) {
             String errMsg = "Ukendt fejl " + ex.getErrorCode() + ", prøv igen senere";
             if (ex.getErrorCode() == 0) {
@@ -123,18 +124,16 @@ public class DBHandler {
         }
     }
 
-    public int getNextRecipeNumber() throws SQLException, NullPointerException {
-        int nextInvoiceNumber = -1;
-        String table = "recipe";
-
+    public int getNextAI(String table) throws SQLException, NullPointerException {
+        int nextAI = -1;
         String sql = "select AUTO_INCREMENT as AI from INFORMATION_SCHEMA.TABLES "
                 + "where TABLE_SCHEMA = '" + db + "' "
                 + "and TABLE_NAME = '" + table + "'";
         ResultSet rs = stmt.executeQuery(sql);
 
         rs.next();
-        nextInvoiceNumber = rs.getInt("AI");
-        return nextInvoiceNumber;
+        nextAI = rs.getInt("AI");
+        return nextAI;
     }
 
     public void insertRecipe(Recipe recipe) throws SQLException {
@@ -182,6 +181,13 @@ public class DBHandler {
         String sql = "INSERT into amount values "
                 + "(" + recipe.getId() + ", " + ingAm.getIngredient().getId()
                 + ", " + ingAm.getAmount() + ", " + ingAm.getUnit().getId() + ");";
+        if (stmt != null) {
+            System.out.println(sql);
+            stmt.execute(sql);
+        }
+    }
+    public void insertIngredient(Ingredient ing) throws SQLException {
+        String sql = "INSERT into ingr values("+ing.getId()+",'"+ing.getName()+"')";
         if (stmt != null) {
             System.out.println(sql);
             stmt.execute(sql);

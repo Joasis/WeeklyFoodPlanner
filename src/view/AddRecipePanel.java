@@ -254,13 +254,15 @@ public class AddRecipePanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton_saveRecipeActionPerformed
 
     private void jButton_addIngredientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_addIngredientActionPerformed
-        if (selectedIngredient != null) {
-            IngredientAmount ingAm = new IngredientAmount((Unit) jComboBoxRecipeUnit.getSelectedItem(), selectedIngredient, Double.parseDouble(jTextFieldRecipeAmount.getText()));
-            list.addElement(ingAm);
-
+        try {
+            addIngredient();
+            // 
+        } catch (SQLException ex) {
+            System.out.println("SQLFEJL ved getNextAI ingr");
         }
-
-        // 
+         catch (NullPointerException ex) {
+            System.out.println("Nullpointer ved addingredient");
+        }
     }//GEN-LAST:event_jButton_addIngredientActionPerformed
 
     private void jTextField_searchIngredientKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_searchIngredientKeyReleased
@@ -347,7 +349,7 @@ public class AddRecipePanel extends javax.swing.JPanel {
         int portion = Integer.parseInt(jTextField_portion.getText());
         int cookTime = Integer.parseInt(jTextField_cooktime.getText());
         String description = jTextArea_description.getText();
-        int recipeID = GUI.getCh().getDbh().getNextRecipeNumber();
+        int recipeID = GUI.getCh().getDbh().getNextAI("recipe");
         if (recipeID != -1) {
             ArrayList<IngredientAmount> ingAmList = new ArrayList<>();
             for (int i = 0; i < list.getSize(); i++) {
@@ -362,6 +364,20 @@ public class AddRecipePanel extends javax.swing.JPanel {
             System.out.println("Cook: " + newRecipe.getCookingtime());
             System.out.println("Personer: " + newRecipe.getPortions());
             System.out.println("ing: " + newRecipe.getIngredientList().size());
+        }
+    }
+
+    public void addIngredient() throws SQLException, NullPointerException {
+        if (selectedIngredient != null) {
+            IngredientAmount ingAm = new IngredientAmount((Unit) jComboBoxRecipeUnit.getSelectedItem(), selectedIngredient, Double.parseDouble(jTextFieldRecipeAmount.getText()));
+            list.addElement(ingAm);
+        } else {
+            int ingrID = GUI.getCh().getDbh().getNextAI("ingr");
+            Ingredient newIng = new Ingredient(ingrID, jTextField_searchIngredient.getText());
+            GUI.getCh().getDbh().insertIngredient(newIng);
+            GUI.getCh().getIh().getIngredientList().add(newIng);
+            IngredientAmount ingAm = new IngredientAmount((Unit) jComboBoxRecipeUnit.getSelectedItem(), newIng, Double.parseDouble(jTextFieldRecipeAmount.getText()));
+            list.addElement(ingAm);
         }
     }
 
