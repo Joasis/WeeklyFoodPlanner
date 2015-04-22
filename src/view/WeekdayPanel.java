@@ -24,11 +24,13 @@ public class WeekdayPanel extends javax.swing.JPanel {
     private Weekday wkday;
     private Recipe weekRecipe;
     private GUI gui;
+    private boolean drawSwitch;
 
     /**
      * Creates new form WeekdayPanel
      */
     public WeekdayPanel(GUI gui, Weekday wkday) {
+        drawSwitch = false;
         this.gui = gui;
         this.wkday = wkday;
         weekRecipe = wkday.getRecipe();
@@ -66,27 +68,38 @@ public class WeekdayPanel extends javax.swing.JPanel {
         int swap = GUI.getCh().getWdh().switchDays(wkday);
         if (swap == 0) {
             setColors(GUI.daySwitchColor);
+            drawSwitch = true;
         }
         if (swap == 1) {
             setColors(GUI.weekPanelColor);
+            drawSwitch = false;
         }
         if (swap == 2) {
             gui.changeTo(gui.getSelectedWeekPanel());
+            drawSwitch = false;
         }
     }
 
     public void draw(Graphics g) {
         if (!wkday.getRecipe().isActive()) {
+            if (!drawSwitch) {
+                g.setColor(GUI.deletedColor);
+                setColors(GUI.omittedColor);
+                g.fillRect(0, 0, getWidth(), getHeight());
+            }
             Image img = Toolkit.getDefaultToolkit().getImage("src\\view\\images\\deletedred.png");
-            g.setColor(GUI.deletedColor);
-            g.fillRect(0, 0, getWidth(), getHeight());
-            g.drawImage(img, ((getWidth() / 2) - (img.getWidth(this) / 2)), ((getHeight() / 2) - (img.getHeight(this) / 2)), this);
-            setColors(GUI.omittedColor);
+            g.drawImage(img, 0, 0, this);
+
         }
-        if (wkday.isOmit() && jPanel1.getBackground() != GUI.daySwitchColor) {
-            setColors(GUI.omittedColor);
+        if (wkday.isOmit()) {
+            if (!drawSwitch) {
+                setColors(GUI.omittedColor);
+            }
+            Image img = Toolkit.getDefaultToolkit().getImage("src\\view\\images\\undladt.png");
+            g.drawImage(img, 0, 0, this);
         }
     }
+//&& jPanel1.getBackground() != GUI.daySwitchColor
 
     public void disableButtons() {
         jButtonDisable.setEnabled(false);

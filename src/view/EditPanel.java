@@ -5,20 +5,19 @@
  */
 package view;
 
-import control.ControlHandler;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.Timer;
+import javax.swing.border.LineBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import model.Ingredient;
@@ -191,6 +190,7 @@ public class EditPanel extends javax.swing.JPanel {
             jTextAreaDescription.setText("");
             selectedRecipe = null;
             toggleRecipePanel(false);
+            clearFeedBack("Recipe");
         }
         if (clearPanel.equals("Ingredient")) {
             jTextFieldIngredientNewName.setText("");
@@ -198,6 +198,7 @@ public class EditPanel extends javax.swing.JPanel {
             jComboBoxEditIngredientUnit.setSelectedIndex(0);
             selectedIngredient = null;
             toggleIngredientPanel(false);
+            clearFeedBack("Ingredient");
         }
     }
 
@@ -645,8 +646,8 @@ public class EditPanel extends javax.swing.JPanel {
                         .addGroup(jPanelEditIngredientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jComboBoxEditIngredientUnit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextFieldEditIngredientAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(20, 20, 20)
-                        .addComponent(jButtonAddIngredient))
+                        .addGap(16, 16, 16)
+                        .addComponent(jButtonAddIngredient, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -731,6 +732,71 @@ public class EditPanel extends javax.swing.JPanel {
             }
         }
     }
+
+    public void setFeedback(JTextField textField) {
+        textField.setBorder(new LineBorder(Color.RED, 1));
+    }
+
+    public void clearFeedBack(String panel) {
+        if (panel.equals("Recipe")) {
+            jTextFieldRecipeNewName.setBorder(null);
+            jTextFieldCookingTime.setBorder(null);
+            jTextFieldPortions.setBorder(null);
+            jTextFieldEditRecipeAmount.setBorder(null);
+        }
+        if (panel.equals("Ingredient")) {
+            jTextFieldIngredientNewName.setBorder(null);
+            jTextFieldEditIngredientAmount.setBorder(null);
+        }
+    }
+
+    public boolean validateIngredientInput() {
+        boolean ok = true;
+        clearFeedBack("Ingredient");
+        if (jTextFieldIngredientNewName.getText().isEmpty()) {
+            setFeedback(jTextFieldEditIngredientAmount);
+            ok = false;
+        }
+        try {
+            jTextFieldEditIngredientAmount.setText(jTextFieldEditIngredientAmount.getText().replace(",", "."));
+            double a = Double.parseDouble(jTextFieldEditIngredientAmount.getText());
+        } catch (NumberFormatException ex2) {
+            setFeedback(jTextFieldEditIngredientAmount);
+            ok = false;
+        }
+        return ok;
+    }
+
+    public boolean validateRecipeInput() {
+        boolean ok = true;
+        clearFeedBack("Recipe");
+        if (jTextFieldRecipeNewName.getText().isEmpty()) {
+            ok = false;
+            setFeedback(jTextFieldRecipeNewName);
+        }
+        try {
+            int a = Integer.parseInt(jTextFieldCookingTime.getText());
+        } catch (NumberFormatException ex2) {
+            setFeedback(jTextFieldCookingTime);
+            ok = false;
+        }
+        try {
+            int a = Integer.parseInt(jTextFieldPortions.getText());
+        } catch (NumberFormatException ex3) {
+            setFeedback(jTextFieldPortions);
+            ok = false;
+        }
+        try {
+            if (!jListEditRecipeIngredients.isSelectionEmpty()) {
+                jTextFieldEditRecipeAmount.setText(jTextFieldEditRecipeAmount.getText().replace(",", "."));
+                double c = Double.parseDouble(jTextFieldEditRecipeAmount.getText());
+            }
+        } catch (NumberFormatException ex4) {
+            setFeedback(jTextFieldEditRecipeAmount);
+            ok = false;
+        }
+        return ok;
+    }
     private void jButtonDeleteRecipeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteRecipeActionPerformed
         deleteSelectedRecipe();
     }//GEN-LAST:event_jButtonDeleteRecipeActionPerformed
@@ -739,21 +805,21 @@ public class EditPanel extends javax.swing.JPanel {
         updateSelectedRecipe();
     }//GEN-LAST:event_jButtonSaveRecipeActionPerformed
     public void addIngredientToRecipe() {
-        IngredientAmount ingAm = new IngredientAmount((Unit) jComboBoxEditIngredientUnit.getSelectedItem(), selectedIngredient, Double.parseDouble(jTextFieldEditIngredientAmount.getText()));
-        if (!jTextFieldIngredientNewName.getText().isEmpty()) {
-            if (GUI.getCh().getRh().isIngredientFound(selectedRecipe, ingAm)) {
-                System.out.println("Ingrediensen findes på listen. Ret i ingrediensen til venstre i stedet");
-            } else {
-                try {
-                    GUI.getCh().getDbh().insertIngredientToRecipe(selectedRecipe, ingAm);
-                    selectedRecipe.getIngredientList().add(ingAm);
-                    model.addElement(ingAm);
-                    jListEditRecipeIngredients.setSelectedValue(ingAm, true);
-                    clearSelection("Ingredient");
-                    jTextFieldIngredientSearch.setText("");
-                } catch (SQLException ex) {
-                    System.out.println("Fejl ved indsættelse af ingredient til nuværende opskrift (DB)");
-                    System.out.println(ex);
+        if (validateIngredientInput()) {
+            IngredientAmount ingAm = new IngredientAmount((Unit) jComboBoxEditIngredientUnit.getSelectedItem(), selectedIngredient, Double.parseDouble(jTextFieldEditIngredientAmount.getText()));
+            if (selectedRecipe != null) {
+                if (!GUI.getCh().getRh().isIngredientFound(selectedRecipe, ingAm)) {
+                    try {
+                        GUI.getCh().getDbh().insertIngredientToRecipe(selectedRecipe, ingAm);
+                        selectedRecipe.getIngredientList().add(ingAm);
+                        model.addElement(ingAm);
+                        jListEditRecipeIngredients.setSelectedValue(ingAm, true);
+                        clearSelection("Ingredient");
+                        jTextFieldIngredientSearch.setText("");
+                    } catch (SQLException ex) {
+                        System.out.println("Fejl ved indsættelse af ingredient til nuværende opskrift (DB)");
+                        System.out.println(ex);
+                    }
                 }
             }
         }
@@ -778,6 +844,8 @@ public class EditPanel extends javax.swing.JPanel {
             } catch (SQLException ex) {
                 System.out.println("Fejl ved opdatering af ingrediens i DB");
             }
+        } else {
+            setFeedback(jTextFieldIngredientNewName);
         }
     }
 
@@ -796,31 +864,36 @@ public class EditPanel extends javax.swing.JPanel {
 
     public void updateSelectedRecipe() {
         if (selectedRecipe != null) {
-            try {
-                selectedRecipe.setName(jTextFieldRecipeNewName.getText());
-                selectedRecipe.setDescription(jTextAreaDescription.getText());
-                selectedRecipe.setCookingtime(Integer.parseInt(jTextFieldCookingTime.getText()));
-                selectedRecipe.setPortions(Integer.parseInt(jTextFieldPortions.getText()));
+            if (validateRecipeInput()) {
+                try {
+                    selectedRecipe.setName(jTextFieldRecipeNewName.getText());
+                    selectedRecipe.setDescription(jTextAreaDescription.getText());
+                    selectedRecipe.setCookingtime(Integer.parseInt(jTextFieldCookingTime.getText()));
+                    selectedRecipe.setPortions(Integer.parseInt(jTextFieldPortions.getText()));
 
-                if (!jListEditRecipeIngredients.isSelectionEmpty()) {
-                    IngredientAmount ingAm = (IngredientAmount) jListEditRecipeIngredients.getSelectedValue();
-                    ingAm.setAmount(Double.parseDouble(jTextFieldEditRecipeAmount.getText()));
-                    ingAm.setUnit((Unit) jComboBoxEditRecipeUnit.getSelectedItem());
+                    if (!jListEditRecipeIngredients.isSelectionEmpty()) {
+                        if (!jTextFieldEditRecipeAmount.getText().isEmpty()) {
+                            IngredientAmount ingAm = (IngredientAmount) jListEditRecipeIngredients.getSelectedValue();
+                            ingAm.setAmount(Double.parseDouble(jTextFieldEditRecipeAmount.getText()));
+                            ingAm.setUnit((Unit) jComboBoxEditRecipeUnit.getSelectedItem());
+                        } else {
+                            setFeedback(jTextFieldEditRecipeAmount);
+                        }
+                    }
+
+                    ArrayList<IngredientAmount> ingAmList;
+                    ingAmList = new ArrayList<>();
+
+                    for (int i = 0; i < model.size(); i++) {
+                        ingAmList.add((IngredientAmount) model.get(i));
+                    }
+
+                    selectedRecipe.setIngredientList(ingAmList);
+
+                    GUI.getCh().getDbh().updateRecipe(selectedRecipe);
+                } catch (SQLException ex) {
+                    System.out.println("Fejl ved update recipe atabase");
                 }
-
-                ArrayList<IngredientAmount> ingAmList;
-                ingAmList = new ArrayList<>();
-
-                for (int i = 0; i < model.size(); i++) {
-                    ingAmList.add((IngredientAmount) model.get(i));
-                }
-
-                selectedRecipe.setIngredientList(ingAmList);
-
-                GUI.getCh().getDbh().updateRecipe(selectedRecipe);
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, "FEJL VED UPDATE TIL DATABASE");
-                System.out.println(ex);
             }
         }
     }
