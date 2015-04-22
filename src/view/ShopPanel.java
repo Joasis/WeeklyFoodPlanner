@@ -6,9 +6,10 @@
 package view;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import javax.swing.DefaultListModel;
-import javax.swing.JViewport;
 import model.IngredientAmount;
+import model.Recipe;
 import model.Week;
 import model.Weekday;
 
@@ -20,8 +21,8 @@ public class ShopPanel extends javax.swing.JPanel {
 
     private Week week;
     private DefaultListModel model;
-    private boolean alreadyThere;
-    private JViewport jShoppingParent;
+    private DefaultListModel modelRecipe;
+    private DefaultListModel modelRecIngList;
 
     /**
      * Creates new form ShopPanel
@@ -29,12 +30,12 @@ public class ShopPanel extends javax.swing.JPanel {
     public ShopPanel(GUI gui) {
 	this.week = gui.getSelectedWeekPanel().getWeek();
 	initComponents();
-	jShoppingParent = (JViewport) jListShop.getParent();
-	jShoppingParent.setBackground(GUI.mainColor);
-	jShoppingParent.setBorder(null);
-	setBackground(GUI.mainColor);
 	model = new DefaultListModel();
+	modelRecipe = new DefaultListModel();
+	modelRecIngList = new DefaultListModel();
 	jListShop.setModel(model);
+	jListRecipe.setModel(modelRecipe);
+	jRecIngList.setModel(modelRecIngList);
 	dataToTable();
     }
 
@@ -49,39 +50,194 @@ public class ShopPanel extends javax.swing.JPanel {
 
         jScrollPane2 = new javax.swing.JScrollPane();
         jListShop = new javax.swing.JList();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jListRecipe = new javax.swing.JList();
+        jRecHeadline = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jRecDesc = new javax.swing.JTextArea();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jRecIngList = new javax.swing.JList();
 
-        setBackground(GUI.mainColor);
+        setBackground(GUI.buttonHoverColor);
         setForeground(new java.awt.Color(255, 255, 255));
         setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
 
-        jListShop.setBackground(GUI.buttonHoverColor);
+        jScrollPane2.setBorder(null);
+
+        jListShop.setBackground(GUI.dayColor);
         jListShop.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
         jListShop.setForeground(new java.awt.Color(255, 255, 255));
+        jListShop.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jListShopMouseReleased(evt);
+            }
+        });
         jScrollPane2.setViewportView(jListShop);
+
+        jLabel1.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Ingrediens Liste:");
+
+        jLabel2.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Brugt i:");
+
+        jScrollPane3.setBorder(null);
+
+        jListRecipe.setBackground(GUI.dayColor);
+        jListRecipe.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
+        jListRecipe.setForeground(new java.awt.Color(255, 255, 255));
+        jListRecipe.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jListRecipeMouseReleased(evt);
+            }
+        });
+        jScrollPane3.setViewportView(jListRecipe);
+
+        jRecHeadline.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
+        jRecHeadline.setForeground(new java.awt.Color(255, 255, 255));
+        jRecHeadline.setText("    ");
+
+        jScrollPane1.setBorder(null);
+
+        jRecDesc.setBackground(GUI.dayColor);
+        jRecDesc.setColumns(20);
+        jRecDesc.setForeground(new java.awt.Color(255, 255, 255));
+        jRecDesc.setLineWrap(true);
+        jRecDesc.setRows(5);
+        jRecDesc.setWrapStyleWord(true);
+        jScrollPane1.setViewportView(jRecDesc);
+
+        jScrollPane4.setBorder(null);
+
+        jRecIngList.setBackground(GUI.dayColor);
+        jRecIngList.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
+        jRecIngList.setForeground(new java.awt.Color(255, 255, 255));
+        jScrollPane4.setViewportView(jRecIngList);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(63, 63, 63)
+                                .addComponent(jRecHeadline, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 171, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jScrollPane1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 471, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jRecHeadline)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1)))
+                    .addComponent(jScrollPane3))
+                .addGap(11, 11, 11))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jListShopMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListShopMouseReleased
+	showRecipes(jListShop.getSelectedIndex());
+    }//GEN-LAST:event_jListShopMouseReleased
+
+    private void jListRecipeMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListRecipeMouseReleased
+	showRecipeFull(jListRecipe.getSelectedIndex());
+    }//GEN-LAST:event_jListRecipeMouseReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JList jListRecipe;
     private javax.swing.JList jListShop;
+    private javax.swing.JTextArea jRecDesc;
+    private javax.swing.JLabel jRecHeadline;
+    private javax.swing.JList jRecIngList;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     // End of variables declaration//GEN-END:variables
 
     private void dataToTable() {
+	boolean firstElementPushed = false;
+	ArrayList<IngredientAmount> tempShopList = new ArrayList<>();
 	for (Weekday wd : week.getWeekdays()) {
 	    for (IngredientAmount ingAm : wd.getRecipe().getIngredientList()) {
-		model.addElement(ingAm);
+		IngredientAmount tempIng = new IngredientAmount(ingAm.getUnit(), ingAm.getIngredient(), ingAm.getAmount());
+		Iterator<IngredientAmount> iter = tempShopList.iterator();
+		boolean push = true;
+		while (iter.hasNext() && firstElementPushed) {
+		    IngredientAmount ing = iter.next();
+		    if (ing.getIngredient() == tempIng.getIngredient()) {
+			for (int i = 0; i < tempShopList.size(); i++) {
+			    if (tempShopList.get(i).getIngredient() == ing.getIngredient()) {
+				tempShopList.get(i).setAmount(ing.getAmount() + tempIng.getAmount());
+				push = false;
+			    }
+			}
+		    }
+		}
+		if (push) {
+		    tempShopList.add(tempIng);
+		    firstElementPushed = true;
+		}
 	    }
+	}
+	for (IngredientAmount tempShop : tempShopList) {
+	    model.addElement(tempShop);
+	}
+    }
+
+    private void showRecipes(int selectedIndex) {
+	IngredientAmount ing = (IngredientAmount) model.getElementAt(selectedIndex);
+	jLabel2.setText(ing.getIngredient() + " bruges i:");
+	modelRecipe.removeAllElements();
+	for (Recipe recipe : GUI.getCh().getRh().getRecipeList()) {
+	    for (IngredientAmount ingredientAmount : recipe.getIngredientList()) {
+		if (ingredientAmount.getIngredient().equals(ing.getIngredient())) {
+		    modelRecipe.addElement(recipe);
+		}
+	    }
+	}
+    }
+
+    private void showRecipeFull(int selectedIndex) {
+	Recipe recipe = (Recipe) modelRecipe.getElementAt(selectedIndex);
+	jRecHeadline.setText(recipe.getName());
+	jRecDesc.setText(recipe.getDescription());
+	modelRecIngList.removeAllElements();
+	for (IngredientAmount in : recipe.getIngredientList()) {
+	    modelRecIngList.addElement(in);
 	}
     }
 }
