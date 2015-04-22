@@ -104,10 +104,6 @@ public class GUI extends javax.swing.JFrame {
 	    case "EditPanel":
 		jButtonUpdate.setBackground(mainColor);
 		break;
-	    case "WeekPanel":
-	    case "JLabel":
-		jButtonBack.setBackground(mainColor);
-		break;
 	    case "ShopPanel":
 		jButtonShop.setBackground(mainColor);
 		break;
@@ -611,9 +607,7 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonGenerateMouseExited
 
     private void jButtonBackMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonBackMouseExited
-	if (!currentWeek.equals("WeekPanel") || currentWeek.equals("JLabel")) {
-	    jButtonBack.setBackground(mainColor);
-	}
+	jButtonBack.setBackground(mainColor);
     }//GEN-LAST:event_jButtonBackMouseExited
 
     private void jButtonShopMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonShopMouseExited
