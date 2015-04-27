@@ -909,6 +909,7 @@ public class EditPanel extends javax.swing.JPanel {
             tempModel.addElement(ing);
         }
         UIManager UI = new UIManager();
+        UI.put("OptionPane.okButtonText", "Luk");
         UI.put("OptionPane.background", GUI.buttonHoverColor);
         UI.put("Panel.background", GUI.buttonHoverColor);
         JOptionPane.showMessageDialog(this, sp, "Ingredienser", JOptionPane.PLAIN_MESSAGE);
@@ -937,6 +938,7 @@ public class EditPanel extends javax.swing.JPanel {
             }
         }
         UIManager UI = new UIManager();
+        UI.put("OptionPane.okButtonText", "Luk");
         UI.put("OptionPane.background", GUI.buttonHoverColor);
         UI.put("Panel.background", GUI.buttonHoverColor);
         JOptionPane.showMessageDialog(this, sp, "Opskrifter", JOptionPane.PLAIN_MESSAGE);
