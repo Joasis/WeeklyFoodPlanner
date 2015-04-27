@@ -137,6 +137,12 @@ public class GUI extends javax.swing.JFrame {
 		disableWeekGen();
 		enableBack();
 		break;
+	    case "AddRecipePanel":
+		disableWeekChooser();
+		disableShop();
+		disableWeekGen();
+		enableBack();
+		break;
 	}
 	jPanelWeek.revalidate();
 	jPanelWeek.repaint();
