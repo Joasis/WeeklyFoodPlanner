@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.IngredientAmount;
+import model.Week;
 import model.Weekday;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -30,7 +31,7 @@ public class ServerHandler {
         this.socket = socket;
     }
 
-    public void sendData(int weekNumber, Weekday[] recipies) {
+    public void sendData(Week week) {
 //        InputStream input = null;
         try {
 //            input = socket.getInputStream();
@@ -41,9 +42,9 @@ public class ServerHandler {
             ArrayList<String> list = new ArrayList<>();
 
             json = new JSONArray();
-            for (Weekday wkday : recipies) {
+            for (Weekday wkday : week.getWeekdays()) {
                 JSONObject recipe = new JSONObject();
-                recipe.put("week", weekNumber);
+                recipe.put("week", week.getDate());
                 recipe.put("name", wkday.getRecipe().getName());
                 recipe.put("date", wkday.getDate());
                 recipe.put("omit", wkday.isOmit());

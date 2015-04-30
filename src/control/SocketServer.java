@@ -10,6 +10,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Week;
 
 /**
  *
@@ -20,10 +21,10 @@ public class SocketServer implements Runnable {
     private ServerHandler serverHandler;
     private boolean active;
     private ServerSocket ss;
-    private boolean clientConnected;
+    private Week week;
 
-    public SocketServer() throws IOException {
-        clientConnected = false;
+    public SocketServer(Week week) throws IOException {
+        this.week = week;
         active = true;
         serverHandler = null;
         ss = new ServerSocket(8189);
@@ -53,7 +54,7 @@ public class SocketServer implements Runnable {
                 Socket socket = ss.accept();
                 System.out.println("Klient forbundet");
                 serverHandler = new ServerHandler(socket);
-                clientConnected = true;
+                serverHandler.sendData(week);
             } catch (IOException ex) {
                 System.out.println("FEJL VED SYNKRONISERING i RUN" + ex);
             }
