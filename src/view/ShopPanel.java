@@ -5,9 +5,15 @@
  */
 package view;
 
+import control.SocketServer;
+import java.io.IOException;
+import java.net.Inet4Address;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import model.IngredientAmount;
 import model.Recipe;
 import model.Week;
@@ -18,7 +24,7 @@ import model.Weekday;
  * @author Morten
  */
 public class ShopPanel extends javax.swing.JPanel {
-
+    
     private Week week;
     private DefaultListModel model;
     private DefaultListModel modelRecipe;
@@ -28,15 +34,15 @@ public class ShopPanel extends javax.swing.JPanel {
      * Creates new form ShopPanel
      */
     public ShopPanel(GUI gui) {
-	this.week = gui.getSelectedWeekPanel().getWeek();
-	initComponents();
-	model = new DefaultListModel();
-	modelRecipe = new DefaultListModel();
-	modelRecIngList = new DefaultListModel();
-	jListShop.setModel(model);
-	jListRecipe.setModel(modelRecipe);
-	jRecIngList.setModel(modelRecIngList);
-	dataToTable();
+        this.week = gui.getSelectedWeekPanel().getWeek();
+        initComponents();
+        model = new DefaultListModel();
+        modelRecipe = new DefaultListModel();
+        modelRecIngList = new DefaultListModel();
+        jListShop.setModel(model);
+        jListRecipe.setModel(modelRecipe);
+        jRecIngList.setModel(modelRecIngList);
+        dataToTable();
     }
 
     /**
@@ -60,6 +66,7 @@ public class ShopPanel extends javax.swing.JPanel {
         jScrollPane4 = new javax.swing.JScrollPane();
         jRecIngList = new javax.swing.JList();
         jButton1 = new javax.swing.JButton();
+        jButtonSyncWithAndroid = new javax.swing.JButton();
 
         setBackground(GUI.buttonHoverColor);
         setForeground(new java.awt.Color(255, 255, 255));
@@ -124,6 +131,13 @@ public class ShopPanel extends javax.swing.JPanel {
         jButton1.setToolTipText("");
         jButton1.setBorder(null);
 
+        jButtonSyncWithAndroid.setText("Synkroniser med android");
+        jButtonSyncWithAndroid.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSyncWithAndroidActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -149,8 +163,9 @@ public class ShopPanel extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jRecHeadline, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jButtonSyncWithAndroid)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -172,22 +187,51 @@ public class ShopPanel extends javax.swing.JPanel {
                     .addComponent(jScrollPane3)
                     .addComponent(jScrollPane2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+                    .addComponent(jButtonSyncWithAndroid, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void jListShopMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListShopMouseReleased
-	showRecipes(jListShop.getSelectedIndex());
+        showRecipes(jListShop.getSelectedIndex());
     }//GEN-LAST:event_jListShopMouseReleased
 
     private void jListRecipeMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListRecipeMouseReleased
-	showRecipeFull(jListRecipe.getSelectedIndex());
+        showRecipeFull(jListRecipe.getSelectedIndex());
     }//GEN-LAST:event_jListRecipeMouseReleased
 
+    private void jButtonSyncWithAndroidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSyncWithAndroidActionPerformed
+        establishConnection();
+    }//GEN-LAST:event_jButtonSyncWithAndroidActionPerformed
+    public void establishConnection() {
+        SocketServer ss;
+        try {
+            ss = new SocketServer();
+            Thread td = new Thread(ss);
+            td.start();
+            System.out.println("Synkroniserer...");
+            int option = JOptionPane.showConfirmDialog(this, "Skriv denne ip i din app: " + Inet4Address.getLocalHost().getHostAddress(), "Synkronisering til android", JOptionPane.CLOSED_OPTION, JOptionPane.PLAIN_MESSAGE);
+            if (option == 0) {
+                syncRecipies(ss);
+            }
+            ss.setActive(false);
+            ss.close();
+        } catch (IOException ex) {
+            System.out.println("FEJL VED SYNKRONISERING" + ex.getMessage());
+        }
+    }
+    
+    public void syncRecipies(SocketServer ss) {
+        if (ss.getServerHandler() != null) {
+            ss.getServerHandler().sendData(week.getDate(), week.getWeekdays());
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonSyncWithAndroid;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JList jListRecipe;
@@ -202,55 +246,55 @@ public class ShopPanel extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void dataToTable() {
-	boolean firstElementPushed = false;
-	ArrayList<IngredientAmount> tempShopList = new ArrayList<>();
-	for (Weekday wd : week.getWeekdays()) {
-	    for (IngredientAmount ingAm : wd.getRecipe().getIngredientList()) {
-		IngredientAmount tempIng = new IngredientAmount(ingAm.getUnit(), ingAm.getIngredient(), ingAm.getAmount());
-		Iterator<IngredientAmount> iter = tempShopList.iterator();
-		boolean push = true;
-		while (iter.hasNext() && firstElementPushed) {
-		    IngredientAmount ing = iter.next();
-		    if (ing.getIngredient() == tempIng.getIngredient()) {
-			for (int i = 0; i < tempShopList.size(); i++) {
-			    if (tempShopList.get(i).getIngredient() == ing.getIngredient()) {
-				tempShopList.get(i).setAmount(ing.getAmount() + tempIng.getAmount());
-				push = false;
-			    }
-			}
-		    }
-		}
-		if (push) {
-		    tempShopList.add(tempIng);
-		    firstElementPushed = true;
-		}
-	    }
-	}
-	for (IngredientAmount tempShop : tempShopList) {
-	    model.addElement(tempShop);
-	}
+        boolean firstElementPushed = false;
+        ArrayList<IngredientAmount> tempShopList = new ArrayList<>();
+        for (Weekday wd : week.getWeekdays()) {
+            for (IngredientAmount ingAm : wd.getRecipe().getIngredientList()) {
+                IngredientAmount tempIng = new IngredientAmount(ingAm.getUnit(), ingAm.getIngredient(), ingAm.getAmount());
+                Iterator<IngredientAmount> iter = tempShopList.iterator();
+                boolean push = true;
+                while (iter.hasNext() && firstElementPushed) {
+                    IngredientAmount ing = iter.next();
+                    if (ing.getIngredient() == tempIng.getIngredient()) {
+                        for (int i = 0; i < tempShopList.size(); i++) {
+                            if (tempShopList.get(i).getIngredient() == ing.getIngredient()) {
+                                tempShopList.get(i).setAmount(ing.getAmount() + tempIng.getAmount());
+                                push = false;
+                            }
+                        }
+                    }
+                }
+                if (push) {
+                    tempShopList.add(tempIng);
+                    firstElementPushed = true;
+                }
+            }
+        }
+        for (IngredientAmount tempShop : tempShopList) {
+            model.addElement(tempShop);
+        }
     }
-
+    
     private void showRecipes(int selectedIndex) {
-	IngredientAmount ing = (IngredientAmount) model.getElementAt(selectedIndex);
-	jLabel2.setText(ing.getIngredient() + " bruges i:");
-	modelRecipe.removeAllElements();
-	for (Recipe recipe : GUI.getCh().getRh().getRecipeList()) {
-	    for (IngredientAmount ingredientAmount : recipe.getIngredientList()) {
-		if (ingredientAmount.getIngredient().equals(ing.getIngredient())) {
-		    modelRecipe.addElement(recipe);
-		}
-	    }
-	}
+        IngredientAmount ing = (IngredientAmount) model.getElementAt(selectedIndex);
+        jLabel2.setText(ing.getIngredient() + " bruges i:");
+        modelRecipe.removeAllElements();
+        for (Recipe recipe : GUI.getCh().getRh().getRecipeList()) {
+            for (IngredientAmount ingredientAmount : recipe.getIngredientList()) {
+                if (ingredientAmount.getIngredient().equals(ing.getIngredient())) {
+                    modelRecipe.addElement(recipe);
+                }
+            }
+        }
     }
-
+    
     private void showRecipeFull(int selectedIndex) {
-	Recipe recipe = (Recipe) modelRecipe.getElementAt(selectedIndex);
-	jRecHeadline.setText(recipe.getName());
-	jRecDesc.setText(recipe.getDescription());
-	modelRecIngList.removeAllElements();
-	for (IngredientAmount in : recipe.getIngredientList()) {
-	    modelRecIngList.addElement(in);
-	}
+        Recipe recipe = (Recipe) modelRecipe.getElementAt(selectedIndex);
+        jRecHeadline.setText(recipe.getName());
+        jRecDesc.setText(recipe.getDescription());
+        modelRecIngList.removeAllElements();
+        for (IngredientAmount in : recipe.getIngredientList()) {
+            modelRecIngList.addElement(in);
+        }
     }
 }
