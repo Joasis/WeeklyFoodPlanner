@@ -159,14 +159,14 @@ public class GUI extends javax.swing.JFrame {
                 disableWeekChooser();
                 disableShop();
                 disableWeekGen();
-                enableSync();
+                disableSync();
                 enableBack();
                 break;
             case "AddRecipePanel":
                 disableWeekChooser();
                 disableShop();
                 disableWeekGen();
-                enableSync();
+                disableSync();
                 enableBack();
                 break;
         }
