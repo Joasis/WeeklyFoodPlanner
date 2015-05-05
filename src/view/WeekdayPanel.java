@@ -97,6 +97,7 @@ public class WeekdayPanel extends javax.swing.JPanel {
             }
             Image img = Toolkit.getDefaultToolkit().getImage("src\\view\\images\\undladt.png");
             g.drawImage(img, 0, 0, this);
+            System.out.println(wkday.isOmit());
         }
     }
 //&& jPanel1.getBackground() != GUI.daySwitchColor

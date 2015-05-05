@@ -33,6 +33,10 @@ public class Week {
         return cal.get(Calendar.WEEK_OF_YEAR);
     }
 
+    public Calendar getCal() {
+        return cal;
+    }
+
     public int getRarity() {
         return rarity;
     }

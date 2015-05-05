@@ -52,7 +52,7 @@
                   <EmptySpace min="-2" pref="200" max="-2" attributes="0"/>
                   <Component id="jButtonGenerate" min="-2" pref="200" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="94" max="-2" attributes="0"/>
-                  <Component id="jButtonBack2" min="-2" pref="100" max="-2" attributes="0"/>
+                  <Component id="jButtonSync" min="-2" pref="100" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jButtonBack" min="-2" pref="100" max="-2" attributes="0"/>
                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
@@ -83,7 +83,7 @@
                       <Component id="jButtonBack" alignment="1" min="-2" pref="100" max="-2" attributes="0"/>
                       <Component id="jButtonGenerate" alignment="1" min="-2" pref="100" max="-2" attributes="0"/>
                       <Component id="jButtonShop" alignment="1" min="-2" pref="100" max="-2" attributes="0"/>
-                      <Component id="jButtonBack2" alignment="1" min="-2" pref="100" max="-2" attributes="0"/>
+                      <Component id="jButtonSync" alignment="1" min="-2" pref="100" max="-2" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -410,7 +410,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JButton" name="jButtonBack2">
+        <Component class="javax.swing.JButton" name="jButtonSync">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="mainColor" type="code"/>
@@ -433,9 +433,9 @@
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButtonBack2MouseEntered"/>
-            <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButtonBack2MouseExited"/>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonBack2ActionPerformed"/>
+            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButtonSyncMouseEntered"/>
+            <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButtonSyncMouseExited"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonSyncActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

@@ -11,12 +11,18 @@ import java.awt.Color;
 import java.awt.Component;
 import java.io.IOException;
 import java.net.Inet4Address;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicComboBoxUI;
+import model.Recipe;
 import model.Week;
+import model.Weekday;
 
 /**
  *
@@ -24,7 +30,7 @@ import model.Week;
  */
 public class GUI extends javax.swing.JFrame {
 
-    private ArrayList<Week> weekList;
+    private LinkedList<Week> weekList;
     private static ControlHandler ch;
     protected final static Color weekPanelColor = new Color(132, 153, 204);
     protected final static Color mainColor = new Color(51, 70, 102);
@@ -50,7 +56,7 @@ public class GUI extends javax.swing.JFrame {
         currentWeek = "";
         this.ch = ch;
         firstRun = true;
-        chooseWeek = "Vælg uge";
+        chooseWeek = "Ny uge";
         this.weekList = ch.getWh().getWeekList();
         BasicComboBoxUI bcb = new BasicComboBoxUI();
 
@@ -83,7 +89,6 @@ public class GUI extends javax.swing.JFrame {
         }
 
         if (currentWeekSat) {
-            jComboWeek.removeItem(chooseWeek);
             jComboWeek.setSelectedItem(tempweek);
             changeTo(getSelectedWeekPanel());
         }
@@ -113,17 +118,14 @@ public class GUI extends javax.swing.JFrame {
             case "ShopPanel":
                 jButtonShop.setBackground(mainColor);
                 break;
-
         }
         currentWeek = page.getClass().getSimpleName();
         switch (currentWeek) {
             case "WeekPanel":
                 enableWeekChooser();
                 enableShop();
-                enableWeekGen();
                 disableBack();
                 disableWeekGen();
-                jButtonBack.setBackground(buttonHoverColor);
                 break;
             case "ShopPanel":
                 disableWeekChooser();
@@ -234,7 +236,7 @@ public class GUI extends javax.swing.JFrame {
         jComboWeek = new javax.swing.JComboBox();
         jLabel2 = new javax.swing.JLabel();
         jButtonDateNext = new javax.swing.JButton();
-        jButtonBack2 = new javax.swing.JButton();
+        jButtonSync = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -470,26 +472,26 @@ public class GUI extends javax.swing.JFrame {
                 .addGap(0, 0, 0))
         );
 
-        jButtonBack2.setBackground(mainColor);
-        jButtonBack2.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        jButtonBack2.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonBack2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/update.png"))); // NOI18N
-        jButtonBack2.setText("Synkroniser");
-        jButtonBack2.setBorder(null);
-        jButtonBack2.setFocusPainted(false);
-        jButtonBack2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButtonBack2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButtonBack2.addMouseListener(new java.awt.event.MouseAdapter() {
+        jButtonSync.setBackground(mainColor);
+        jButtonSync.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        jButtonSync.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonSync.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/update.png"))); // NOI18N
+        jButtonSync.setText("Synkroniser");
+        jButtonSync.setBorder(null);
+        jButtonSync.setFocusPainted(false);
+        jButtonSync.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonSync.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonSync.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButtonBack2MouseEntered(evt);
+                jButtonSyncMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                jButtonBack2MouseExited(evt);
+                jButtonSyncMouseExited(evt);
             }
         });
-        jButtonBack2.addActionListener(new java.awt.event.ActionListener() {
+        jButtonSync.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonBack2ActionPerformed(evt);
+                jButtonSyncActionPerformed(evt);
             }
         });
 
@@ -505,7 +507,7 @@ public class GUI extends javax.swing.JFrame {
                 .addGap(200, 200, 200)
                 .addComponent(jButtonGenerate, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(94, 94, 94)
-                .addComponent(jButtonBack2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonSync, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonBack, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
@@ -531,7 +533,7 @@ public class GUI extends javax.swing.JFrame {
                     .addComponent(jButtonBack, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonGenerate, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonShop, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonBack2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jButtonSync, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -554,17 +556,63 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonAddActionPerformed
 
     private void jButtonGenerateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGenerateActionPerformed
-
+        try {
+            generateFoodPlan();
+        } catch (SQLException ex) {
+            Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButtonGenerateActionPerformed
+
+    public void generateFoodPlan() throws SQLException {
+        Calendar newWeek = Calendar.getInstance();
+        Weekday[] weekdays = new Weekday[7];
+        int nextWeekAi = getCh().getDbh().getNextAI("wk");
+        ArrayList<Recipe> clonedRecipeList = getCh().getRh().cloneRecipeList();
+
+        if (currentWeekSat) {
+            newWeek = Calendar.getInstance();
+            newWeek.setTime(weekList.getFirst().getCal().getTime());
+            newWeek.add(Calendar.WEEK_OF_YEAR, 1);
+        }
+        Calendar wkdayCal = null;
+
+        for (int i = 0; i < 7; i++) {
+            wkdayCal = Calendar.getInstance();
+            wkdayCal.setTime(newWeek.getTime());
+            wkdayCal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY + i);
+            Recipe tempRecipe = clonedRecipeList.get((int) (Math.random() * clonedRecipeList.size()));
+            Weekday wkday = new Weekday(getCh().getDbh().getNextAI("wkday"), tempRecipe, wkdayCal, nextWeekAi, false);
+            clonedRecipeList.remove(tempRecipe);
+            weekdays[i] = wkday;
+        }
+
+        if (nextWeekAi != -1) {
+            Week week = new Week(nextWeekAi, newWeek, 0, weekdays);
+            getCh().getDbh().insertWeek(week);
+
+            weekList.addFirst(week);
+            currentWeekSat = true;
+            firstRun = true;
+            jComboWeek.removeAllItems();
+            jComboWeek.addItem(chooseWeek);
+            for (Week tempWeek : weekList) {
+                jComboWeek.addItem(tempWeek);
+            }
+            firstRun = false;
+            jComboWeek.setSelectedIndex(1);
+        }
+    }
 
     private void jComboWeekActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboWeekActionPerformed
         if (!firstRun) {
-            if (jComboWeek.getSelectedItem().toString() != "Vælg uge") {
-                changeTo(getSelectedWeekPanel());
-                enableShop();
-            } else {
-                changeTo(jLabelNoWeek);
-                disableShop();
+            if (jComboWeek.getSelectedIndex() != -1) {
+                if (jComboWeek.getSelectedItem() != chooseWeek) {
+                    changeTo(getSelectedWeekPanel());
+                    enableShop();
+                } else {
+                    changeTo(jLabelNoWeek);
+                    disableShop();
+                }
             }
         }
     }//GEN-LAST:event_jComboWeekActionPerformed
@@ -679,17 +727,18 @@ public class GUI extends javax.swing.JFrame {
         jButtonDateNext.setBackground(mainColor);
     }//GEN-LAST:event_jButtonDateNextMouseExited
 
-    private void jButtonBack2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonBack2MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonBack2MouseEntered
+    private void jButtonSyncMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonSyncMouseEntered
+        jButtonSync.setBackground(buttonHoverColor);
+    }//GEN-LAST:event_jButtonSyncMouseEntered
 
-    private void jButtonBack2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonBack2MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonBack2MouseExited
+    private void jButtonSyncMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonSyncMouseExited
+        jButtonSync.setBackground(mainColor);
+    }//GEN-LAST:event_jButtonSyncMouseExited
 
-    private void jButtonBack2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBack2ActionPerformed
+    private void jButtonSyncActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSyncActionPerformed
+        jButtonSync.setBackground(new Color(107, 191, 76));
         establishConnection();
-    }//GEN-LAST:event_jButtonBack2ActionPerformed
+    }//GEN-LAST:event_jButtonSyncActionPerformed
 
     /**
      * @param args the command line arguments
@@ -733,11 +782,11 @@ public class GUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAdd;
     private javax.swing.JButton jButtonBack;
-    private javax.swing.JButton jButtonBack2;
     private javax.swing.JButton jButtonDateNext;
     private javax.swing.JButton jButtonDatePrevious;
     private javax.swing.JButton jButtonGenerate;
     private javax.swing.JButton jButtonShop;
+    private javax.swing.JButton jButtonSync;
     private javax.swing.JButton jButtonUpdate;
     private javax.swing.JComboBox jComboWeek;
     private javax.swing.JLabel jLabel1;

@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.LinkedList;
 import model.Week;
 import model.Weekday;
 
@@ -18,17 +19,17 @@ import model.Weekday;
  */
 public class WeekHandler {
 
-    private ArrayList<Week> weekList;
+    private LinkedList<Week> weekList;
     private Weekday[] weekdaysToSwitch = new Weekday[2];
 
     public WeekHandler() {
-        weekList = new ArrayList<>();
+        weekList = new LinkedList<>();
         getWeeksFromDB();
     }
 
     public void getWeeksFromDB() {
         try {
-            ResultSet rs = ControlHandler.getDbh().selectAll("wk");
+            ResultSet rs = ControlHandler.getDbh().selectAll("wk order by wk_date DESC");
             while (rs.next()) {
                 Calendar cal = Calendar.getInstance();
                 cal.setTimeInMillis(rs.getLong("wk_date"));
@@ -53,7 +54,7 @@ public class WeekHandler {
         return weekdaysForWeek;
     }
 
-    public ArrayList<Week> getWeekList() {
+    public LinkedList<Week> getWeekList() {
         return weekList;
     }
 }

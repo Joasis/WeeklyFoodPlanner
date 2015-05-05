@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import model.Ingredient;
 import model.IngredientAmount;
 import model.Recipe;
+import model.Week;
 import model.Weekday;
 
 /**
@@ -186,11 +187,25 @@ public class DBHandler {
             stmt.execute(sql);
         }
     }
+
     public void insertIngredient(Ingredient ing) throws SQLException {
-        String sql = "INSERT into ingr values("+ing.getId()+",'"+ing.getName()+"')";
+        String sql = "INSERT into ingr values(" + ing.getId() + ",'" + ing.getName() + "')";
         if (stmt != null) {
             System.out.println(sql);
             stmt.execute(sql);
+        }
+    }
+
+    public void insertWeek(Week week) throws SQLException {
+        String sql = "INSERT into wk(wk_date, wk_rare) values(" + week.getCal().getTimeInMillis() + ", " + week.getRarity() + ")";
+        stmt.addBatch(sql);
+        String sqlWeekDay = "";
+        for (Weekday wkday : week.getWeekdays()) {
+            sqlWeekDay = "INSERT into wkday(wkd_date, fk_recipe, fk_week) values(" + wkday.getDateByCal().getTimeInMillis() + ", " + wkday.getRecipe().getId() + ", " + wkday.getWeek() + ")";
+            stmt.addBatch(sqlWeekDay);
+        }
+        if (stmt != null) {
+            stmt.executeBatch();
         }
     }
 }
