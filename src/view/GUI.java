@@ -9,6 +9,7 @@ import control.ControlHandler;
 import control.SocketServer;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import java.io.IOException;
 import java.net.Inet4Address;
 import java.sql.SQLException;
@@ -19,6 +20,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 import javax.swing.plaf.basic.BasicComboBoxUI;
 import model.Recipe;
 import model.Week;
@@ -42,7 +44,9 @@ public class GUI extends javax.swing.JFrame {
     protected final static Color disableDayColor = new Color(16, 16, 16);
     protected final static Color deletedColor = new Color(0, 0, 0, 80);
     protected final static Color omittedColor = new Color(118, 118, 118);
-    private final ImageIcon loadingIcon = new ImageIcon("src\\view\\images\\loading.gif");
+    protected final static Color succesColor = new Color(107, 191, 76);
+    protected final static Color dangerColor = new Color(201, 48, 44);
+    private final ImageIcon loadingIcon = new ImageIcon("src\\view\\images\\loadingSync.gif");
     private boolean currentWeekSat;
     private boolean firstRun;
     private String chooseWeek;
@@ -70,6 +74,15 @@ public class GUI extends javax.swing.JFrame {
         jPanelContent.setBackground(mainColor);
 
         addWeeks();
+    }
+
+    public static void decorateUI(String confirmText, String cancelText) {
+        UIManager.put("OptionPane.okButtonText", confirmText);
+        UIManager.put("OptionPane.cancelButtonText", cancelText);
+        UIManager.put("OptionPane.background", GUI.buttonHoverColor);
+        UIManager.put("Panel.background", GUI.buttonHoverColor);
+        UIManager.put("OptionPane.messageForeground", Color.white);
+        UIManager.put("OptionPane.messageFont", new Font("Verdana", Font.PLAIN, 12));
     }
 
     protected static ControlHandler getCh() {
@@ -124,6 +137,7 @@ public class GUI extends javax.swing.JFrame {
             case "WeekPanel":
                 enableWeekChooser();
                 enableShop();
+                enableSync();
                 disableBack();
                 disableWeekGen();
                 break;
@@ -131,11 +145,13 @@ public class GUI extends javax.swing.JFrame {
                 disableWeekChooser();
                 disableShop();
                 disableWeekGen();
+                enableSync();
                 enableBack();
                 break;
             case "JLabel":
                 disableShop();
                 disableBack();
+                disableSync();
                 enableWeekChooser();
                 enableWeekGen();
                 break;
@@ -143,12 +159,14 @@ public class GUI extends javax.swing.JFrame {
                 disableWeekChooser();
                 disableShop();
                 disableWeekGen();
+                enableSync();
                 enableBack();
                 break;
             case "AddRecipePanel":
                 disableWeekChooser();
                 disableShop();
                 disableWeekGen();
+                enableSync();
                 enableBack();
                 break;
         }
@@ -158,6 +176,14 @@ public class GUI extends javax.swing.JFrame {
 
     public void hidePages() {
         jPanelWeek.removeAll();
+    }
+
+    public void disableSync() {
+        jButtonSync.setEnabled(false);
+    }
+
+    public void enableSync() {
+        jButtonSync.setEnabled(true);
     }
 
     public void disableWeekChooser() {
@@ -204,7 +230,8 @@ public class GUI extends javax.swing.JFrame {
                 Thread td = new Thread(ss);
                 td.start();
                 System.out.println("Synkroniserer...");
-                int option = JOptionPane.showConfirmDialog(this, "Forbind din telefon til netværket.\nIndtast følgende, som ip adresse i appen:\n" + Inet4Address.getLocalHost().getHostAddress(), "Synkronisering til android", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, loadingIcon);
+                decorateUI("Luk", "");
+                JOptionPane.showConfirmDialog(this, "Forbind din telefon til netværket.\nIndtast følgende, som ip adresse i appen:\n" + Inet4Address.getLocalHost().getHostAddress(), "Synkronisering til android", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, loadingIcon);
                 ss.setActive(false);
                 ss.close();
             } catch (IOException ex) {
@@ -478,6 +505,7 @@ public class GUI extends javax.swing.JFrame {
         jButtonSync.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/update.png"))); // NOI18N
         jButtonSync.setText("Synkroniser");
         jButtonSync.setBorder(null);
+        jButtonSync.setEnabled(false);
         jButtonSync.setFocusPainted(false);
         jButtonSync.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButtonSync.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -728,7 +756,9 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonDateNextMouseExited
 
     private void jButtonSyncMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonSyncMouseEntered
-        jButtonSync.setBackground(buttonHoverColor);
+        if (jButtonSync.isEnabled()) {
+            jButtonSync.setBackground(buttonHoverColor);
+        }
     }//GEN-LAST:event_jButtonSyncMouseEntered
 
     private void jButtonSyncMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonSyncMouseExited
@@ -736,7 +766,7 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonSyncMouseExited
 
     private void jButtonSyncActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSyncActionPerformed
-        jButtonSync.setBackground(new Color(107, 191, 76));
+        jButtonSync.setBackground(GUI.succesColor);
         establishConnection();
     }//GEN-LAST:event_jButtonSyncActionPerformed
 

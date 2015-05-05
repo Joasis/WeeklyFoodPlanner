@@ -11,6 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
 import model.Ingredient;
 import model.IngredientAmount;
@@ -206,6 +208,13 @@ public class DBHandler {
         }
         if (stmt != null) {
             stmt.executeBatch();
+        }
+    }
+
+    public void swapRecipe(Weekday weekday) throws SQLException {
+        String sql = "UPDATE wkday SET fk_recipe = " + weekday.getRecipe().getId() + " where wkd_id = " + weekday.getId();
+        if (stmt != null) {
+                stmt.execute(sql);
         }
     }
 }

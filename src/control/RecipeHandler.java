@@ -88,4 +88,14 @@ public class RecipeHandler {
         }
         return cloneList;
     }
+
+    public boolean isRecipeFound(String recipeName) {
+        boolean recipeFound = false;
+        for (int i = 0; i < recipeList.size() && !recipeFound; i++) {
+            if (recipeList.get(i).getName().toLowerCase().equals(recipeName.toLowerCase()) && recipeList.get(i).isActive()) {
+                recipeFound = true;
+            }
+        }
+        return recipeFound;
+    }
 }

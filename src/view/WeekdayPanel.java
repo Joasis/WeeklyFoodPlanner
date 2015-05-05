@@ -25,19 +25,35 @@ public class WeekdayPanel extends javax.swing.JPanel {
     private Recipe weekRecipe;
     private GUI gui;
     private boolean drawSwitch;
+    private boolean run;
 
     /**
      * Creates new form WeekdayPanel
      */
     public WeekdayPanel(GUI gui, Weekday wkday) {
+        run = false;
         drawSwitch = false;
         this.gui = gui;
         this.wkday = wkday;
         weekRecipe = wkday.getRecipe();
         initComponents();
         setSize(142, 400);
+        jPanel1.setSize(142, 400);
         setWeekday();
+        fillSubs();
         setColors(GUI.weekPanelColor);
+    }
+
+    public void toggleSubs(boolean status) {
+        jButtonReplaceRandom.setVisible(status);
+        jButtonReplaceRandom.setEnabled(status);
+        jComboAllRecipes.setVisible(status);
+        jComboAllRecipes.setEnabled(status);
+
+        jButtonReplace.setEnabled(!status);
+        jButtonReplace.setVisible(!status);
+        jButtonDisable.setEnabled(!status);
+        jButtonDisable.setVisible(!status);
     }
 
     public void setColors(Color col) {
@@ -58,6 +74,18 @@ public class WeekdayPanel extends javax.swing.JPanel {
         if (wkday.isOmit() && wkday.getRecipe().isActive()) {
             jButtonDisable.setText("Genaktiver");
         }
+        toggleSubs(false);
+    }
+
+    public void fillSubs() {
+        jComboAllRecipes.removeAllItems();
+        jComboAllRecipes.setMaximumRowCount(5);
+        for (Recipe recipe : GUI.getCh().getRh().getRecipeList()) {
+            if (recipe.isActive()) {
+                jComboAllRecipes.addItem(recipe);
+            }
+        }
+        run = true;
     }
 
     public Recipe getWeekRecipe() {
@@ -124,6 +152,10 @@ public class WeekdayPanel extends javax.swing.JPanel {
         }
     }
 
+    public Weekday getWkday() {
+        return wkday;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -149,6 +181,8 @@ public class WeekdayPanel extends javax.swing.JPanel {
         jLabelDescription = new javax.swing.JTextArea();
         jButtonReplace = new javax.swing.JButton();
         jButtonDisable = new javax.swing.JButton();
+        jComboAllRecipes = new javax.swing.JComboBox();
+        jButtonReplaceRandom = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(105, 135, 186));
 
@@ -159,38 +193,53 @@ public class WeekdayPanel extends javax.swing.JPanel {
                 jPanel1MouseReleased(evt);
             }
         });
+        jPanel1.setLayout(null);
 
         jLabelOpskriftNavn.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jLabelOpskriftNavn.setForeground(new java.awt.Color(255, 255, 255));
         jLabelOpskriftNavn.setText("Stor fed skinke");
+        jPanel1.add(jLabelOpskriftNavn);
+        jLabelOpskriftNavn.setBounds(0, 59, 130, 40);
 
         jLabelDay.setFont(new java.awt.Font("Verdana", 0, 30)); // NOI18N
         jLabelDay.setForeground(new java.awt.Color(255, 255, 255));
         jLabelDay.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelDay.setText("Mandag");
+        jPanel1.add(jLabelDay);
+        jLabelDay.setBounds(0, 0, 142, 38);
 
         jLabel3.setFont(new java.awt.Font("Verdana", 1, 10)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Tilberedning:");
+        jPanel1.add(jLabel3);
+        jLabel3.setBounds(0, 330, 80, 14);
 
         jLabelCookingTime.setFont(new java.awt.Font("Verdana", 1, 10)); // NOI18N
         jLabelCookingTime.setForeground(new java.awt.Color(255, 255, 255));
         jLabelCookingTime.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelCookingTime.setText("30 min");
         jLabelCookingTime.setToolTipText("");
+        jPanel1.add(jLabelCookingTime);
+        jLabelCookingTime.setBounds(90, 330, 50, 14);
 
         jLabel4.setFont(new java.awt.Font("Verdana", 1, 10)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Antal personer");
+        jPanel1.add(jLabel4);
+        jLabel4.setBounds(0, 310, 90, 14);
 
         jLabelPortions.setFont(new java.awt.Font("Verdana", 1, 10)); // NOI18N
         jLabelPortions.setForeground(new java.awt.Color(255, 255, 255));
         jLabelPortions.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelPortions.setText("4");
+        jPanel1.add(jLabelPortions);
+        jLabelPortions.setBounds(110, 310, 30, 14);
 
         jLabelDate.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
         jLabelDate.setForeground(new java.awt.Color(255, 255, 255));
         jLabelDate.setText("06-04-2015");
+        jPanel1.add(jLabelDate);
+        jLabelDate.setBounds(58, 44, 84, 15);
 
         jLabelDescription.setEditable(false);
         jLabelDescription.setBackground(GUI.dayColor);
@@ -213,6 +262,8 @@ public class WeekdayPanel extends javax.swing.JPanel {
                 jLabelDescriptionMouseReleased(evt);
             }
         });
+        jPanel1.add(jLabelDescription);
+        jLabelDescription.setBounds(0, 104, 140, 200);
 
         jButtonReplace.setBackground(GUI.replaceDayColor);
         jButtonReplace.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
@@ -226,6 +277,8 @@ public class WeekdayPanel extends javax.swing.JPanel {
                 jButtonReplaceActionPerformed(evt);
             }
         });
+        jPanel1.add(jButtonReplace);
+        jButtonReplace.setBounds(0, 350, 142, 25);
 
         jButtonDisable.setBackground(GUI.disableDayColor);
         jButtonDisable.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
@@ -239,74 +292,46 @@ public class WeekdayPanel extends javax.swing.JPanel {
                 jButtonDisableActionPerformed(evt);
             }
         });
+        jPanel1.add(jButtonDisable);
+        jButtonDisable.setBounds(0, 375, 142, 25);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jButtonReplace, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabelDay, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addGap(58, 58, 58)
-                        .addComponent(jLabelDate, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabelOpskriftNavn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelDescription, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabelPortions, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabelCookingTime, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButtonDisable, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, 0))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(jLabelDay)
-                .addGap(6, 6, 6)
-                .addComponent(jLabelDate)
-                .addGap(0, 0, 0)
-                .addComponent(jLabelOpskriftNavn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
-                .addComponent(jLabelDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabelPortions))
-                .addGap(6, 6, 6)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabelCookingTime))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonReplace, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(jButtonDisable, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
-        );
+        jComboAllRecipes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboAllRecipesActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jComboAllRecipes);
+        jComboAllRecipes.setBounds(0, 375, 142, 25);
+
+        jButtonReplaceRandom.setBackground(GUI.replaceDayColor);
+        jButtonReplaceRandom.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        jButtonReplaceRandom.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonReplaceRandom.setText("Tilfældig");
+        jButtonReplaceRandom.setBorder(null);
+        jButtonReplaceRandom.setBorderPainted(false);
+        jButtonReplaceRandom.setFocusPainted(false);
+        jButtonReplaceRandom.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonReplaceRandomActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButtonReplaceRandom);
+        jButtonReplaceRandom.setBounds(0, 350, 142, 25);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonReplaceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReplaceActionPerformed
-        //GENERER DENNE DAG IGEN
+        toggleSubs(true);
     }//GEN-LAST:event_jButtonReplaceActionPerformed
 
     private void jButtonDisableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDisableActionPerformed
@@ -320,9 +345,42 @@ public class WeekdayPanel extends javax.swing.JPanel {
     private void jLabelDescriptionMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelDescriptionMouseReleased
         switchDay();
     }//GEN-LAST:event_jLabelDescriptionMouseReleased
+
+    private void jButtonReplaceRandomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReplaceRandomActionPerformed
+        getRandomRecipe();
+        swapRecipe();
+    }//GEN-LAST:event_jButtonReplaceRandomActionPerformed
+
+    public void swapRecipe() {
+        try {
+            GUI.getCh().getDbh().swapRecipe(getWkday());
+            setWeekday();
+        } catch (SQLException ex) {
+            System.out.println("SQL FEJL");
+        }
+    }
+
+    public void getRandomRecipe() {
+        int random = (int) (Math.random() * GUI.getCh().getRh().getRecipeList().size());
+        Recipe randomRecipe = GUI.getCh().getRh().getRecipeList().get(random);
+        if (getWeekRecipe() == randomRecipe || !randomRecipe.isActive()) {
+            getRandomRecipe();
+        } else {
+            wkday.setRecipe(randomRecipe);
+        }
+    }
+    private void jComboAllRecipesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboAllRecipesActionPerformed
+        if (run) {
+            wkday.setRecipe((Recipe) jComboAllRecipes.getSelectedItem());
+            swapRecipe();
+        }
+    }//GEN-LAST:event_jComboAllRecipesActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonDisable;
     private javax.swing.JButton jButtonReplace;
+    private javax.swing.JButton jButtonReplaceRandom;
+    private javax.swing.JComboBox jComboAllRecipes;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabelCookingTime;

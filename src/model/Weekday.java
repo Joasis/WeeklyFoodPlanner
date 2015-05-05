@@ -85,6 +85,10 @@ public class Weekday implements Comparable {
         this.cal = cal;
     }
 
+    public void setRecipe(Recipe recipe) {
+        this.recipe = recipe;
+    }
+
     @Override
     public int compareTo(Object t) {
         Weekday w = (Weekday) t;

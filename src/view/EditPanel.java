@@ -19,7 +19,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -321,7 +320,7 @@ public class EditPanel extends javax.swing.JPanel {
 
         jLabel4.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Antal personer");
+        jLabel4.setText("Portioner");
 
         jTextFieldCookingTime.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jTextFieldCookingTime.setBorder(null);
@@ -329,10 +328,13 @@ public class EditPanel extends javax.swing.JPanel {
 
         jLabel5.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Tilberedningstid");
+        jLabel5.setText("Tilberedningstid (min)");
 
+        jButtonDeleteRecipe.setBackground(GUI.dangerColor);
         jButtonDeleteRecipe.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jButtonDeleteRecipe.setForeground(new java.awt.Color(255, 255, 255));
         jButtonDeleteRecipe.setText("Slet opskrift");
+        jButtonDeleteRecipe.setBorder(null);
         jButtonDeleteRecipe.setEnabled(false);
         jButtonDeleteRecipe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -340,8 +342,11 @@ public class EditPanel extends javax.swing.JPanel {
             }
         });
 
+        jButtonSaveRecipe.setBackground(GUI.succesColor);
         jButtonSaveRecipe.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jButtonSaveRecipe.setForeground(new java.awt.Color(255, 255, 255));
         jButtonSaveRecipe.setText("Gem opskrift");
+        jButtonSaveRecipe.setBorder(null);
         jButtonSaveRecipe.setEnabled(false);
         jButtonSaveRecipe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -359,8 +364,11 @@ public class EditPanel extends javax.swing.JPanel {
         });
         jScrollPane2.setViewportView(jListEditRecipeIngredients);
 
+        jButtonRemoveIngredient.setBackground(GUI.dangerColor);
         jButtonRemoveIngredient.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jButtonRemoveIngredient.setForeground(new java.awt.Color(255, 255, 255));
         jButtonRemoveIngredient.setText("Fjern ingrediens");
+        jButtonRemoveIngredient.setBorder(null);
         jButtonRemoveIngredient.setEnabled(false);
         jButtonRemoveIngredient.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -430,24 +438,24 @@ public class EditPanel extends javax.swing.JPanel {
                         .addGroup(jPanelEditRecipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(jPanelEditRecipeLayout.createSequentialGroup()
                                 .addGroup(jPanelEditRecipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelEditRecipeLayout.createSequentialGroup()
-                                        .addComponent(jButtonDeleteRecipe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGap(23, 23, 23)
-                                        .addComponent(jButtonSaveRecipe))
                                     .addComponent(jTextFieldRecipeNewName)
                                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
                                     .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addGroup(jPanelEditRecipeLayout.createSequentialGroup()
+                                        .addGroup(jPanelEditRecipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jTextFieldCookingTime))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(jPanelEditRecipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jTextFieldPortions)))
+                                    .addGroup(jPanelEditRecipeLayout.createSequentialGroup()
                                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(0, 0, Short.MAX_VALUE))
-                                    .addGroup(jPanelEditRecipeLayout.createSequentialGroup()
-                                        .addGroup(jPanelEditRecipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addComponent(jTextFieldCookingTime, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelEditRecipeLayout.createSequentialGroup()
+                                        .addComponent(jButtonDeleteRecipe, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGroup(jPanelEditRecipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jTextFieldPortions, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addComponent(jButtonSaveRecipe, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanelEditRecipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
@@ -496,15 +504,13 @@ public class EditPanel extends javax.swing.JPanel {
                     .addGroup(jPanelEditRecipeLayout.createSequentialGroup()
                         .addComponent(jTextFieldRecipeNewName, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanelEditRecipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanelEditRecipeLayout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextFieldPortions, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanelEditRecipeLayout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextFieldCookingTime, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanelEditRecipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanelEditRecipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextFieldCookingTime, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldPortions, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -521,11 +527,10 @@ public class EditPanel extends javax.swing.JPanel {
                                     .addComponent(jTextFieldEditRecipeAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jComboBoxEditRecipeUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addGap(16, 16, 16)
-                .addGroup(jPanelEditRecipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonDeleteRecipe)
-                    .addGroup(jPanelEditRecipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButtonSaveRecipe)
-                        .addComponent(jButtonRemoveIngredient)))
+                .addGroup(jPanelEditRecipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButtonDeleteRecipe, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+                    .addComponent(jButtonSaveRecipe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonRemoveIngredient, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -561,7 +566,11 @@ public class EditPanel extends javax.swing.JPanel {
         jTextFieldIngredientNewName.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jTextFieldIngredientNewName.setBorder(null);
 
+        jButtonSaveIngredient.setBackground(GUI.succesColor);
+        jButtonSaveIngredient.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jButtonSaveIngredient.setForeground(new java.awt.Color(255, 255, 255));
         jButtonSaveIngredient.setText("Gem ingrediens");
+        jButtonSaveIngredient.setBorder(null);
         jButtonSaveIngredient.setEnabled(false);
         jButtonSaveIngredient.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -569,7 +578,11 @@ public class EditPanel extends javax.swing.JPanel {
             }
         });
 
+        jButtonDeleteIngredient.setBackground(GUI.dangerColor);
+        jButtonDeleteIngredient.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jButtonDeleteIngredient.setForeground(new java.awt.Color(255, 255, 255));
         jButtonDeleteIngredient.setText("Slet ingrediens");
+        jButtonDeleteIngredient.setBorder(null);
         jButtonDeleteIngredient.setEnabled(false);
         jButtonDeleteIngredient.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -577,7 +590,11 @@ public class EditPanel extends javax.swing.JPanel {
             }
         });
 
+        jButtonAddIngredient.setBackground(GUI.succesColor);
+        jButtonAddIngredient.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jButtonAddIngredient.setForeground(new java.awt.Color(255, 255, 255));
         jButtonAddIngredient.setText("Føj til opskrift");
+        jButtonAddIngredient.setBorder(null);
         jButtonAddIngredient.setEnabled(false);
         jButtonAddIngredient.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -625,12 +642,11 @@ public class EditPanel extends javax.swing.JPanel {
             .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanelEditIngredientLayout.createSequentialGroup()
                 .addGroup(jPanelEditIngredientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelEditIngredientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelEditIngredientLayout.createSequentialGroup()
-                            .addComponent(jButtonDeleteIngredient)
-                            .addGap(62, 62, 62)
-                            .addComponent(jButtonSaveIngredient))
-                        .addComponent(jTextFieldIngredientNewName, javax.swing.GroupLayout.Alignment.LEADING))
+                    .addGroup(jPanelEditIngredientLayout.createSequentialGroup()
+                        .addComponent(jButtonDeleteIngredient, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(jButtonSaveIngredient, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldIngredientNewName, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanelEditIngredientLayout.createSequentialGroup()
                         .addGroup(jPanelEditIngredientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel11)
@@ -677,8 +693,8 @@ public class EditPanel extends javax.swing.JPanel {
                         .addComponent(jTextFieldIngredientNewName, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(jPanelEditIngredientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButtonDeleteIngredient)
-                            .addComponent(jButtonSaveIngredient))
+                            .addComponent(jButtonDeleteIngredient, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonSaveIngredient, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel16)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -759,18 +775,27 @@ public class EditPanel extends javax.swing.JPanel {
     private void jButtonRemoveIngredientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoveIngredientActionPerformed
         removeIngredientFromSelectedRecipe();
     }//GEN-LAST:event_jButtonRemoveIngredientActionPerformed
+
     public void removeIngredientFromSelectedRecipe() {
         if (selectedRecipe != null) {
-            if (!jListEditRecipeIngredients.isSelectionEmpty()) {
-                IngredientAmount ingam = (IngredientAmount) jListEditRecipeIngredients.getSelectedValue();
-                selectedRecipe.getIngredientList().remove(ingam);
-                model.removeElement(ingam);
-                jTextFieldEditRecipeAmount.setText("");
-                jComboBoxEditRecipeUnit.setSelectedIndex(0);
-                try {
-                    GUI.getCh().getDbh().deleteIngredientFromRecipe(selectedRecipe, ingam.getIngredient());
-                } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(this, "FEJL VED INGREDIENT REMOVAL FRA DATABASE");
+            if (model.size() == 1) {
+                GUI.decorateUI("Ja", "Nej");
+                int option = JOptionPane.showConfirmDialog(this, "Hvis du fjerner den sidste ingrediens, slettes opskriften\nVil du fortsætte?", "ADVARSEL", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+                if (option == 0) {
+                    deleteSelectedRecipe();
+                }
+            } else {
+                if (!jListEditRecipeIngredients.isSelectionEmpty()) {
+                    IngredientAmount ingam = (IngredientAmount) jListEditRecipeIngredients.getSelectedValue();
+                    selectedRecipe.getIngredientList().remove(ingam);
+                    model.removeElement(ingam);
+                    jTextFieldEditRecipeAmount.setText("");
+                    jComboBoxEditRecipeUnit.setSelectedIndex(0);
+                    try {
+                        GUI.getCh().getDbh().deleteIngredientFromRecipe(selectedRecipe, ingam.getIngredient());
+                    } catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(this, "FEJL VED INGREDIENT REMOVAL FRA DATABASE");
+                    }
                 }
             }
         }
@@ -906,10 +931,7 @@ public class EditPanel extends javax.swing.JPanel {
         for (Ingredient ing : ingredientList) {
             tempModel.addElement(ing);
         }
-        UIManager UI = new UIManager();
-        UI.put("OptionPane.okButtonText", "Luk");
-        UI.put("OptionPane.background", GUI.buttonHoverColor);
-        UI.put("Panel.background", GUI.buttonHoverColor);
+        GUI.decorateUI("Luk", "");
         JOptionPane.showMessageDialog(this, sp, "Ingredienser", JOptionPane.PLAIN_MESSAGE);
     }
 
@@ -935,10 +957,7 @@ public class EditPanel extends javax.swing.JPanel {
                 tempModel.addElement(rec);
             }
         }
-        UIManager UI = new UIManager();
-        UI.put("OptionPane.okButtonText", "Luk");
-        UI.put("OptionPane.background", GUI.buttonHoverColor);
-        UI.put("Panel.background", GUI.buttonHoverColor);
+        GUI.decorateUI("Luk", "");
         JOptionPane.showMessageDialog(this, sp, "Opskrifter", JOptionPane.PLAIN_MESSAGE);
     }
 
