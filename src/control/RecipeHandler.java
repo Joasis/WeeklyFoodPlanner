@@ -17,7 +17,6 @@ import model.Unit;
  *
  * @author Jonas
  */
-
 public class RecipeHandler {
 
     private ArrayList<Recipe> recipeList;
@@ -78,5 +77,15 @@ public class RecipeHandler {
 
     public ArrayList<Recipe> getRecipeList() {
         return recipeList;
+    }
+
+    public ArrayList<Recipe> cloneRecipeList() {
+        ArrayList<Recipe> cloneList = new ArrayList<>();
+        for (Recipe recipeClone : recipeList) {
+            if (recipeClone.isActive()) {
+                cloneList.add(recipeClone.cloneRecipe());
+            }
+        }
+        return cloneList;
     }
 }
