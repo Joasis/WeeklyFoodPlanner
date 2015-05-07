@@ -246,10 +246,10 @@ public class AddRecipePanel extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(58, 58, 58)
                         .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -258,7 +258,7 @@ public class AddRecipePanel extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabelShowAllIngredients))
                             .addComponent(jTextField_searchIngredient, javax.swing.GroupLayout.PREFERRED_SIZE, 554, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPic, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 0, 0))
         );
@@ -547,6 +547,7 @@ public class AddRecipePanel extends javax.swing.JPanel {
                     System.out.println("Personer: " + newRecipe.getPortions());
                     System.out.println("ing: " + newRecipe.getIngredientList().size());
                 }
+                clearPanel();
             }
         }
     }
@@ -555,7 +556,30 @@ public class AddRecipePanel extends javax.swing.JPanel {
         if (validateIngredientInput()) {
             if (selectedIngredient != null) {
                 IngredientAmount ingAm = new IngredientAmount((Unit) jComboBoxRecipeUnit.getSelectedItem(), selectedIngredient, Double.parseDouble(jTextFieldRecipeAmount.getText()));
-                list.addElement(ingAm);
+                if (!list.isEmpty()) {
+                    for (int i = 0; i < list.getSize(); i++) {
+                        IngredientAmount ingAmTemp = (IngredientAmount) list.getElementAt(i);
+                        if (ingAmTemp.getIngredient().equals(ingAm.getIngredient())) {
+                            if (!ingAmTemp.getUnit().getShortname().equals(ingAm.getUnit().getShortname())) {
+                                jListIngredients.setBorder(new LineBorder(Color.RED, 1));
+                                jListIngredients.setBackground(Color.pink);
+                            } else {
+                                ingAm.setAmount(ingAmTemp.getAmount() + ingAm.getAmount());
+                                list.removeElementAt(i);
+                                list.addElement(ingAm);
+                                System.out.println("DEN er på listen");
+                                jListIngredients.setBorder(null);
+                                jListIngredients.setBackground(Color.white);
+                            }
+                        } else {
+                            list.addElement(ingAm);
+                        }
+
+                    }
+                } else {
+                    list.addElement(ingAm);
+                }
+
             } else {
                 int ingrID = GUI.getCh().getDbh().getNextAI("ingr");
                 Ingredient newIng = new Ingredient(ingrID, jTextField_searchIngredient.getText());
@@ -676,5 +700,19 @@ public class AddRecipePanel extends javax.swing.JPanel {
         }
         GUI.decorateUI("OK", "");
         JOptionPane.showMessageDialog(this, sp, "Ingredienser", JOptionPane.PLAIN_MESSAGE);
+    }
+
+    public void clearPanel() {
+
+        jTextField_name.setText("");
+        jTextField_cooktime.setText("");
+        jTextField_portion.setText("");
+        jTextField_searchIngredient.setText("");
+        jTextArea_description.setText("");
+        jTextFieldRecipeAmount.setText("");
+        jComboBoxRecipeUnit.setSelectedIndex(0);
+        selectedIngredient = null;
+        list.clear();
+        clearFeedBack();
     }
 }
