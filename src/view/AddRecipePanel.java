@@ -422,6 +422,9 @@ public class AddRecipePanel extends javax.swing.JPanel {
             IngredientAmount ingam = (IngredientAmount) jListIngredients.getSelectedValue();
             list.removeElement(ingam);
             jListIngredients.setSelectedIndex(0);
+            jListIngredients.setBorder(null);
+            jListIngredients.setBackground(Color.white);
+
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton_removeIngredientActionPerformed
@@ -560,19 +563,13 @@ public class AddRecipePanel extends javax.swing.JPanel {
                     for (int i = 0; i < list.getSize(); i++) {
                         IngredientAmount ingAmTemp = (IngredientAmount) list.getElementAt(i);
                         if (ingAmTemp.getIngredient().equals(ingAm.getIngredient())) {
-                            if (!ingAmTemp.getUnit().getShortname().equals(ingAm.getUnit().getShortname())) {
-                                jListIngredients.setBorder(new LineBorder(Color.RED, 1));
-                                jListIngredients.setBackground(Color.pink);
-                            } else {
-                                ingAm.setAmount(ingAmTemp.getAmount() + ingAm.getAmount());
-                                list.removeElementAt(i);
-                                list.addElement(ingAm);
-                                System.out.println("DEN er på listen");
-                                jListIngredients.setBorder(null);
-                                jListIngredients.setBackground(Color.white);
-                            }
+                            jListIngredients.setBorder(new LineBorder(Color.RED, 1));
+                            jListIngredients.setBackground(Color.pink);
+                            System.out.println("DEN er på listen");
                         } else {
                             list.addElement(ingAm);
+                            jListIngredients.setBorder(null);
+                            jListIngredients.setBackground(Color.white);
                         }
 
                     }
@@ -609,6 +606,8 @@ public class AddRecipePanel extends javax.swing.JPanel {
         jTextField_portion.setBorder(null);
         jTextFieldRecipeAmount.setBorder(null);
         jTextField_searchIngredient.setBorder(null);
+        jListIngredients.setBorder(null);
+        jListIngredients.setBackground(Color.white);
         jTextField_name.setBackground(Color.white);
         jTextField_cooktime.setBackground(Color.white);
         jTextField_portion.setBackground(Color.white);
