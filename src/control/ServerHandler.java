@@ -25,7 +25,7 @@ import org.json.simple.JSONObject;
 public class ServerHandler {
 
     private Socket socket;
-    private JSONArray json;
+    private JSONArray jsonRecipies;
 
     public ServerHandler(Socket socket) {
         this.socket = socket;
@@ -39,14 +39,14 @@ public class ServerHandler {
             OutputStream ops = socket.getOutputStream();
 //            PrintWriter pw = new PrintWriter(output, true);
             OutputStreamWriter osw = new OutputStreamWriter(ops);
-            ArrayList<String> list = new ArrayList<>();
 
-            json = new JSONArray();
+            jsonRecipies = new JSONArray();
+            JSONObject weekObject = new JSONObject();
+            weekObject.put("week", week.getDate());
             for (Weekday wkday : week.getWeekdays()) {
                 JSONObject recipe = new JSONObject();
-                recipe.put("week", week.getDate());
                 recipe.put("name", wkday.getRecipe().getName());
-                recipe.put("date", wkday.getDate());
+//                recipe.put("date", wkday.getDate());
                 recipe.put("omit", wkday.isOmit());
                 recipe.put("active", wkday.getRecipe().isActive());
                 JSONArray ingList = new JSONArray();
@@ -58,9 +58,10 @@ public class ServerHandler {
                     ingList.add(ingredient);
                 }
                 recipe.put("ingredientList", ingList);
-                json.add(recipe);
+                jsonRecipies.add(recipe);
             }
-            String output = json.toJSONString();
+            weekObject.put("recipies", jsonRecipies);
+            String output = weekObject.toJSONString();
             if (!socket.isClosed()) {
                 osw.write(output);
 //                String request = scan.nextLine();
