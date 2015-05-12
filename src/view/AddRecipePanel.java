@@ -400,7 +400,7 @@ public class AddRecipePanel extends javax.swing.JPanel {
     private void jButton_addIngredientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_addIngredientActionPerformed
         try {
             addIngredient();
-            jListIngredients.setSelectedIndex(0);
+
             // 
         } catch (SQLException ex) {
             System.out.println("SQLFEJL ved getNextAI ingr");
@@ -550,7 +550,7 @@ public class AddRecipePanel extends javax.swing.JPanel {
                     System.out.println("Personer: " + newRecipe.getPortions());
                     System.out.println("ing: " + newRecipe.getIngredientList().size());
                 }
-                clearPanel();
+                clearPanel("All");
             }
         }
     }
@@ -562,7 +562,7 @@ public class AddRecipePanel extends javax.swing.JPanel {
                 if (!list.isEmpty()) {
                     for (int i = 0; i < list.getSize(); i++) {
                         IngredientAmount ingAmTemp = (IngredientAmount) list.getElementAt(i);
-                        if (ingAmTemp.getIngredient().equals(ingAm.getIngredient())) {
+                        if (ingAmTemp.getIngredient().getName().equals(ingAm.getIngredient().getName())) {
                             jListIngredients.setBorder(new LineBorder(Color.RED, 1));
                             jListIngredients.setBackground(Color.pink);
                             System.out.println("DEN er på listen");
@@ -571,7 +571,6 @@ public class AddRecipePanel extends javax.swing.JPanel {
                             jListIngredients.setBorder(null);
                             jListIngredients.setBackground(Color.white);
                         }
-
                     }
                 } else {
                     list.addElement(ingAm);
@@ -600,25 +599,34 @@ public class AddRecipePanel extends javax.swing.JPanel {
         textField.setBackground(Color.pink);
     }
 
-    public void clearFeedBack() {
-        jTextField_name.setBorder(null);
-        jTextField_cooktime.setBorder(null);
-        jTextField_portion.setBorder(null);
-        jTextFieldRecipeAmount.setBorder(null);
-        jTextField_searchIngredient.setBorder(null);
-        jListIngredients.setBorder(null);
-        jListIngredients.setBackground(Color.white);
-        jTextField_name.setBackground(Color.white);
-        jTextField_cooktime.setBackground(Color.white);
-        jTextField_portion.setBackground(Color.white);
-        jTextFieldRecipeAmount.setBackground(Color.white);
-        jTextField_searchIngredient.setBackground(Color.white);
-
+    public void clearFeedBack(String section) {
+        if (section.equals("All")) {
+            jTextField_name.setBorder(null);
+            jTextField_cooktime.setBorder(null);
+            jTextField_portion.setBorder(null);
+            jTextFieldRecipeAmount.setBorder(null);
+            jTextField_searchIngredient.setBorder(null);
+            jListIngredients.setBorder(null);
+            jListIngredients.setBackground(Color.white);
+            jTextField_name.setBackground(Color.white);
+            jTextField_cooktime.setBackground(Color.white);
+            jTextField_portion.setBackground(Color.white);
+            jTextFieldRecipeAmount.setBackground(Color.white);
+            jTextField_searchIngredient.setBackground(Color.white);
+        }
+        if (section.equals("Ingredient")) {
+            jTextFieldRecipeAmount.setBorder(null);
+            jTextField_searchIngredient.setBorder(null);
+            jListIngredients.setBorder(null);
+            jListIngredients.setBackground(Color.white);
+            jTextFieldRecipeAmount.setBackground(Color.white);
+            jTextField_searchIngredient.setBackground(Color.white);
+        }
     }
 
     public boolean validateRecipeInput() {
         boolean ok = true;
-        clearFeedBack();
+        clearFeedBack("All");
         if (jTextField_name.getText().isEmpty()) {
             ok = false;
             setFeedback(jTextField_name);
@@ -640,7 +648,7 @@ public class AddRecipePanel extends javax.swing.JPanel {
 
     public boolean validateIngredientInput() {
         boolean ok = true;
-        clearFeedBack();
+        clearFeedBack("Ingredient");
         if (jTextField_searchIngredient.getText().isEmpty()) {
             setFeedback(jTextField_searchIngredient);
             ok = false;
@@ -701,17 +709,25 @@ public class AddRecipePanel extends javax.swing.JPanel {
         JOptionPane.showMessageDialog(this, sp, "Ingredienser", JOptionPane.PLAIN_MESSAGE);
     }
 
-    public void clearPanel() {
-
-        jTextField_name.setText("");
-        jTextField_cooktime.setText("");
-        jTextField_portion.setText("");
-        jTextField_searchIngredient.setText("");
-        jTextArea_description.setText("");
-        jTextFieldRecipeAmount.setText("");
-        jComboBoxRecipeUnit.setSelectedIndex(0);
-        selectedIngredient = null;
-        list.clear();
-        clearFeedBack();
+    public void clearPanel(String clearPanel) {
+        if (clearPanel.equals("All")) {
+            jTextField_name.setText("");
+            jTextField_cooktime.setText("");
+            jTextField_portion.setText("");
+            jTextField_searchIngredient.setText("");
+            jTextArea_description.setText("");
+            jTextFieldRecipeAmount.setText("");
+            jComboBoxRecipeUnit.setSelectedIndex(0);
+            selectedIngredient = null;
+            list.clear();
+            clearFeedBack("All");
+        }
+        if (clearPanel.equals("Ingredient")) {
+            jTextField_searchIngredient.setText("");
+            jTextFieldRecipeAmount.setText("");
+            jComboBoxRecipeUnit.setSelectedIndex(0);
+            selectedIngredient = null;
+            list.clear();
+        }
     }
 }
