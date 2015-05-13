@@ -423,7 +423,6 @@ public class AddRecipePanel extends javax.swing.JPanel {
             list.removeElement(ingam);
             jListIngredients.setSelectedIndex(0);
             jListIngredients.setBorder(null);
-            jListIngredients.setBackground(Color.white);
 
         }
         // TODO add your handling code here:
@@ -569,12 +568,15 @@ public class AddRecipePanel extends javax.swing.JPanel {
                     }
                     if (!found) {
                         list.addElement(ingAm);
+                        clearIngredients();
                     } else {
                         jListIngredients.setBorder(new LineBorder(Color.RED, 1));
                         System.out.println("DEN er på listen");
                     }
                 } else {
                     list.addElement(ingAm);
+                    clearIngredients();
+
                 }
             } else {
                 int ingrID = GUI.getCh().getDbh().getNextAI("ingr");
@@ -583,6 +585,7 @@ public class AddRecipePanel extends javax.swing.JPanel {
                 GUI.getCh().getIh().getIngredientList().add(newIng);
                 IngredientAmount ingAm = new IngredientAmount((Unit) jComboBoxRecipeUnit.getSelectedItem(), newIng, Double.parseDouble(jTextFieldRecipeAmount.getText()));
                 list.addElement(ingAm);
+                clearIngredients();
             }
         }
     }
@@ -603,7 +606,6 @@ public class AddRecipePanel extends javax.swing.JPanel {
 
     public void setFeedback(JTextField textField) {
         textField.setBorder(new LineBorder(Color.RED, 1));
-        textField.setBackground(Color.pink);
     }
 
     public void clearFeedBack(String section) {
@@ -614,20 +616,11 @@ public class AddRecipePanel extends javax.swing.JPanel {
             jTextFieldRecipeAmount.setBorder(null);
             jTextField_searchIngredient.setBorder(null);
             jListIngredients.setBorder(null);
-            jListIngredients.setBackground(Color.white);
-            jTextField_name.setBackground(Color.white);
-            jTextField_cooktime.setBackground(Color.white);
-            jTextField_portion.setBackground(Color.white);
-            jTextFieldRecipeAmount.setBackground(Color.white);
-            jTextField_searchIngredient.setBackground(Color.white);
         }
         if (section.equals("Ingredient")) {
             jTextFieldRecipeAmount.setBorder(null);
             jTextField_searchIngredient.setBorder(null);
             jListIngredients.setBorder(null);
-            jListIngredients.setBackground(Color.white);
-            jTextFieldRecipeAmount.setBackground(Color.white);
-            jTextField_searchIngredient.setBackground(Color.white);
         }
     }
 
