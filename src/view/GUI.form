@@ -99,7 +99,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="2"/>
-            <Property name="text" type="java.lang.String" value="Weekly Food Planner"/>
+            <Property name="text" type="java.lang.String" value="Min madplan"/>
           </Properties>
         </Component>
         <Container class="javax.swing.JPanel" name="jPanelWeek">

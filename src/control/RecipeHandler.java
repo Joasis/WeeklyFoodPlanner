@@ -79,6 +79,16 @@ public class RecipeHandler {
         return recipeList;
     }
 
+    public int getActiveRecipeListsize() {
+        ArrayList<Recipe> activeList = new ArrayList<>();
+        for (Recipe rp : getRecipeList()) {
+            if (rp.isActive()) {
+                activeList.add(rp);
+            }
+        }
+        return activeList.size();
+    }
+
     public ArrayList<Recipe> cloneRecipeList() {
         ArrayList<Recipe> cloneList = new ArrayList<>();
         for (Recipe recipeClone : recipeList) {

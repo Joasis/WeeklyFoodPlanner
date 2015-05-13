@@ -423,19 +423,18 @@ public class AddRecipePanel extends javax.swing.JPanel {
             list.removeElement(ingam);
             jListIngredients.setSelectedIndex(0);
             jListIngredients.setBorder(null);
-
         }
-        // TODO add your handling code here:
+        if (list.size() == 0) {
+            jButton_saveRecipe.setEnabled(false);
+        }
     }//GEN-LAST:event_jButton_removeIngredientActionPerformed
 
     private void jListIngredientsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListIngredientsValueChanged
         if (!evt.getValueIsAdjusting()) {
             if (!jListIngredients.isSelectionEmpty()) {
                 jButton_removeIngredient.setEnabled(true);
-                jButton_saveRecipe.setEnabled(true);
             } else {
                 jButton_removeIngredient.setEnabled(false);
-                jButton_saveRecipe.setEnabled(false);
             }
         }
     }//GEN-LAST:event_jListIngredientsValueChanged
@@ -576,7 +575,6 @@ public class AddRecipePanel extends javax.swing.JPanel {
                 } else {
                     list.addElement(ingAm);
                     clearIngredients();
-
                 }
             } else {
                 int ingrID = GUI.getCh().getDbh().getNextAI("ingr");
@@ -594,6 +592,7 @@ public class AddRecipePanel extends javax.swing.JPanel {
         jTextField_searchIngredient.setText("");
         jTextFieldRecipeAmount.setText("");
         jComboBoxRecipeUnit.setSelectedIndex(0);
+        jButton_saveRecipe.setEnabled(true);
         clearFeedBack("Ingredient");
     }
 

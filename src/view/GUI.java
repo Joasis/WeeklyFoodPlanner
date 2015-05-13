@@ -273,7 +273,7 @@ public class GUI extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 60)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel1.setText("Weekly Food Planner");
+        jLabel1.setText("Min madplan");
 
         jPanelWeek.setOpaque(false);
         jPanelWeek.setPreferredSize(new java.awt.Dimension(1000, 400));
@@ -584,10 +584,15 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonAddActionPerformed
 
     private void jButtonGenerateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGenerateActionPerformed
-        try {
-            generateFoodPlan();
-        } catch (SQLException ex) {
-            Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+        if (getCh().getRh().getActiveRecipeListsize() < 7) {
+            JOptionPane.showMessageDialog(this, "Generering af ugeplan kræver mindst 7 tilføjede opskrifter\nDu mangler kun: " + (7 - getCh().getRh().getActiveRecipeListsize()) + " mere!", "ADVARSEL", JOptionPane.ERROR_MESSAGE);
+            decorateUI("Luk", "");
+        } else {
+            try {
+                generateFoodPlan();
+            } catch (SQLException ex) {
+                Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_jButtonGenerateActionPerformed
 
