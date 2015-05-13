@@ -559,23 +559,24 @@ public class AddRecipePanel extends javax.swing.JPanel {
         if (validateIngredientInput()) {
             if (selectedIngredient != null) {
                 IngredientAmount ingAm = new IngredientAmount((Unit) jComboBoxRecipeUnit.getSelectedItem(), selectedIngredient, Double.parseDouble(jTextFieldRecipeAmount.getText()));
+                boolean found = false;
                 if (!list.isEmpty()) {
-                    for (int i = 0; i < list.getSize(); i++) {
+                    for (int i = 0; i < list.getSize() && !found; i++) {
                         IngredientAmount ingAmTemp = (IngredientAmount) list.getElementAt(i);
-                        if (ingAmTemp.getIngredient().getName().equals(ingAm.getIngredient().getName())) {
-                            jListIngredients.setBorder(new LineBorder(Color.RED, 1));
-                            jListIngredients.setBackground(Color.pink);
-                            System.out.println("DEN er på listen");
-                        } else {
-                            list.addElement(ingAm);
-                            jListIngredients.setBorder(null);
-                            jListIngredients.setBackground(Color.white);
+                        if (ingAmTemp.getIngredient().getName().equals(ingAm.getIngredient().getName()) && ingAmTemp.getUnit().getName().equals(ingAm.getUnit().getName())) {
+                            found = true;
                         }
+                    }
+                    if (!found) {
+                        list.addElement(ingAm);
+                    } else {
+                        jListIngredients.setBorder(new LineBorder(Color.RED, 1));
+                        jListIngredients.setBackground(Color.pink);
+                        System.out.println("DEN er på listen");
                     }
                 } else {
                     list.addElement(ingAm);
                 }
-
             } else {
                 int ingrID = GUI.getCh().getDbh().getNextAI("ingr");
                 Ingredient newIng = new Ingredient(ingrID, jTextField_searchIngredient.getText());
@@ -585,6 +586,13 @@ public class AddRecipePanel extends javax.swing.JPanel {
                 list.addElement(ingAm);
             }
         }
+    }
+
+    public void clearIngredients() {
+        jTextField_searchIngredient.setText("");
+        jTextFieldRecipeAmount.setText("");
+        jComboBoxRecipeUnit.setSelectedIndex(0);
+        clearFeedBack("Ingredient");
     }
 
     public void setUnits() {
