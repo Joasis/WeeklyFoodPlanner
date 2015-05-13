@@ -571,7 +571,6 @@ public class AddRecipePanel extends javax.swing.JPanel {
                         list.addElement(ingAm);
                     } else {
                         jListIngredients.setBorder(new LineBorder(Color.RED, 1));
-                        jListIngredients.setBackground(Color.pink);
                         System.out.println("DEN er på listen");
                     }
                 } else {
