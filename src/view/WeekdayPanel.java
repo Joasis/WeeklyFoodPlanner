@@ -356,7 +356,7 @@ public class WeekdayPanel extends javax.swing.JPanel {
             GUI.getCh().getDbh().swapRecipe(getWkday());
             setWeekday();
         } catch (SQLException ex) {
-            System.out.println("SQL FEJL");
+            System.out.println("SQL FEJL" + ex);
         }
     }
 

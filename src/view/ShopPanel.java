@@ -5,17 +5,11 @@
  */
 package view;
 
-import control.SocketServer;
-import java.io.IOException;
-import java.net.Inet4Address;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
 import model.IngredientAmount;
-import model.Recipe;
 import model.Week;
 import model.Weekday;
 
@@ -24,7 +18,7 @@ import model.Weekday;
  * @author Morten
  */
 public class ShopPanel extends javax.swing.JPanel {
-    
+
     private Week week;
     private DefaultListModel model;
     private DefaultListModel modelRecipe;
@@ -34,15 +28,18 @@ public class ShopPanel extends javax.swing.JPanel {
      * Creates new form ShopPanel
      */
     public ShopPanel(GUI gui) {
-        this.week = gui.getSelectedWeekPanel().getWeek();
-        initComponents();
-        model = new DefaultListModel();
-        modelRecipe = new DefaultListModel();
-        modelRecIngList = new DefaultListModel();
-        jListShop.setModel(model);
-        jListRecipe.setModel(modelRecipe);
-        jRecIngList.setModel(modelRecIngList);
-        dataToTable();
+	this.week = gui.getSelectedWeekPanel().getWeek();
+	initComponents();
+	model = new DefaultListModel();
+	jLabelHeadline.setText("Indkøbsliste for uge " + week.getDate());
+	ingredientListForDay(jTextAreaMan, week.getWeekdays()[0]);
+	ingredientListForDay(jTextAreaTir, week.getWeekdays()[1]);
+	ingredientListForDay(jTextAreaOns, week.getWeekdays()[2]);
+	ingredientListForDay(jTextAreaTor, week.getWeekdays()[3]);
+	ingredientListForDay(jTextAreaFre, week.getWeekdays()[4]);
+	ingredientListForDay(jTextAreaLor, week.getWeekdays()[5]);
+	ingredientListForDay(jTextAreaSon, week.getWeekdays()[6]);
+	fullIngredientList();
     }
 
     /**
@@ -54,207 +51,452 @@ public class ShopPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jListShop = new javax.swing.JList();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jListRecipe = new javax.swing.JList();
-        jRecHeadline = new javax.swing.JLabel();
+        jPanelDays = new javax.swing.JPanel();
+        jLabelHeadline = new javax.swing.JLabel();
+        jPanelMan = new javax.swing.JPanel();
+        jLabelMan = new javax.swing.JLabel();
+        jTextAreaMan = new javax.swing.JTextArea();
+        jPanelTir = new javax.swing.JPanel();
+        jLabelTir = new javax.swing.JLabel();
+        jTextAreaTir = new javax.swing.JTextArea();
+        jPanelOns = new javax.swing.JPanel();
+        jLabelOns = new javax.swing.JLabel();
+        jTextAreaOns = new javax.swing.JTextArea();
+        jPanelTor = new javax.swing.JPanel();
+        jLabelTor = new javax.swing.JLabel();
+        jTextAreaTor = new javax.swing.JTextArea();
+        jPanelFre = new javax.swing.JPanel();
+        jLabelFre = new javax.swing.JLabel();
+        jTextAreaFre = new javax.swing.JTextArea();
+        jPanelLor = new javax.swing.JPanel();
+        jLabelLor = new javax.swing.JLabel();
+        jTextAreaLor = new javax.swing.JTextArea();
+        jPanelSon = new javax.swing.JPanel();
+        jLabelSon = new javax.swing.JLabel();
+        jTextAreaSon = new javax.swing.JTextArea();
+        jPanelFull = new javax.swing.JPanel();
+        jLabelHeadline1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jRecDesc = new javax.swing.JTextArea();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        jRecIngList = new javax.swing.JList();
-        jButton1 = new javax.swing.JButton();
+        jTextAreaFull = new javax.swing.JTextArea();
 
         setBackground(GUI.buttonHoverColor);
         setForeground(new java.awt.Color(255, 255, 255));
         setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
 
-        jScrollPane2.setBorder(null);
+        jPanelDays.setBackground(GUI.buttonHoverColor);
 
-        jListShop.setBackground(GUI.dayColor);
-        jListShop.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
-        jListShop.setForeground(new java.awt.Color(255, 255, 255));
-        jListShop.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                jListShopMouseReleased(evt);
-            }
-        });
-        jScrollPane2.setViewportView(jListShop);
+        jLabelHeadline.setFont(new java.awt.Font("Verdana", 0, 22)); // NOI18N
+        jLabelHeadline.setForeground(new java.awt.Color(255, 255, 255));
 
-        jLabel1.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Ingrediens Liste:");
+        jPanelMan.setBackground(GUI.dayColor);
 
-        jLabel2.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Brugt i:");
+        jLabelMan.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
+        jLabelMan.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelMan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelMan.setText("Mandag");
 
-        jScrollPane3.setBorder(null);
+        jTextAreaMan.setBackground(GUI.dayColor);
+        jTextAreaMan.setColumns(20);
+        jTextAreaMan.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jTextAreaMan.setForeground(new java.awt.Color(255, 255, 255));
+        jTextAreaMan.setLineWrap(true);
+        jTextAreaMan.setRows(5);
+        jTextAreaMan.setWrapStyleWord(true);
+        jTextAreaMan.setBorder(null);
+        jTextAreaMan.setEnabled(false);
 
-        jListRecipe.setBackground(GUI.dayColor);
-        jListRecipe.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
-        jListRecipe.setForeground(new java.awt.Color(255, 255, 255));
-        jListRecipe.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                jListRecipeMouseReleased(evt);
-            }
-        });
-        jScrollPane3.setViewportView(jListRecipe);
+        javax.swing.GroupLayout jPanelManLayout = new javax.swing.GroupLayout(jPanelMan);
+        jPanelMan.setLayout(jPanelManLayout);
+        jPanelManLayout.setHorizontalGroup(
+            jPanelManLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelManLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanelManLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTextAreaMan, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jLabelMan, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)))
+        );
+        jPanelManLayout.setVerticalGroup(
+            jPanelManLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelManLayout.createSequentialGroup()
+                .addComponent(jLabelMan)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextAreaMan))
+        );
 
-        jRecHeadline.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        jRecHeadline.setForeground(new java.awt.Color(255, 255, 255));
-        jRecHeadline.setText("    ");
+        jPanelTir.setBackground(GUI.dayColor);
+
+        jLabelTir.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
+        jLabelTir.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelTir.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelTir.setText("Tirsdag");
+
+        jTextAreaTir.setBackground(GUI.dayColor);
+        jTextAreaTir.setColumns(20);
+        jTextAreaTir.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jTextAreaTir.setForeground(new java.awt.Color(255, 255, 255));
+        jTextAreaTir.setLineWrap(true);
+        jTextAreaTir.setRows(5);
+        jTextAreaTir.setWrapStyleWord(true);
+        jTextAreaTir.setBorder(null);
+        jTextAreaTir.setEnabled(false);
+
+        javax.swing.GroupLayout jPanelTirLayout = new javax.swing.GroupLayout(jPanelTir);
+        jPanelTir.setLayout(jPanelTirLayout);
+        jPanelTirLayout.setHorizontalGroup(
+            jPanelTirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTirLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanelTirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTextAreaTir, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jLabelTir, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)))
+        );
+        jPanelTirLayout.setVerticalGroup(
+            jPanelTirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelTirLayout.createSequentialGroup()
+                .addComponent(jLabelTir)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextAreaTir))
+        );
+
+        jPanelOns.setBackground(GUI.dayColor);
+
+        jLabelOns.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
+        jLabelOns.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelOns.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelOns.setText("Onsdag");
+
+        jTextAreaOns.setBackground(GUI.dayColor);
+        jTextAreaOns.setColumns(20);
+        jTextAreaOns.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jTextAreaOns.setForeground(new java.awt.Color(255, 255, 255));
+        jTextAreaOns.setLineWrap(true);
+        jTextAreaOns.setRows(5);
+        jTextAreaOns.setWrapStyleWord(true);
+        jTextAreaOns.setBorder(null);
+        jTextAreaOns.setEnabled(false);
+
+        javax.swing.GroupLayout jPanelOnsLayout = new javax.swing.GroupLayout(jPanelOns);
+        jPanelOns.setLayout(jPanelOnsLayout);
+        jPanelOnsLayout.setHorizontalGroup(
+            jPanelOnsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelOnsLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanelOnsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTextAreaOns, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jLabelOns, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)))
+        );
+        jPanelOnsLayout.setVerticalGroup(
+            jPanelOnsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelOnsLayout.createSequentialGroup()
+                .addComponent(jLabelOns)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextAreaOns))
+        );
+
+        jPanelTor.setBackground(GUI.dayColor);
+
+        jLabelTor.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
+        jLabelTor.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelTor.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelTor.setText("Torsdag");
+
+        jTextAreaTor.setBackground(GUI.dayColor);
+        jTextAreaTor.setColumns(20);
+        jTextAreaTor.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jTextAreaTor.setForeground(new java.awt.Color(255, 255, 255));
+        jTextAreaTor.setLineWrap(true);
+        jTextAreaTor.setRows(5);
+        jTextAreaTor.setWrapStyleWord(true);
+        jTextAreaTor.setBorder(null);
+        jTextAreaTor.setEnabled(false);
+
+        javax.swing.GroupLayout jPanelTorLayout = new javax.swing.GroupLayout(jPanelTor);
+        jPanelTor.setLayout(jPanelTorLayout);
+        jPanelTorLayout.setHorizontalGroup(
+            jPanelTorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTorLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanelTorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTextAreaTor, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jLabelTor, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)))
+        );
+        jPanelTorLayout.setVerticalGroup(
+            jPanelTorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelTorLayout.createSequentialGroup()
+                .addComponent(jLabelTor)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextAreaTor))
+        );
+
+        jPanelFre.setBackground(GUI.dayColor);
+
+        jLabelFre.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
+        jLabelFre.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelFre.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelFre.setText("Fredag");
+
+        jTextAreaFre.setBackground(GUI.dayColor);
+        jTextAreaFre.setColumns(20);
+        jTextAreaFre.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jTextAreaFre.setForeground(new java.awt.Color(255, 255, 255));
+        jTextAreaFre.setLineWrap(true);
+        jTextAreaFre.setRows(5);
+        jTextAreaFre.setWrapStyleWord(true);
+        jTextAreaFre.setBorder(null);
+        jTextAreaFre.setEnabled(false);
+
+        javax.swing.GroupLayout jPanelFreLayout = new javax.swing.GroupLayout(jPanelFre);
+        jPanelFre.setLayout(jPanelFreLayout);
+        jPanelFreLayout.setHorizontalGroup(
+            jPanelFreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelFreLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanelFreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTextAreaFre, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jLabelFre, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)))
+        );
+        jPanelFreLayout.setVerticalGroup(
+            jPanelFreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelFreLayout.createSequentialGroup()
+                .addComponent(jLabelFre)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextAreaFre))
+        );
+
+        jPanelLor.setBackground(GUI.dayColor);
+
+        jLabelLor.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
+        jLabelLor.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelLor.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelLor.setText("Lørdag");
+
+        jTextAreaLor.setBackground(GUI.dayColor);
+        jTextAreaLor.setColumns(20);
+        jTextAreaLor.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jTextAreaLor.setForeground(new java.awt.Color(255, 255, 255));
+        jTextAreaLor.setLineWrap(true);
+        jTextAreaLor.setRows(5);
+        jTextAreaLor.setWrapStyleWord(true);
+        jTextAreaLor.setBorder(null);
+        jTextAreaLor.setEnabled(false);
+
+        javax.swing.GroupLayout jPanelLorLayout = new javax.swing.GroupLayout(jPanelLor);
+        jPanelLor.setLayout(jPanelLorLayout);
+        jPanelLorLayout.setHorizontalGroup(
+            jPanelLorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelLorLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanelLorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTextAreaLor, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jLabelLor, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)))
+        );
+        jPanelLorLayout.setVerticalGroup(
+            jPanelLorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelLorLayout.createSequentialGroup()
+                .addComponent(jLabelLor)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextAreaLor, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE))
+        );
+
+        jPanelSon.setBackground(GUI.dayColor);
+
+        jLabelSon.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
+        jLabelSon.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelSon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelSon.setText("Søndag");
+
+        jTextAreaSon.setBackground(GUI.dayColor);
+        jTextAreaSon.setColumns(20);
+        jTextAreaSon.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jTextAreaSon.setForeground(new java.awt.Color(255, 255, 255));
+        jTextAreaSon.setLineWrap(true);
+        jTextAreaSon.setRows(5);
+        jTextAreaSon.setWrapStyleWord(true);
+        jTextAreaSon.setBorder(null);
+        jTextAreaSon.setEnabled(false);
+
+        javax.swing.GroupLayout jPanelSonLayout = new javax.swing.GroupLayout(jPanelSon);
+        jPanelSon.setLayout(jPanelSonLayout);
+        jPanelSonLayout.setHorizontalGroup(
+            jPanelSonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelSonLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanelSonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTextAreaSon, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jLabelSon, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)))
+        );
+        jPanelSonLayout.setVerticalGroup(
+            jPanelSonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelSonLayout.createSequentialGroup()
+                .addComponent(jLabelSon)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextAreaSon))
+        );
+
+        javax.swing.GroupLayout jPanelDaysLayout = new javax.swing.GroupLayout(jPanelDays);
+        jPanelDays.setLayout(jPanelDaysLayout);
+        jPanelDaysLayout.setHorizontalGroup(
+            jPanelDaysLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabelHeadline, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanelDaysLayout.createSequentialGroup()
+                .addComponent(jPanelMan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(1, 1, 1)
+                .addComponent(jPanelTir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(1, 1, 1)
+                .addComponent(jPanelOns, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(1, 1, 1)
+                .addComponent(jPanelTor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(1, 1, 1)
+                .addComponent(jPanelFre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(1, 1, 1)
+                .addComponent(jPanelLor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(1, 1, 1)
+                .addComponent(jPanelSon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jPanelDaysLayout.setVerticalGroup(
+            jPanelDaysLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelDaysLayout.createSequentialGroup()
+                .addComponent(jLabelHeadline, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelDaysLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanelLor, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelMan, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelTir, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelOns, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelTor, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelFre, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelSon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        jPanelFull.setBackground(GUI.buttonHoverColor);
+
+        jLabelHeadline1.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jLabelHeadline1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelHeadline1.setText("Fuld indkøbsliste:");
 
         jScrollPane1.setBorder(null);
 
-        jRecDesc.setBackground(GUI.dayColor);
-        jRecDesc.setColumns(20);
-        jRecDesc.setForeground(new java.awt.Color(255, 255, 255));
-        jRecDesc.setLineWrap(true);
-        jRecDesc.setRows(5);
-        jRecDesc.setWrapStyleWord(true);
-        jScrollPane1.setViewportView(jRecDesc);
+        jTextAreaFull.setColumns(20);
+        jTextAreaFull.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        jTextAreaFull.setLineWrap(true);
+        jTextAreaFull.setRows(5);
+        jTextAreaFull.setWrapStyleWord(true);
+        jTextAreaFull.setBorder(null);
+        jScrollPane1.setViewportView(jTextAreaFull);
 
-        jScrollPane4.setBorder(null);
-
-        jRecIngList.setBackground(GUI.dayColor);
-        jRecIngList.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
-        jRecIngList.setForeground(new java.awt.Color(255, 255, 255));
-        jScrollPane4.setViewportView(jRecIngList);
-
-        jButton1.setBackground(new java.awt.Color(107, 191, 76));
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Udskriv");
-        jButton1.setToolTipText("");
-        jButton1.setBorder(null);
+        javax.swing.GroupLayout jPanelFullLayout = new javax.swing.GroupLayout(jPanelFull);
+        jPanelFull.setLayout(jPanelFullLayout);
+        jPanelFullLayout.setHorizontalGroup(
+            jPanelFullLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabelHeadline1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanelFullLayout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jPanelFullLayout.setVerticalGroup(
+            jPanelFullLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelFullLayout.createSequentialGroup()
+                .addComponent(jLabelHeadline1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(4, 4, 4)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jRecHeadline, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))))))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addComponent(jPanelFull, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanelDays, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jRecHeadline)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1)))
-                    .addComponent(jScrollPane3)
-                    .addComponent(jScrollPane2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanelDays, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanelFull, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jListShopMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListShopMouseReleased
-        showRecipes(jListShop.getSelectedIndex());
-    }//GEN-LAST:event_jListShopMouseReleased
-
-    private void jListRecipeMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListRecipeMouseReleased
-        showRecipeFull(jListRecipe.getSelectedIndex());
-    }//GEN-LAST:event_jListRecipeMouseReleased
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JList jListRecipe;
-    private javax.swing.JList jListShop;
-    private javax.swing.JTextArea jRecDesc;
-    private javax.swing.JLabel jRecHeadline;
-    private javax.swing.JList jRecIngList;
+    private javax.swing.JLabel jLabelFre;
+    private javax.swing.JLabel jLabelHeadline;
+    private javax.swing.JLabel jLabelHeadline1;
+    private javax.swing.JLabel jLabelLor;
+    private javax.swing.JLabel jLabelMan;
+    private javax.swing.JLabel jLabelOns;
+    private javax.swing.JLabel jLabelSon;
+    private javax.swing.JLabel jLabelTir;
+    private javax.swing.JLabel jLabelTor;
+    private javax.swing.JPanel jPanelDays;
+    private javax.swing.JPanel jPanelFre;
+    private javax.swing.JPanel jPanelFull;
+    private javax.swing.JPanel jPanelLor;
+    private javax.swing.JPanel jPanelMan;
+    private javax.swing.JPanel jPanelOns;
+    private javax.swing.JPanel jPanelSon;
+    private javax.swing.JPanel jPanelTir;
+    private javax.swing.JPanel jPanelTor;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JTextArea jTextAreaFre;
+    private javax.swing.JTextArea jTextAreaFull;
+    private javax.swing.JTextArea jTextAreaLor;
+    private javax.swing.JTextArea jTextAreaMan;
+    private javax.swing.JTextArea jTextAreaOns;
+    private javax.swing.JTextArea jTextAreaSon;
+    private javax.swing.JTextArea jTextAreaTir;
+    private javax.swing.JTextArea jTextAreaTor;
     // End of variables declaration//GEN-END:variables
 
-    private void dataToTable() {
-        boolean firstElementPushed = false;
-        ArrayList<IngredientAmount> tempShopList = new ArrayList<>();
-        for (Weekday wd : week.getWeekdays()) {
-            for (IngredientAmount ingAm : wd.getRecipe().getIngredientList()) {
-                IngredientAmount tempIng = new IngredientAmount(ingAm.getUnit(), ingAm.getIngredient(), ingAm.getAmount());
-                Iterator<IngredientAmount> iter = tempShopList.iterator();
-                boolean push = true;
-                while (iter.hasNext() && firstElementPushed) {
-                    IngredientAmount ing = iter.next();
-                    if (ing.getIngredient() == tempIng.getIngredient()) {
-                        for (int i = 0; i < tempShopList.size(); i++) {
-                            if (tempShopList.get(i).getIngredient() == ing.getIngredient()) {
-                                tempShopList.get(i).setAmount(ing.getAmount() + tempIng.getAmount());
-                                push = false;
-                            }
-                        }
-                    }
-                }
-                if (push) {
-                    tempShopList.add(tempIng);
-                    firstElementPushed = true;
-                }
-            }
-        }
-        for (IngredientAmount tempShop : tempShopList) {
-            model.addElement(tempShop);
-        }
+    private void ingredientListForDay(JTextArea day, Weekday weekday) {
+	if (weekday.isOmit() || !weekday.getRecipe().isActive()) {
+	    day.getParent().setBackground(GUI.omittedColor);
+	    day.setBackground(GUI.omittedColor);
+	    day.setDisabledTextColor(GUI.disableDayColor);
+	}
+	day.append(weekday.getRecipe().getName() + "\n\n");
+	for (IngredientAmount ingAm : weekday.getRecipe().getIngredientList()) {
+	    day.append(ingAm.toString() + "\n");
+	}
     }
-    
-    private void showRecipes(int selectedIndex) {
-        IngredientAmount ing = (IngredientAmount) model.getElementAt(selectedIndex);
-        jLabel2.setText(ing.getIngredient() + " bruges i:");
-        modelRecipe.removeAllElements();
-        for (Recipe recipe : GUI.getCh().getRh().getRecipeList()) {
-            for (IngredientAmount ingredientAmount : recipe.getIngredientList()) {
-                if (ingredientAmount.getIngredient().equals(ing.getIngredient())) {
-                    modelRecipe.addElement(recipe);
-                }
-            }
-        }
-    }
-    
-    private void showRecipeFull(int selectedIndex) {
-        Recipe recipe = (Recipe) modelRecipe.getElementAt(selectedIndex);
-        jRecHeadline.setText(recipe.getName());
-        jRecDesc.setText(recipe.getDescription());
-        modelRecIngList.removeAllElements();
-        for (IngredientAmount in : recipe.getIngredientList()) {
-            modelRecIngList.addElement(in);
-        }
+
+    private void fullIngredientList() {
+	boolean firstElementPushed = false;
+	ArrayList<IngredientAmount> tempShopList = new ArrayList<>();
+	for (Weekday wd : week.getWeekdays()) {
+	    if (!wd.isOmit() && wd.getRecipe().isActive()) {
+		System.out.println("WHY?!" + wd.isOmit() + wd.getRecipe().isActive());
+		for (IngredientAmount ingAm : wd.getRecipe().getIngredientList()) {
+		    IngredientAmount tempIng = new IngredientAmount(ingAm.getUnit(), ingAm.getIngredient(), ingAm.getAmount());
+		    Iterator<IngredientAmount> iter = tempShopList.iterator();
+		    boolean push = true;
+		    while (iter.hasNext() && firstElementPushed) {
+			IngredientAmount ing = iter.next();
+			if (ing.getIngredient() == tempIng.getIngredient()) {
+			    for (int i = 0; i < tempShopList.size(); i++) {
+				if (tempShopList.get(i).getIngredient() == ing.getIngredient()) {
+				    tempShopList.get(i).setAmount(ing.getAmount() + tempIng.getAmount());
+				    push = false;
+				}
+			    }
+			}
+		    }
+		    if (push) {
+			tempShopList.add(tempIng);
+			firstElementPushed = true;
+		    }
+		}
+	    }
+	}
+	String test = "";
+	for (int i = 0; i < tempShopList.size(); i++) {
+	    test += tempShopList.get(i).getAmountString() + tempShopList.get(i).getUnit().getShortname() + " " + tempShopList.get(i).getIngredient().getName();
+	    if (i < tempShopList.size() - 1) {
+		test += ", ";
+	    }
+	}
+	jTextAreaFull.setText(test);
     }
 }
