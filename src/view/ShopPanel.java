@@ -20,9 +20,7 @@ import model.Weekday;
 public class ShopPanel extends javax.swing.JPanel {
 
     private Week week;
-    private DefaultListModel model;
-    private DefaultListModel modelRecipe;
-    private DefaultListModel modelRecIngList;
+    private String fullIngredientList;
 
     /**
      * Creates new form ShopPanel
@@ -30,7 +28,6 @@ public class ShopPanel extends javax.swing.JPanel {
     public ShopPanel(GUI gui) {
 	this.week = gui.getSelectedWeekPanel().getWeek();
 	initComponents();
-	model = new DefaultListModel();
 	jLabelHeadline.setText("Indkøbsliste for uge " + week.getDate());
 	ingredientListForDay(jTextAreaMan, week.getWeekdays()[0]);
 	ingredientListForDay(jTextAreaTir, week.getWeekdays()[1]);
@@ -464,6 +461,7 @@ public class ShopPanel extends javax.swing.JPanel {
 
     private void fullIngredientList() {
 	boolean firstElementPushed = false;
+	fullIngredientList="";
 	ArrayList<IngredientAmount> tempShopList = new ArrayList<>();
 	for (Weekday wd : week.getWeekdays()) {
 	    if (!wd.isOmit() && wd.getRecipe().isActive()) {
@@ -489,13 +487,12 @@ public class ShopPanel extends javax.swing.JPanel {
 		}
 	    }
 	}
-	String test = "";
 	for (int i = 0; i < tempShopList.size(); i++) {
-	    test += tempShopList.get(i).getAmountString() + tempShopList.get(i).getUnit().getShortname() + " " + tempShopList.get(i).getIngredient().getName();
+	    fullIngredientList += tempShopList.get(i).getAmountString() + tempShopList.get(i).getUnit().getShortname() + " " + tempShopList.get(i).getIngredient().getName();
 	    if (i < tempShopList.size() - 1) {
-		test += ", ";
+		fullIngredientList += ", ";
 	    }
 	}
-	jTextAreaFull.setText(test);
+	jTextAreaFull.setText(fullIngredientList);
     }
 }
