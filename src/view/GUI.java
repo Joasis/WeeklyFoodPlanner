@@ -46,7 +46,7 @@ public class GUI extends javax.swing.JFrame {
     protected final static Color omittedColor = new Color(118, 118, 118);
     protected final static Color succesColor = new Color(107, 191, 76);
     protected final static Color dangerColor = new Color(201, 48, 44);
-    private final ImageIcon loadingIcon = new ImageIcon("src\\view\\images\\loadingSync.gif");
+    private final ImageIcon loadingIcon = new ImageIcon("src\\view\\images\\loading.gif");
     private boolean currentWeekSat;
     private boolean firstRun;
     private String chooseWeek;
