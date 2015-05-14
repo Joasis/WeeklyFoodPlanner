@@ -5,6 +5,7 @@
  */
 package view;
 
+import control.RecipeHandler;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -129,7 +130,6 @@ public class AddRecipePanel extends javax.swing.JPanel {
         jButton_saveRecipe.setForeground(new java.awt.Color(255, 255, 255));
         jButton_saveRecipe.setText("Gem Opskrift");
         jButton_saveRecipe.setBorder(null);
-        jButton_saveRecipe.setEnabled(false);
         jButton_saveRecipe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_saveRecipeActionPerformed(evt);
@@ -424,9 +424,6 @@ public class AddRecipePanel extends javax.swing.JPanel {
             jListIngredients.setSelectedIndex(0);
             jListIngredients.setBorder(null);
         }
-        if (list.size() == 0) {
-            jButton_saveRecipe.setEnabled(false);
-        }
     }//GEN-LAST:event_jButton_removeIngredientActionPerformed
 
     private void jListIngredientsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListIngredientsValueChanged
@@ -538,10 +535,13 @@ public class AddRecipePanel extends javax.swing.JPanel {
                     for (int i = 0; i < list.getSize(); i++) {
                         ingAmList.add((IngredientAmount) list.getElementAt(i));
                     }
-
                     Recipe newRecipe = new Recipe(recipeID, name, description, portion, cookTime, true, ingAmList);
                     GUI.getCh().getDbh().insertRecipe(newRecipe);
                     GUI.getCh().getRh().getRecipeList().add(newRecipe);
+                    if (ingAmList.isEmpty()) {
+                        IngredientAmount ingAm = new IngredientAmount(GUI.getCh().getUh().getUnitList().get(0), GUI.getCh().getIh().getIngredientList().get(0), RecipeHandler.NO_INGREDIENTS);
+                        GUI.getCh().getDbh().insertIngredientToRecipe(newRecipe, ingAm);
+                    }
                     System.out.println("Name: " + newRecipe.getName());
                     System.out.println("Descr: " + newRecipe.getDescription());
                     System.out.println("Cook: " + newRecipe.getCookingtime());

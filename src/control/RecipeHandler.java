@@ -22,6 +22,7 @@ public class RecipeHandler {
 
     private ArrayList<Recipe> recipeList;
     private ArrayList<Recipe> addedRecipes;
+    public static final int NO_INGREDIENTS = -866;
 
     public RecipeHandler() {
         getRecipesFromDB();
@@ -45,10 +46,12 @@ public class RecipeHandler {
                     Recipe rec = new Recipe(rs.getInt("re_id"), rs.getString("re_name"), rs.getString("re_description"), rs.getInt("re_portions"), rs.getInt("re_cooktime"), rs.getBoolean("re_active"), ingList);
                     recipeList.add(rec);
                 }
-                unit = ControlHandler.getUh().getUnit(rs.getInt("fk_am_unittype"));
-                ing = ControlHandler.getIh().getIngredient(rs.getInt("fk_ingr"));
-                ingAm = new IngredientAmount(unit, ing, rs.getDouble("am_amount"));
-                ingList.add(ingAm);
+                if (rs.getDouble("am_amount") != NO_INGREDIENTS) {
+                    unit = ControlHandler.getUh().getUnit(rs.getInt("fk_am_unittype"));
+                    ing = ControlHandler.getIh().getIngredient(rs.getInt("fk_ingr"));
+                    ingAm = new IngredientAmount(unit, ing, rs.getDouble("am_amount"));
+                    ingList.add(ingAm);
+                }
                 currentID = rs.getInt("re_id");
             }
         } catch (SQLException ex) {

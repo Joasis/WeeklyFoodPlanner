@@ -152,6 +152,13 @@ public class DBHandler {
         }
     }
 
+    public void deleteEmptyRecipeIngredient(Recipe recipe) throws SQLException {
+        String sql = "DELETE from amount where fk_recipe = " + recipe.getId();
+        if (stmt != null) {
+            stmt.execute(sql);
+        }
+    }
+
     public void updateRecipe(Recipe recipe) throws SQLException {
         ArrayList<String> sqlQueries;
         sqlQueries = new ArrayList<>();
@@ -214,7 +221,7 @@ public class DBHandler {
     public void swapRecipe(Weekday weekday) throws SQLException {
         String sql = "UPDATE wkday SET fk_recipe = " + weekday.getRecipe().getId() + " where wkd_id = " + weekday.getId();
         if (stmt != null) {
-                stmt.execute(sql);
+            stmt.execute(sql);
         }
     }
 }

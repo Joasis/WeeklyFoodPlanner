@@ -5,6 +5,7 @@
  */
 package view;
 
+import control.RecipeHandler;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -799,24 +800,40 @@ public class EditPanel extends javax.swing.JPanel {
 
     public void removeIngredientFromSelectedRecipe() {
         if (selectedRecipe != null) {
-            if (model.size() == 1) {
-                GUI.decorateUI("Ja", "Nej");
-                int option = JOptionPane.showConfirmDialog(this, "Hvis du fjerner den sidste ingrediens, slettes opskriften\nVil du fortsætte?", "ADVARSEL", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-                if (option == 0) {
-                    deleteSelectedRecipe();
-                }
-            } else {
-                if (!jListEditRecipeIngredients.isSelectionEmpty()) {
-                    IngredientAmount ingam = (IngredientAmount) jListEditRecipeIngredients.getSelectedValue();
-                    selectedRecipe.getIngredientList().remove(ingam);
-                    model.removeElement(ingam);
-                    jTextFieldEditRecipeAmount.setText("");
-                    jComboBoxEditRecipeUnit.setSelectedIndex(0);
-                    try {
-                        GUI.getCh().getDbh().deleteIngredientFromRecipe(selectedRecipe, ingam.getIngredient());
-                    } catch (SQLException ex) {
-                        JOptionPane.showMessageDialog(this, "FEJL VED INGREDIENT REMOVAL FRA DATABASE");
+            /*
+             GUI.decorateUI("Ja", "Nej");
+             int option = JOptionPane.showConfirmDialog(this, "Hvis du fjerner den sidste ingrediens, slettes opskriften\nVil du fortsætte?", "ADVARSEL", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+             if (option == 0) {
+             deleteSelectedRecipe();
+             }
+
+             if (!jListEditRecipeIngredients.isSelectionEmpty()) {
+             IngredientAmount ingam = (IngredientAmount) jListEditRecipeIngredients.getSelectedValue();
+             model.removeElement(ingam);
+             jTextFieldEditRecipeAmount.setText("");
+             jComboBoxEditRecipeUnit.setSelectedIndex(0);
+             try {
+             selectedRecipe.getIngredientList().remove(ingam);
+             GUI.getCh().getDbh().createEmptyRecipe(selectedRecipe);
+             } catch (SQLException ex) {
+             JOptionPane.showMessageDialog(this, "FEJL VED INGREDIENT REMOVAL FRA DATABASE");
+             }
+             }
+             */
+            if (!jListEditRecipeIngredients.isSelectionEmpty()) {
+                IngredientAmount ingam = (IngredientAmount) jListEditRecipeIngredients.getSelectedValue();
+                selectedRecipe.getIngredientList().remove(ingam);
+                model.removeElement(ingam);
+                jTextFieldEditRecipeAmount.setText("");
+                jComboBoxEditRecipeUnit.setSelectedIndex(0);
+                try {
+                    GUI.getCh().getDbh().deleteIngredientFromRecipe(selectedRecipe, ingam.getIngredient());
+                    if (model.isEmpty()) {
+                        ingam.setAmount(RecipeHandler.NO_INGREDIENTS);
+                        GUI.getCh().getDbh().insertIngredientToRecipe(selectedRecipe, ingam);
                     }
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(this, "FEJL VED INGREDIENT REMOVAL FRA DATABASE");
                 }
             }
         }
@@ -914,12 +931,16 @@ public class EditPanel extends javax.swing.JPanel {
     private void jButtonSaveRecipeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveRecipeActionPerformed
         updateSelectedRecipe();
     }//GEN-LAST:event_jButtonSaveRecipeActionPerformed
+
     public void addIngredientToRecipe() {
         if (validateIngredientInput()) {
             IngredientAmount ingAm = new IngredientAmount((Unit) jComboBoxEditIngredientUnit.getSelectedItem(), selectedIngredient, Double.parseDouble(jTextFieldEditIngredientAmount.getText()));
             if (selectedRecipe != null) {
                 if (!GUI.getCh().getRh().isIngredientFound(selectedRecipe, ingAm)) {
                     try {
+                        if (selectedRecipe.getIngredientList().isEmpty()) {
+                            GUI.getCh().getDbh().deleteEmptyRecipeIngredient(selectedRecipe);
+                        }
                         GUI.getCh().getDbh().insertIngredientToRecipe(selectedRecipe, ingAm);
                         selectedRecipe.getIngredientList().add(ingAm);
                         model.addElement(ingAm);
