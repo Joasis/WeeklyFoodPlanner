@@ -303,7 +303,9 @@ public class AddRecipePanel extends javax.swing.JPanel {
 
         jTextArea_description.setColumns(20);
         jTextArea_description.setFont(new java.awt.Font("Verdana", 2, 11)); // NOI18N
+        jTextArea_description.setLineWrap(true);
         jTextArea_description.setRows(5);
+        jTextArea_description.setWrapStyleWord(true);
         jTextArea_description.setBorder(null);
         jScrollPane1.setViewportView(jTextArea_description);
 
