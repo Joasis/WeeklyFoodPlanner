@@ -172,7 +172,6 @@ public class EditPanel extends javax.swing.JPanel {
         jTextAreaDescription.setEnabled(enable);
         jButtonDeleteRecipe.setEnabled(enable);
         jButtonSaveRecipe.setEnabled(enable);
-        jButtonRemoveIngredient.setEnabled(enable);
         jListEditRecipeIngredients.setEnabled(enable);
         if (selectedIngredient != null) {
             jButtonAddIngredient.setEnabled(enable);
@@ -261,6 +260,7 @@ public class EditPanel extends javax.swing.JPanel {
         jTextFieldRecipeNewName = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabelShowAllRecipes = new javax.swing.JLabel();
+        jButtonEditIngredients = new javax.swing.JButton();
         jPanelEditIngredient = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jTextFieldIngredientSearch = new javax.swing.JTextField() {
@@ -426,6 +426,18 @@ public class EditPanel extends javax.swing.JPanel {
             }
         });
 
+        jButtonEditIngredients.setBackground(GUI.succesColor);
+        jButtonEditIngredients.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jButtonEditIngredients.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonEditIngredients.setText("Ret");
+        jButtonEditIngredients.setBorder(null);
+        jButtonEditIngredients.setEnabled(false);
+        jButtonEditIngredients.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEditIngredientsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelEditRecipeLayout = new javax.swing.GroupLayout(jPanelEditRecipe);
         jPanelEditRecipe.setLayout(jPanelEditRecipeLayout);
         jPanelEditRecipeLayout.setHorizontalGroup(
@@ -464,6 +476,8 @@ public class EditPanel extends javax.swing.JPanel {
                                         .addGroup(jPanelEditRecipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
                                             .addComponent(jTextFieldEditRecipeAmount))
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jButtonEditIngredients, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addGroup(jPanelEditRecipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
@@ -518,20 +532,23 @@ public class EditPanel extends javax.swing.JPanel {
                     .addGroup(jPanelEditRecipeLayout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanelEditRecipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8)
+                        .addGroup(jPanelEditRecipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanelEditRecipeLayout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButtonEditIngredients, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelEditRecipeLayout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanelEditRecipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jTextFieldEditRecipeAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jComboBoxEditRecipeUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addGap(16, 16, 16)
+                .addGap(14, 14, 14)
                 .addGroup(jPanelEditRecipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButtonDeleteRecipe, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
                     .addComponent(jButtonSaveRecipe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButtonRemoveIngredient, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanelEditIngredient.setBackground(new java.awt.Color(150, 150, 150));
@@ -723,8 +740,8 @@ public class EditPanel extends javax.swing.JPanel {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelEditRecipe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(jPanelEditIngredient, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanelEditRecipe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -756,10 +773,14 @@ public class EditPanel extends javax.swing.JPanel {
                 jButtonRemoveIngredient.setEnabled(true);
                 jTextFieldEditRecipeAmount.setEnabled(true);
                 jComboBoxEditRecipeUnit.setEnabled(true);
+                jButtonEditIngredients.setEnabled(true);
+                jButtonRemoveIngredient.setEnabled(true);
             } else {
                 jButtonRemoveIngredient.setEnabled(false);
                 jTextFieldEditRecipeAmount.setEnabled(false);
                 jComboBoxEditRecipeUnit.setEnabled(false);
+                jButtonEditIngredients.setEnabled(false);
+                jButtonRemoveIngredient.setEnabled(false);
             }
         }
     }//GEN-LAST:event_jListEditRecipeIngredientsValueChanged
@@ -826,8 +847,15 @@ public class EditPanel extends javax.swing.JPanel {
             ok = false;
         }
         try {
-            jTextFieldEditIngredientAmount.setText(jTextFieldEditIngredientAmount.getText().replace(",", "."));
-            double a = Double.parseDouble(jTextFieldEditIngredientAmount.getText());
+            if (jTextFieldEditIngredientAmount.getText().length() > 8) {
+                setFeedback(jTextFieldEditIngredientAmount);
+                ok = false;
+                JOptionPane.showMessageDialog(this, "Antal overskrider den maksimale værdi på 8 tegn\nRet værdien, og prøv igen", "ADVARSEL", JOptionPane.ERROR_MESSAGE);
+                GUI.decorateUI("Luk", "");
+            } else {
+                jTextFieldEditIngredientAmount.setText(jTextFieldEditIngredientAmount.getText().replace(",", "."));
+                double a = Double.parseDouble(jTextFieldEditIngredientAmount.getText());
+            }
         } catch (NumberFormatException ex2) {
             setFeedback(jTextFieldEditIngredientAmount);
             ok = false;
@@ -842,17 +870,31 @@ public class EditPanel extends javax.swing.JPanel {
             ok = false;
             setFeedback(jTextFieldRecipeNewName);
         }
-        try {
-            int a = Integer.parseInt(jTextFieldCookingTime.getText());
-        } catch (NumberFormatException ex2) {
+        if (jTextFieldCookingTime.getText().length() > 8) {
             setFeedback(jTextFieldCookingTime);
             ok = false;
+            JOptionPane.showMessageDialog(this, "Tilberedningstiden overskrider den maksimale værdi på 8 tegn\nRet værdien, og prøv igen", "ADVARSEL", JOptionPane.ERROR_MESSAGE);
+            GUI.decorateUI("Luk", "");
+        } else {
+            try {
+                int a = Integer.parseInt(jTextFieldCookingTime.getText());
+            } catch (NumberFormatException ex2) {
+                setFeedback(jTextFieldCookingTime);
+                ok = false;
+            }
         }
-        try {
-            int a = Integer.parseInt(jTextFieldPortions.getText());
-        } catch (NumberFormatException ex3) {
+        if (jTextFieldPortions.getText().length() > 8) {
             setFeedback(jTextFieldPortions);
             ok = false;
+            JOptionPane.showMessageDialog(this, "Antal overskrider den maksimale værdi på 8 tegn\nRet værdien, og prøv igen", "ADVARSEL", JOptionPane.ERROR_MESSAGE);
+            GUI.decorateUI("Luk", "");
+        } else {
+            try {
+                int a = Integer.parseInt(jTextFieldPortions.getText());
+            } catch (NumberFormatException ex3) {
+                setFeedback(jTextFieldPortions);
+                ok = false;
+            }
         }
         try {
             if (!jListEditRecipeIngredients.isSelectionEmpty()) {
@@ -911,6 +953,24 @@ public class EditPanel extends javax.swing.JPanel {
     private void jLabelShowAllIngredientsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelShowAllIngredientsMouseClicked
         showAllIngredients();
     }//GEN-LAST:event_jLabelShowAllIngredientsMouseClicked
+
+    private void jButtonEditIngredientsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditIngredientsActionPerformed
+        if (!jListEditRecipeIngredients.isSelectionEmpty()) {
+            if (!jTextFieldEditRecipeAmount.getText().isEmpty()) {
+                if (jTextFieldEditRecipeAmount.getText().length() > 8) {
+                    setFeedback(jTextFieldEditRecipeAmount);
+                    JOptionPane.showMessageDialog(this, "Antal overskrider den maksimale værdi på 8 tegn\nRet værdien, og prøv igen", "ADVARSEL", JOptionPane.ERROR_MESSAGE);
+                    GUI.decorateUI("Luk", "");
+                } else {
+                    IngredientAmount ingAm = (IngredientAmount) jListEditRecipeIngredients.getSelectedValue();
+                    ingAm.setAmount(Double.parseDouble(jTextFieldEditRecipeAmount.getText()));
+                    ingAm.setUnit((Unit) jComboBoxEditRecipeUnit.getSelectedItem());
+                }
+            } else {
+                setFeedback(jTextFieldEditRecipeAmount);
+            }
+        }
+    }//GEN-LAST:event_jButtonEditIngredientsActionPerformed
     public void showAllIngredients() {
         DefaultListModel tempModel = new DefaultListModel();
         JList list = new JList(tempModel);
@@ -991,34 +1051,32 @@ public class EditPanel extends javax.swing.JPanel {
     public void updateSelectedRecipe() {
         if (selectedRecipe != null) {
             if (validateRecipeInput()) {
-                try {
-                    selectedRecipe.setName(jTextFieldRecipeNewName.getText());
-                    selectedRecipe.setDescription(jTextAreaDescription.getText());
-                    selectedRecipe.setCookingtime(Integer.parseInt(jTextFieldCookingTime.getText()));
-                    selectedRecipe.setPortions(Integer.parseInt(jTextFieldPortions.getText()));
+                if (!selectedRecipe.getName().equalsIgnoreCase(jTextFieldRecipeNewName.getText().trim()) && GUI.getCh().getRh().isRecipeFound(jTextFieldRecipeNewName.getText().trim())) {
+                    JOptionPane.showMessageDialog(this, "Der findes allerede en opskrift med dette navn\nVælg et andet navn, og prøv igen", "ADVARSEL", JOptionPane.ERROR_MESSAGE);
+                    setFeedback(jTextFieldRecipeNewName);
+                    GUI.decorateUI("Luk", "");
+                } else {
+                    try {
+                        selectedRecipe.setName(jTextFieldRecipeNewName.getText());
+                        selectedRecipe.setDescription(jTextAreaDescription.getText());
+                        selectedRecipe.setCookingtime(Integer.parseInt(jTextFieldCookingTime.getText()));
+                        selectedRecipe.setPortions(Integer.parseInt(jTextFieldPortions.getText()));
 
-                    if (!jListEditRecipeIngredients.isSelectionEmpty()) {
-                        if (!jTextFieldEditRecipeAmount.getText().isEmpty()) {
-                            IngredientAmount ingAm = (IngredientAmount) jListEditRecipeIngredients.getSelectedValue();
-                            ingAm.setAmount(Double.parseDouble(jTextFieldEditRecipeAmount.getText()));
-                            ingAm.setUnit((Unit) jComboBoxEditRecipeUnit.getSelectedItem());
-                        } else {
-                            setFeedback(jTextFieldEditRecipeAmount);
+                        ArrayList<IngredientAmount> ingAmList;
+                        ingAmList = new ArrayList<>();
+
+                        for (int i = 0; i < model.size(); i++) {
+                            ingAmList.add((IngredientAmount) model.get(i));
                         }
+
+                        selectedRecipe.setIngredientList(ingAmList);
+
+                        GUI.getCh().getDbh().updateRecipe(selectedRecipe);
+                        clearSelection("Recipe");
+                        jTextFieldRecipeSearch.setText("");
+                    } catch (SQLException ex) {
+                        System.out.println("Fejl ved update recipe atabase");
                     }
-
-                    ArrayList<IngredientAmount> ingAmList;
-                    ingAmList = new ArrayList<>();
-
-                    for (int i = 0; i < model.size(); i++) {
-                        ingAmList.add((IngredientAmount) model.get(i));
-                    }
-
-                    selectedRecipe.setIngredientList(ingAmList);
-
-                    GUI.getCh().getDbh().updateRecipe(selectedRecipe);
-                } catch (SQLException ex) {
-                    System.out.println("Fejl ved update recipe atabase");
                 }
             }
         }
@@ -1040,6 +1098,7 @@ public class EditPanel extends javax.swing.JPanel {
     private javax.swing.JButton jButtonAddIngredient;
     private javax.swing.JButton jButtonDeleteIngredient;
     private javax.swing.JButton jButtonDeleteRecipe;
+    private javax.swing.JButton jButtonEditIngredients;
     private javax.swing.JButton jButtonRemoveIngredient;
     private javax.swing.JButton jButtonSaveIngredient;
     private javax.swing.JButton jButtonSaveRecipe;

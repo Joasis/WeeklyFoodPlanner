@@ -8,6 +8,7 @@ package control;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import model.Ingredient;
 import model.IngredientAmount;
 import model.Recipe;
@@ -20,12 +21,14 @@ import model.Unit;
 public class RecipeHandler {
 
     private ArrayList<Recipe> recipeList;
+    private ArrayList<Recipe> addedRecipes;
 
     public RecipeHandler() {
         getRecipesFromDB();
     }
 
     public void getRecipesFromDB() {
+        clearAddedRecipes();
         recipeList = new ArrayList<>();
         try {
             ResultSet rs = ControlHandler.getDbh().selectAll("amount inner join recipe on fk_recipe = re_id");
@@ -89,20 +92,30 @@ public class RecipeHandler {
         return activeList.size();
     }
 
-    public ArrayList<Recipe> cloneRecipeList() {
-        ArrayList<Recipe> cloneList = new ArrayList<>();
-        for (Recipe recipeClone : recipeList) {
-            if (recipeClone.isActive()) {
-                cloneList.add(recipeClone.cloneRecipe());
+    public Recipe getRandomRecipe(int n) {
+        Recipe recipe = null;
+        if (addedRecipes.size() < 7) {
+            for (int i = 0; addedRecipes.size() < 7; i++) {
+                recipe = recipeList.get((int) (Math.random() * recipeList.size()));
+                if (!addedRecipes.contains(recipe)) {
+                    addedRecipes.add(recipe);
+                }
             }
+            recipe = addedRecipes.get(n);
+        } else {
+            recipe = addedRecipes.get(n);
         }
-        return cloneList;
+        return recipe;
+    }
+
+    public void clearAddedRecipes() {
+        addedRecipes = new ArrayList<>();
     }
 
     public boolean isRecipeFound(String recipeName) {
         boolean recipeFound = false;
         for (int i = 0; i < recipeList.size() && !recipeFound; i++) {
-            if (recipeList.get(i).getName().toLowerCase().equals(recipeName.toLowerCase()) && recipeList.get(i).isActive()) {
+            if (recipeList.get(i).getName().equalsIgnoreCase(recipeName) && recipeList.get(i).isActive()) {
                 recipeFound = true;
             }
         }

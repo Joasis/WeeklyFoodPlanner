@@ -13,7 +13,6 @@ import java.awt.Font;
 import java.io.IOException;
 import java.net.Inet4Address;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.logging.Level;
@@ -31,7 +30,7 @@ import model.Weekday;
  * @author Jonas
  */
 public class GUI extends javax.swing.JFrame {
-
+    
     private LinkedList<Week> weekList;
     private static ControlHandler ch;
     protected final static Color weekPanelColor = new Color(132, 153, 204);
@@ -70,12 +69,12 @@ public class GUI extends javax.swing.JFrame {
          */
         initComponents();
         jComboWeek.setUI(bcb);
-
+        
         jPanelContent.setBackground(mainColor);
-
+        
         addWeeks();
     }
-
+    
     public static void decorateUI(String confirmText, String cancelText) {
         UIManager.put("OptionPane.okButtonText", confirmText);
         UIManager.put("OptionPane.cancelButtonText", cancelText);
@@ -84,11 +83,11 @@ public class GUI extends javax.swing.JFrame {
         UIManager.put("OptionPane.messageForeground", Color.white);
         UIManager.put("OptionPane.messageFont", new Font("Verdana", Font.PLAIN, 12));
     }
-
+    
     protected static ControlHandler getCh() {
         return ch;
     }
-
+    
     public void addWeeks() {
         Week tempweek = null;
         Calendar cal = Calendar.getInstance();
@@ -100,14 +99,14 @@ public class GUI extends javax.swing.JFrame {
                 tempweek = week;
             }
         }
-
+        
         if (currentWeekSat) {
             jComboWeek.setSelectedItem(tempweek);
             changeTo(getSelectedWeekPanel());
         }
         firstRun = false;
     }
-
+    
     public WeekPanel getSelectedWeekPanel() {
         WeekPanel wp = null;
         if (jComboWeek.getSelectedItem() != chooseWeek) {
@@ -116,7 +115,7 @@ public class GUI extends javax.swing.JFrame {
         }
         return wp;
     }
-
+    
     public void changeTo(Component page) {
         hidePages();
         jPanelWeek.add(page);
@@ -133,11 +132,9 @@ public class GUI extends javax.swing.JFrame {
                 break;
         }
         currentWeek = page.getClass().getSimpleName();
-switch (currentWeek) {
+	enableAll();
+        switch (currentWeek) {
             case "WeekPanel":
-                enableWeekChooser();
-                enableShop();
-                enableSync();
                 disableBack();
                 disableWeekGen();
                 break;
@@ -145,81 +142,99 @@ switch (currentWeek) {
                 disableWeekChooser();
                 disableShop();
                 disableWeekGen();
-                enableSync();
-                enableBack();
                 break;
             case "JLabel":
                 disableShop();
                 disableBack();
                 disableSync();
-                enableWeekChooser();
-                enableWeekGen();
                 break;
             case "EditPanel":
                 disableWeekChooser();
                 disableShop();
                 disableWeekGen();
                 disableSync();
-                enableBack();
+		disableEdit();
                 break;
             case "AddRecipePanel":
                 disableWeekChooser();
                 disableShop();
                 disableWeekGen();
                 disableSync();
-                enableBack();
+		disableAdd();
                 break;
         }
         jPanelWeek.revalidate();
         jPanelWeek.repaint();
     }
-
+    
     public void hidePages() {
         jPanelWeek.removeAll();
     }
-
+    public void enableAll() {
+	enableAdd();
+	enableBack();
+	enableEdit();
+	enableShop();
+	enableSync();
+	enableWeekChooser();
+	enableWeekGen();
+    }
     public void disableSync() {
         jButtonSync.setEnabled(false);
     }
-
+    
     public void enableSync() {
         jButtonSync.setEnabled(true);
     }
-
+    
     public void disableWeekChooser() {
         jButtonDatePrevious.setEnabled(false);
         jButtonDateNext.setEnabled(false);
         jComboWeek.setEnabled(false);
     }
-
+    
     public void enableWeekChooser() {
         jButtonDatePrevious.setEnabled(true);
         jButtonDateNext.setEnabled(true);
         jComboWeek.setEnabled(true);
     }
-
+    
     public void enableShop() {
         jButtonShop.setEnabled(true);
     }
-
+    
     public void disableShop() {
         jButtonShop.setEnabled(false);
     }
-
+    
     public void enableWeekGen() {
         jButtonGenerate.setEnabled(true);
     }
-
+    
     public void disableWeekGen() {
         jButtonGenerate.setEnabled(false);
     }
-
+    
     public void enableBack() {
         jButtonBack.setEnabled(true);
     }
-
+    
     public void disableBack() {
         jButtonBack.setEnabled(false);
+    }
+    public void enableAdd() {
+        jButtonAdd.setEnabled(true);
+    }
+
+    public void disableAdd() {
+        jButtonAdd.setEnabled(false);
+    }
+    public void enableEdit() {
+        jButtonUpdate.setEnabled(true);
+    }
+
+    public void disableEdit() {
+        jButtonUpdate.setEnabled(false);
     }
 
     public void establishConnection() {
@@ -595,34 +610,32 @@ switch (currentWeek) {
             }
         }
     }//GEN-LAST:event_jButtonGenerateActionPerformed
-
+    
     public void generateFoodPlan() throws SQLException {
         Calendar newWeek = Calendar.getInstance();
         Weekday[] weekdays = new Weekday[7];
         int nextWeekAi = getCh().getDbh().getNextAI("wk");
-        ArrayList<Recipe> clonedRecipeList = getCh().getRh().cloneRecipeList();
-
+        
         if (currentWeekSat) {
             newWeek = Calendar.getInstance();
             newWeek.setTime(weekList.getFirst().getCal().getTime());
             newWeek.add(Calendar.WEEK_OF_YEAR, 1);
         }
         Calendar wkdayCal = null;
-
+        
         for (int i = 0; i < 7; i++) {
             wkdayCal = Calendar.getInstance();
             wkdayCal.setTime(newWeek.getTime());
             wkdayCal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY + i);
-            Recipe tempRecipe = clonedRecipeList.get((int) (Math.random() * clonedRecipeList.size()));
+            Recipe tempRecipe = getCh().getRh().getRandomRecipe(i);
             Weekday wkday = new Weekday(getCh().getDbh().getNextAI("wkday"), tempRecipe, wkdayCal, nextWeekAi, false);
-            clonedRecipeList.remove(tempRecipe);
             weekdays[i] = wkday;
         }
-
+        getCh().getRh().clearAddedRecipes();
+        
         if (nextWeekAi != -1) {
             Week week = new Week(nextWeekAi, newWeek, 0, weekdays);
             getCh().getDbh().insertWeek(week);
-
             weekList.addFirst(week);
             currentWeekSat = true;
             firstRun = true;
@@ -789,7 +802,7 @@ switch (currentWeek) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-
+                    
                 }
             }
         } catch (ClassNotFoundException ex) {

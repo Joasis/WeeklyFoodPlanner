@@ -82,10 +82,6 @@ public class Recipe {
     public void setIngredientList(ArrayList<IngredientAmount> ingredientList) {
         this.ingredientList = ingredientList;
     }
-    public Recipe cloneRecipe(){
-	Recipe recipeClone = new Recipe(id, name, description, portions, cookingtime, active, ingredientList);
-	return recipeClone;
-    }
 
     @Override
     public String toString() {

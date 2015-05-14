@@ -58,6 +58,7 @@ public class WeekdayPanel extends javax.swing.JPanel {
 
     public void setColors(Color col) {
         jLabelDescription.setBackground(col);
+        jLabelOpskriftNavn.setBackground(col);
         jPanel1.setBackground(col);
     }
 
@@ -65,7 +66,9 @@ public class WeekdayPanel extends javax.swing.JPanel {
         jLabelDay.setText(wkday.getWeekName());
         jLabelDate.setText("<html>" + wkday.getDate() + "</html>");
         jLabelDescription.setText(getWeekRecipe().getDescription());
-        jLabelOpskriftNavn.setText("<html>" + getWeekRecipe().getName() + "</html>");
+        jLabelDescription.setToolTipText("<html><p width=\"300\">" + weekRecipe.getDescription() + "</p></html>");
+        jLabelOpskriftNavn.setText(getWeekRecipe().getName());
+        jLabelOpskriftNavn.setToolTipText("<html><p width=\"300\">" + weekRecipe.getName() + "</p></html>");
         jLabelCookingTime.setText(getWeekRecipe().getCookingtime() + " min");
         jLabelPortions.setText(getWeekRecipe().getPortions() + "");
         if (!wkday.getRecipe().isActive()) {
@@ -117,6 +120,7 @@ public class WeekdayPanel extends javax.swing.JPanel {
             }
             Image img = Toolkit.getDefaultToolkit().getImage("src\\view\\images\\deletedred.png");
             g.drawImage(img, 0, 0, this);
+            disableButtons();
 
         }
         if (wkday.isOmit()) {
@@ -125,10 +129,9 @@ public class WeekdayPanel extends javax.swing.JPanel {
             }
             Image img = Toolkit.getDefaultToolkit().getImage("src\\view\\images\\undladt.png");
             g.drawImage(img, 0, 0, this);
-            System.out.println(wkday.isOmit());
+            disableButtons();
         }
     }
-//&& jPanel1.getBackground() != GUI.daySwitchColor
 
     public void disableButtons() {
         jButtonDisable.setEnabled(false);
@@ -171,7 +174,6 @@ public class WeekdayPanel extends javax.swing.JPanel {
                 draw(g);
             }
         };
-        jLabelOpskriftNavn = new javax.swing.JLabel();
         jLabelDay = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabelCookingTime = new javax.swing.JLabel();
@@ -183,6 +185,7 @@ public class WeekdayPanel extends javax.swing.JPanel {
         jButtonDisable = new javax.swing.JButton();
         jComboAllRecipes = new javax.swing.JComboBox();
         jButtonReplaceRandom = new javax.swing.JButton();
+        jLabelOpskriftNavn = new javax.swing.JTextArea();
 
         setBackground(new java.awt.Color(105, 135, 186));
 
@@ -194,12 +197,6 @@ public class WeekdayPanel extends javax.swing.JPanel {
             }
         });
         jPanel1.setLayout(null);
-
-        jLabelOpskriftNavn.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        jLabelOpskriftNavn.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelOpskriftNavn.setText("Stor fed skinke");
-        jPanel1.add(jLabelOpskriftNavn);
-        jLabelOpskriftNavn.setBounds(0, 59, 130, 40);
 
         jLabelDay.setFont(new java.awt.Font("Verdana", 0, 30)); // NOI18N
         jLabelDay.setForeground(new java.awt.Color(255, 255, 255));
@@ -248,7 +245,6 @@ public class WeekdayPanel extends javax.swing.JPanel {
         jLabelDescription.setForeground(new java.awt.Color(255, 255, 255));
         jLabelDescription.setLineWrap(true);
         jLabelDescription.setRows(1);
-        jLabelDescription.setToolTipText("<html><p width=\"300\">" +wkday.getRecipe().getDescription()+"</p></html>");
         jLabelDescription.setWrapStyleWord(true);
         jLabelDescription.setAutoscrolls(false);
         jLabelDescription.setBorder(null);
@@ -263,7 +259,7 @@ public class WeekdayPanel extends javax.swing.JPanel {
             }
         });
         jPanel1.add(jLabelDescription);
-        jLabelDescription.setBounds(0, 104, 140, 200);
+        jLabelDescription.setBounds(0, 94, 140, 212);
 
         jButtonReplace.setBackground(GUI.replaceDayColor);
         jButtonReplace.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
@@ -318,6 +314,26 @@ public class WeekdayPanel extends javax.swing.JPanel {
         jPanel1.add(jButtonReplaceRandom);
         jButtonReplaceRandom.setBounds(0, 350, 142, 25);
 
+        jLabelOpskriftNavn.setEditable(false);
+        jLabelOpskriftNavn.setBackground(new java.awt.Color(240, 240, 240));
+        jLabelOpskriftNavn.setColumns(20);
+        jLabelOpskriftNavn.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
+        jLabelOpskriftNavn.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelOpskriftNavn.setLineWrap(true);
+        jLabelOpskriftNavn.setRows(2);
+        jLabelOpskriftNavn.setTabSize(2);
+        jLabelOpskriftNavn.setWrapStyleWord(true);
+        jLabelOpskriftNavn.setBorder(null);
+        jLabelOpskriftNavn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabelOpskriftNavn.setFocusable(false);
+        jLabelOpskriftNavn.setMaximumSize(new java.awt.Dimension(140, 35));
+        jLabelOpskriftNavn.setMinimumSize(new java.awt.Dimension(140, 35));
+        jLabelOpskriftNavn.setOpaque(false);
+        jLabelOpskriftNavn.setRequestFocusEnabled(false);
+        jLabelOpskriftNavn.setVerifyInputWhenFocusTarget(false);
+        jPanel1.add(jLabelOpskriftNavn);
+        jLabelOpskriftNavn.setBounds(0, 59, 140, 30);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -356,7 +372,7 @@ public class WeekdayPanel extends javax.swing.JPanel {
             GUI.getCh().getDbh().swapRecipe(getWkday());
             setWeekday();
         } catch (SQLException ex) {
-            System.out.println("SQL FEJL");
+            System.out.println("SQL FEJL" + ex);
         }
     }
 
@@ -367,6 +383,7 @@ public class WeekdayPanel extends javax.swing.JPanel {
             getRandomRecipe();
         } else {
             wkday.setRecipe(randomRecipe);
+            weekRecipe = wkday.getRecipe();
         }
     }
     private void jComboAllRecipesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboAllRecipesActionPerformed
@@ -387,7 +404,7 @@ public class WeekdayPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabelDate;
     private javax.swing.JLabel jLabelDay;
     private javax.swing.JTextArea jLabelDescription;
-    private javax.swing.JLabel jLabelOpskriftNavn;
+    private javax.swing.JTextArea jLabelOpskriftNavn;
     private javax.swing.JLabel jLabelPortions;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables

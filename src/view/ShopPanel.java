@@ -7,6 +7,7 @@ package view;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import javax.swing.DefaultListModel;
 import javax.swing.JTextArea;
 import model.IngredientAmount;
 import model.Week;
@@ -71,7 +72,7 @@ public class ShopPanel extends javax.swing.JPanel {
         jLabelSon = new javax.swing.JLabel();
         jTextAreaSon = new javax.swing.JTextArea();
         jPanelFull = new javax.swing.JPanel();
-        jLabelHeadlineFull = new javax.swing.JLabel();
+        jLabelHeadline1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextAreaFull = new javax.swing.JTextArea();
 
@@ -368,9 +369,9 @@ public class ShopPanel extends javax.swing.JPanel {
 
         jPanelFull.setBackground(GUI.buttonHoverColor);
 
-        jLabelHeadlineFull.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jLabelHeadlineFull.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelHeadlineFull.setText("Fuld indkøbsliste:");
+        jLabelHeadline1.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jLabelHeadline1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelHeadline1.setText("Fuld indkøbsliste:");
 
         jScrollPane1.setBorder(null);
 
@@ -386,7 +387,7 @@ public class ShopPanel extends javax.swing.JPanel {
         jPanelFull.setLayout(jPanelFullLayout);
         jPanelFullLayout.setHorizontalGroup(
             jPanelFullLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabelHeadlineFull, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabelHeadline1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanelFullLayout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -394,7 +395,7 @@ public class ShopPanel extends javax.swing.JPanel {
         jPanelFullLayout.setVerticalGroup(
             jPanelFullLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelFullLayout.createSequentialGroup()
-                .addComponent(jLabelHeadlineFull, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabelHeadline1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE))
         );
@@ -419,7 +420,7 @@ public class ShopPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabelFre;
     private javax.swing.JLabel jLabelHeadline;
-    private javax.swing.JLabel jLabelHeadlineFull;
+    private javax.swing.JLabel jLabelHeadline1;
     private javax.swing.JLabel jLabelLor;
     private javax.swing.JLabel jLabelMan;
     private javax.swing.JLabel jLabelOns;
@@ -460,7 +461,7 @@ public class ShopPanel extends javax.swing.JPanel {
 
     private void fullIngredientList() {
 	boolean firstElementPushed = false;
-	fullIngredientList = "";
+	fullIngredientList="";
 	ArrayList<IngredientAmount> tempShopList = new ArrayList<>();
 	for (Weekday wd : week.getWeekdays()) {
 	    if (!wd.isOmit() && wd.getRecipe().isActive()) {

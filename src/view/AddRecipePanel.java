@@ -8,9 +8,6 @@ package view;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.scene.shape.Arc;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -19,7 +16,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -149,6 +145,8 @@ public class AddRecipePanel extends javax.swing.JPanel {
         jLabel7.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Antal");
+
+        jScrollPane3.setAutoscrolls(true);
 
         jListIngredients.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jListIngredients.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
@@ -632,17 +630,31 @@ public class AddRecipePanel extends javax.swing.JPanel {
             ok = false;
             setFeedback(jTextField_name);
         }
-        try {
-            int a = Integer.parseInt(jTextField_cooktime.getText());
-        } catch (NumberFormatException ex2) {
+        if (jTextField_cooktime.getText().length() > 8) {
             setFeedback(jTextField_cooktime);
             ok = false;
+            JOptionPane.showMessageDialog(this, "Tilberedningstiden overskrider den maksimale værdi på 8 tegn\nRet værdien, og prøv igen", "ADVARSEL", JOptionPane.ERROR_MESSAGE);
+            GUI.decorateUI("Luk", "");
+        } else {
+            try {
+                int a = Integer.parseInt(jTextField_cooktime.getText());
+            } catch (NumberFormatException ex2) {
+                setFeedback(jTextField_cooktime);
+                ok = false;
+            }
         }
-        try {
-            int a = Integer.parseInt(jTextField_portion.getText());
-        } catch (NumberFormatException ex3) {
+        if (jTextField_portion.getText().length() > 8) {
             setFeedback(jTextField_portion);
             ok = false;
+            JOptionPane.showMessageDialog(this, "Antal overskrider den maksimale værdi på 8 tegn\nRet værdien, og prøv igen", "ADVARSEL", JOptionPane.ERROR_MESSAGE);
+            GUI.decorateUI("Luk", "");
+        } else {
+            try {
+                int a = Integer.parseInt(jTextField_portion.getText());
+            } catch (NumberFormatException ex3) {
+                setFeedback(jTextField_portion);
+                ok = false;
+            }
         }
         return ok;
     }
@@ -654,14 +666,20 @@ public class AddRecipePanel extends javax.swing.JPanel {
             setFeedback(jTextField_searchIngredient);
             ok = false;
         }
-        try {
-
-            jTextFieldRecipeAmount.setText(jTextFieldRecipeAmount.getText().replace(",", "."));
-            double c = Double.parseDouble(jTextFieldRecipeAmount.getText());
-
-        } catch (NumberFormatException ex4) {
+        if (jTextFieldRecipeAmount.getText().length() > 8) {
             setFeedback(jTextFieldRecipeAmount);
             ok = false;
+            JOptionPane.showMessageDialog(this, "Antal overskrider den maksimale værdi på 8 tegn\nRet værdien, og prøv igen", "ADVARSEL", JOptionPane.ERROR_MESSAGE);
+            GUI.decorateUI("Luk", "");
+        } else {
+            try {
+                jTextFieldRecipeAmount.setText(jTextFieldRecipeAmount.getText().replace(",", "."));
+                double c = Double.parseDouble(jTextFieldRecipeAmount.getText());
+
+            } catch (NumberFormatException ex4) {
+                setFeedback(jTextFieldRecipeAmount);
+                ok = false;
+            }
         }
         return ok;
     }
