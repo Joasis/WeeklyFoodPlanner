@@ -133,11 +133,9 @@ public class GUI extends javax.swing.JFrame {
                 break;
         }
         currentWeek = page.getClass().getSimpleName();
+	enableAll();
         switch (currentWeek) {
             case "WeekPanel":
-                enableWeekChooser();
-                enableShop();
-                enableSync();
                 disableBack();
                 disableWeekGen();
                 break;
@@ -145,29 +143,25 @@ public class GUI extends javax.swing.JFrame {
                 disableWeekChooser();
                 disableShop();
                 disableWeekGen();
-                enableSync();
-                enableBack();
                 break;
             case "JLabel":
                 disableShop();
                 disableBack();
                 disableSync();
-                enableWeekChooser();
-                enableWeekGen();
                 break;
             case "EditPanel":
                 disableWeekChooser();
                 disableShop();
                 disableWeekGen();
                 disableSync();
-                enableBack();
+		disableEdit();
                 break;
             case "AddRecipePanel":
                 disableWeekChooser();
                 disableShop();
                 disableWeekGen();
                 disableSync();
-                enableBack();
+		disableAdd();
                 break;
         }
         jPanelWeek.revalidate();
@@ -177,7 +171,15 @@ public class GUI extends javax.swing.JFrame {
     public void hidePages() {
         jPanelWeek.removeAll();
     }
-
+    public void enableAll() {
+	enableAdd();
+	enableBack();
+	enableEdit();
+	enableShop();
+	enableSync();
+	enableWeekChooser();
+	enableWeekGen();
+    }
     public void disableSync() {
         jButtonSync.setEnabled(false);
     }
@@ -220,6 +222,20 @@ public class GUI extends javax.swing.JFrame {
 
     public void disableBack() {
         jButtonBack.setEnabled(false);
+    }
+    public void enableAdd() {
+        jButtonAdd.setEnabled(true);
+    }
+
+    public void disableAdd() {
+        jButtonAdd.setEnabled(false);
+    }
+    public void enableEdit() {
+        jButtonUpdate.setEnabled(true);
+    }
+
+    public void disableEdit() {
+        jButtonUpdate.setEnabled(false);
     }
 
     public void establishConnection() {

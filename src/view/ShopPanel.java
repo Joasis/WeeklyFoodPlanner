@@ -467,7 +467,6 @@ public class ShopPanel extends javax.swing.JPanel {
 	ArrayList<IngredientAmount> tempShopList = new ArrayList<>();
 	for (Weekday wd : week.getWeekdays()) {
 	    if (!wd.isOmit() && wd.getRecipe().isActive()) {
-		System.out.println("WHY?!" + wd.isOmit() + wd.getRecipe().isActive());
 		for (IngredientAmount ingAm : wd.getRecipe().getIngredientList()) {
 		    IngredientAmount tempIng = new IngredientAmount(ingAm.getUnit(), ingAm.getIngredient(), ingAm.getAmount());
 		    Iterator<IngredientAmount> iter = tempShopList.iterator();
