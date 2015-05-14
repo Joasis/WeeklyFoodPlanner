@@ -5,7 +5,6 @@
  */
 package view;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -27,12 +26,12 @@ public class ShopPanel extends javax.swing.JPanel {
      * Creates new form ShopPanel
      */
     public ShopPanel(GUI gui) {
-	this.week = gui.getSelectedWeekPanel().getWeek();
-	initComponents();
-	jLabelHeadline.setText("Indkøbsliste for uge " + week.getDate());
-	fillIngredientListDays();
-	fullIngredientList();
-	jPanelDays.remove(jPanelMan);
+        this.week = gui.getSelectedWeekPanel().getWeek();
+        initComponents();
+        jLabelHeadline.setText("Indkøbsliste for uge " + week.getDate());
+        fillIngredientListDays();
+        fullIngredientList();
+        jPanelDays.remove(jPanelMan);
     }
 
     /**
@@ -520,88 +519,88 @@ public class ShopPanel extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void fillIngredientListDays() {
-	JTextArea day;
-	Component parent;
-	Weekday weekday;
-	for (int i = 0; i < 7; i++) {
-	    switch(i){
-		case 0:
-		    day = jTextAreaMan;
-		    parent = jPanelMan;
-		    break;
-		case 1:
-		    day = jTextAreaTir;
-		    parent = jPanelTir;
-		    break;
-		case 2:
-		    day = jTextAreaOns;
-		    parent = jPanelOns;
-		    break;
-		case 3:
-		    day = jTextAreaTor;
-		    parent = jPanelTor;
-		    break;
-		case 4:
-		    day = jTextAreaFre;
-		    parent = jPanelFre;
-		    break;
-		case 5:
-		    day = jTextAreaLor;
-		    parent = jPanelLor;
-		    break;
-		default:
-		    day = jTextAreaSon;
-		    parent = jPanelSon;
-		    break;
-	    }
-	    weekday = week.getWeekdays()[i];
-	    if (weekday.isOmit() || !weekday.getRecipe().isActive()) {
-		day.setBackground(GUI.buttonHoverColor);
-		parent.setBackground(GUI.buttonHoverColor);
-		day.setText("Dag undladt");
-	    } else {
-		day.append(weekday.getRecipe().getName() + "\n\n");
-		for (IngredientAmount ingAm : weekday.getRecipe().getIngredientList()) {
-		    day.append(ingAm.toString() + "\n");
-		}
-	    }
-	}
+        JTextArea day;
+        Component parent;
+        Weekday weekday;
+        for (int i = 0; i < 7; i++) {
+            switch (i) {
+                case 0:
+                    day = jTextAreaMan;
+                    parent = jPanelMan;
+                    break;
+                case 1:
+                    day = jTextAreaTir;
+                    parent = jPanelTir;
+                    break;
+                case 2:
+                    day = jTextAreaOns;
+                    parent = jPanelOns;
+                    break;
+                case 3:
+                    day = jTextAreaTor;
+                    parent = jPanelTor;
+                    break;
+                case 4:
+                    day = jTextAreaFre;
+                    parent = jPanelFre;
+                    break;
+                case 5:
+                    day = jTextAreaLor;
+                    parent = jPanelLor;
+                    break;
+                default:
+                    day = jTextAreaSon;
+                    parent = jPanelSon;
+                    break;
+            }
+            weekday = week.getWeekdays()[i];
+            if (weekday.isOmit() || !weekday.getRecipe().isActive()) {
+                day.setBackground(GUI.buttonHoverColor);
+                parent.setBackground(GUI.buttonHoverColor);
+                day.setText("Dag undladt");
+            } else {
+                day.append(weekday.getRecipe().getName() + "\n\n");
+                for (IngredientAmount ingAm : weekday.getRecipe().getIngredientList()) {
+                    day.append(ingAm.toString() + "\n");
+                }
+            }
+        }
     }
 
     private void fullIngredientList() {
-	boolean firstElementPushed = false;
-	fullIngredientList = "";
-	ArrayList<IngredientAmount> tempShopList = new ArrayList<>();
-	for (Weekday wd : week.getWeekdays()) {
-	    if (!wd.isOmit() && wd.getRecipe().isActive()) {
-		for (IngredientAmount ingAm : wd.getRecipe().getIngredientList()) {
-		    IngredientAmount tempIng = new IngredientAmount(ingAm.getUnit(), ingAm.getIngredient(), ingAm.getAmount());
-		    Iterator<IngredientAmount> iter = tempShopList.iterator();
-		    boolean push = true;
-		    while (iter.hasNext() && firstElementPushed) {
-			IngredientAmount ing = iter.next();
-			if (ing.getIngredient() == tempIng.getIngredient()) {
-			    for (int i = 0; i < tempShopList.size(); i++) {
-				if (tempShopList.get(i).getIngredient() == ing.getIngredient()) {
-				    tempShopList.get(i).setAmount(ing.getAmount() + tempIng.getAmount());
-				    push = false;
-				}
-			    }
-			}
-		    }
-		    if (push) {
-			tempShopList.add(tempIng);
-			firstElementPushed = true;
-		    }
-		}
-	    }
-	}
-	for (int i = 0; i < tempShopList.size(); i++) {
-	    fullIngredientList += tempShopList.get(i).getAmountString() + tempShopList.get(i).getUnit().getShortname() + " " + tempShopList.get(i).getIngredient().getName();
-	    if (i < tempShopList.size() - 1) {
-		fullIngredientList += ", ";
-	    }
-	}
-	jTextAreaFull.setText(fullIngredientList);
+        boolean firstElementPushed = false;
+        fullIngredientList = "";
+        ArrayList<IngredientAmount> tempShopList = new ArrayList<>();
+        for (Weekday wd : week.getWeekdays()) {
+            if (!wd.isOmit() && wd.getRecipe().isActive()) {
+                for (IngredientAmount ingAm : wd.getRecipe().getIngredientList()) {
+                    IngredientAmount tempIng = new IngredientAmount(ingAm.getUnit(), ingAm.getIngredient(), ingAm.getAmount());
+                    Iterator<IngredientAmount> iter = tempShopList.iterator();
+                    boolean push = true;
+                    while (iter.hasNext() && firstElementPushed) {
+                        IngredientAmount ing = iter.next();
+                        if (ing.getIngredient() == tempIng.getIngredient() && ing.getUnit() == tempIng.getUnit()) {
+                            for (int i = 0; i < tempShopList.size(); i++) {
+                                if (tempShopList.get(i).getIngredient() == ing.getIngredient() && tempShopList.get(i).getUnit() == ing.getUnit()) {
+                                    tempShopList.get(i).setAmount(ing.getAmount() + tempIng.getAmount());
+                                    push = false;
+                                }
+                            }
+                        }
+                    }
+                    if (push) {
+                        tempShopList.add(tempIng);
+                        firstElementPushed = true;
+                    }
+                }
+            }
+        }
+        for (int i = 0; i < tempShopList.size(); i++) {
+            fullIngredientList += tempShopList.get(i).getAmountString() + tempShopList.get(i).getUnit().getShortname() + " " + tempShopList.get(i).getIngredient().getName();
+            if (i < tempShopList.size() - 1) {
+                fullIngredientList += ", ";
+            }
+        }
+        jTextAreaFull.setText(fullIngredientList);
     }
 }
