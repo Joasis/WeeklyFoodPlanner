@@ -100,7 +100,7 @@ public class RecipeHandler {
         if (addedRecipes.size() < 7) {
             for (int i = 0; addedRecipes.size() < 7; i++) {
                 recipe = recipeList.get((int) (Math.random() * recipeList.size()));
-                if (!addedRecipes.contains(recipe)) {
+                if (!addedRecipes.contains(recipe) && recipe.isActive()) {
                     addedRecipes.add(recipe);
                 }
             }
