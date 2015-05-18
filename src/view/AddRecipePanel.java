@@ -521,7 +521,7 @@ public class AddRecipePanel extends javax.swing.JPanel {
     public void addRecipe() throws SQLException {
         if (validateRecipeInput()) {
             String name = jTextField_name.getText();
-            if (GUI.getCh().getRh().isRecipeFound(name)) {
+            if (GUI.getCh().getRh().isRecipeFound(name.trim())) {
                 JOptionPane.showMessageDialog(this, "Der findes allerede en opskrift med navnet: " + name + "\nVælg et andet navn til din opskrift", "ADVARSEL", JOptionPane.OK_OPTION);
                 jTextField_name.selectAll();
                 jTextField_name.requestFocus();

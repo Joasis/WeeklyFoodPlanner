@@ -30,7 +30,7 @@ import model.Weekday;
  * @author Jonas
  */
 public class GUI extends javax.swing.JFrame {
-    
+
     private LinkedList<Week> weekList;
     private static ControlHandler ch;
     protected final static Color weekPanelColor = new Color(132, 153, 204);
@@ -69,12 +69,12 @@ public class GUI extends javax.swing.JFrame {
          */
         initComponents();
         jComboWeek.setUI(bcb);
-        
+
         jPanelContent.setBackground(mainColor);
-        
+
         addWeeks();
     }
-    
+
     public static void decorateUI(String confirmText, String cancelText) {
         UIManager.put("OptionPane.okButtonText", confirmText);
         UIManager.put("OptionPane.cancelButtonText", cancelText);
@@ -83,11 +83,11 @@ public class GUI extends javax.swing.JFrame {
         UIManager.put("OptionPane.messageForeground", Color.white);
         UIManager.put("OptionPane.messageFont", new Font("Verdana", Font.PLAIN, 12));
     }
-    
+
     protected static ControlHandler getCh() {
         return ch;
     }
-    
+
     public void addWeeks() {
         Week tempweek = null;
         Calendar cal = Calendar.getInstance();
@@ -99,14 +99,14 @@ public class GUI extends javax.swing.JFrame {
                 tempweek = week;
             }
         }
-        
+
         if (currentWeekSat) {
             jComboWeek.setSelectedItem(tempweek);
             changeTo(getSelectedWeekPanel());
         }
         firstRun = false;
     }
-    
+
     public WeekPanel getSelectedWeekPanel() {
         WeekPanel wp = null;
         if (jComboWeek.getSelectedItem() != chooseWeek) {
@@ -115,7 +115,7 @@ public class GUI extends javax.swing.JFrame {
         }
         return wp;
     }
-    
+
     public void changeTo(Component page) {
         hidePages();
         jPanelWeek.add(page);
@@ -132,7 +132,7 @@ public class GUI extends javax.swing.JFrame {
                 break;
         }
         currentWeek = page.getClass().getSimpleName();
-	enableAll();
+        enableAll();
         switch (currentWeek) {
             case "WeekPanel":
                 disableBack();
@@ -153,75 +153,85 @@ public class GUI extends javax.swing.JFrame {
                 disableShop();
                 disableWeekGen();
                 disableSync();
-		disableEdit();
+                disableEdit();
+                uncheckCheckBoxes();
                 break;
             case "AddRecipePanel":
                 disableWeekChooser();
                 disableShop();
                 disableWeekGen();
                 disableSync();
-		disableAdd();
+                disableAdd();
+                uncheckCheckBoxes();
                 break;
         }
         jPanelWeek.revalidate();
         jPanelWeek.repaint();
     }
-    
+
+    public void uncheckCheckBoxes() {
+        jCheckBoxAllowDuplicated.setSelected(false);
+        jCheckBoxExcludeLastWeek.setSelected(false);
+    }
+
     public void hidePages() {
         jPanelWeek.removeAll();
     }
+
     public void enableAll() {
-	enableAdd();
-	enableBack();
-	enableEdit();
-	enableShop();
-	enableSync();
-	enableWeekChooser();
-	enableWeekGen();
+        enableAdd();
+        enableBack();
+        enableEdit();
+        enableShop();
+        enableSync();
+        enableWeekChooser();
+        enableWeekGen();
     }
+
     public void disableSync() {
         jButtonSync.setEnabled(false);
     }
-    
+
     public void enableSync() {
         jButtonSync.setEnabled(true);
     }
-    
+
     public void disableWeekChooser() {
         jButtonDatePrevious.setEnabled(false);
         jButtonDateNext.setEnabled(false);
         jComboWeek.setEnabled(false);
     }
-    
+
     public void enableWeekChooser() {
         jButtonDatePrevious.setEnabled(true);
         jButtonDateNext.setEnabled(true);
         jComboWeek.setEnabled(true);
     }
-    
+
     public void enableShop() {
         jButtonShop.setEnabled(true);
     }
-    
+
     public void disableShop() {
         jButtonShop.setEnabled(false);
     }
-    
+
     public void enableWeekGen() {
         jButtonGenerate.setEnabled(true);
     }
-    
+
     public void disableWeekGen() {
         jButtonGenerate.setEnabled(false);
     }
-    
+
     public void enableBack() {
         jButtonBack.setEnabled(true);
     }
-    
+
     public void disableBack() {
         jButtonBack.setEnabled(false);
     }
+
     public void enableAdd() {
         jButtonAdd.setEnabled(true);
     }
@@ -229,6 +239,7 @@ public class GUI extends javax.swing.JFrame {
     public void disableAdd() {
         jButtonAdd.setEnabled(false);
     }
+
     public void enableEdit() {
         jButtonUpdate.setEnabled(true);
     }
@@ -279,6 +290,10 @@ public class GUI extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jButtonDateNext = new javax.swing.JButton();
         jButtonSync = new javax.swing.JButton();
+        jPanelSettings = new javax.swing.JPanel();
+        jLabel12 = new javax.swing.JLabel();
+        jCheckBoxAllowDuplicated = new javax.swing.JCheckBox();
+        jCheckBoxExcludeLastWeek = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -305,9 +320,7 @@ public class GUI extends javax.swing.JFrame {
         jPanelWeek.setLayout(jPanelWeekLayout);
         jPanelWeekLayout.setHorizontalGroup(
             jPanelWeekLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelWeekLayout.createSequentialGroup()
-                .addComponent(jLabelNoWeek, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+            .addComponent(jLabelNoWeek, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanelWeekLayout.setVerticalGroup(
             jPanelWeekLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -538,6 +551,55 @@ public class GUI extends javax.swing.JFrame {
             }
         });
 
+        jPanelSettings.setBackground(buttonHoverColor);
+        jPanelSettings.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+
+        jLabel12.setFont(new java.awt.Font("Verdana", 1, 10)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel12.setText("Indstillinger for generering af ugeplan");
+
+        jCheckBoxAllowDuplicated.setFont(new java.awt.Font("Verdana", 0, 10)); // NOI18N
+        jCheckBoxAllowDuplicated.setForeground(new java.awt.Color(255, 255, 255));
+        jCheckBoxAllowDuplicated.setText("Tillad dubletter");
+        jCheckBoxAllowDuplicated.setFocusPainted(false);
+        jCheckBoxAllowDuplicated.setOpaque(false);
+        jCheckBoxAllowDuplicated.setRequestFocusEnabled(false);
+        jCheckBoxAllowDuplicated.setVerifyInputWhenFocusTarget(false);
+
+        jCheckBoxExcludeLastWeek.setFont(new java.awt.Font("Verdana", 0, 10)); // NOI18N
+        jCheckBoxExcludeLastWeek.setForeground(new java.awt.Color(255, 255, 255));
+        jCheckBoxExcludeLastWeek.setText("Undlad sidste uges opskrifter");
+        jCheckBoxExcludeLastWeek.setFocusPainted(false);
+        jCheckBoxExcludeLastWeek.setOpaque(false);
+        jCheckBoxExcludeLastWeek.setRequestFocusEnabled(false);
+        jCheckBoxExcludeLastWeek.setVerifyInputWhenFocusTarget(false);
+        jCheckBoxExcludeLastWeek.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxExcludeLastWeekActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanelSettingsLayout = new javax.swing.GroupLayout(jPanelSettings);
+        jPanelSettings.setLayout(jPanelSettingsLayout);
+        jPanelSettingsLayout.setHorizontalGroup(
+            jPanelSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelSettingsLayout.createSequentialGroup()
+                .addComponent(jCheckBoxAllowDuplicated)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jCheckBoxExcludeLastWeek))
+            .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanelSettingsLayout.setVerticalGroup(
+            jPanelSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelSettingsLayout.createSequentialGroup()
+                .addComponent(jLabel12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jCheckBoxAllowDuplicated)
+                    .addComponent(jCheckBoxExcludeLastWeek)))
+        );
+
         javax.swing.GroupLayout jPanelContentLayout = new javax.swing.GroupLayout(jPanelContent);
         jPanelContent.setLayout(jPanelContentLayout);
         jPanelContentLayout.setHorizontalGroup(
@@ -556,18 +618,22 @@ public class GUI extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addComponent(jButtonShop, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(jPanelContentLayout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 760, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanelSettings, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jPanelWeekNumbers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanelContentLayout.setVerticalGroup(
             jPanelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelContentLayout.createSequentialGroup()
-                .addGroup(jPanelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelContentLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanelWeekNumbers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jPanelSettings, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanelWeekNumbers, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(26, 26, 26)))
                 .addComponent(jPanelWeek, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -583,7 +649,7 @@ public class GUI extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelContent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanelContent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -610,29 +676,29 @@ public class GUI extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jButtonGenerateActionPerformed
-    
+
     public void generateFoodPlan() throws SQLException {
         Calendar newWeek = Calendar.getInstance();
         Weekday[] weekdays = new Weekday[7];
         int nextWeekAi = getCh().getDbh().getNextAI("wk");
-        
+
         if (currentWeekSat) {
             newWeek = Calendar.getInstance();
             newWeek.setTime(weekList.getFirst().getCal().getTime());
             newWeek.add(Calendar.WEEK_OF_YEAR, 1);
         }
         Calendar wkdayCal = null;
-        
+
         for (int i = 0; i < 7; i++) {
             wkdayCal = Calendar.getInstance();
             wkdayCal.setTime(newWeek.getTime());
             wkdayCal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY + i);
-            Recipe tempRecipe = getCh().getRh().getRandomRecipe(i);
+            Recipe tempRecipe = getCh().getRh().getRandomRecipe(i, jCheckBoxAllowDuplicated.isSelected(), jCheckBoxExcludeLastWeek.isSelected(), newWeek);
             Weekday wkday = new Weekday(getCh().getDbh().getNextAI("wkday"), tempRecipe, wkdayCal, nextWeekAi, false);
             weekdays[i] = wkday;
         }
         getCh().getRh().clearAddedRecipes();
-        
+
         if (nextWeekAi != -1) {
             Week week = new Week(nextWeekAi, newWeek, 0, weekdays);
             getCh().getDbh().insertWeek(week);
@@ -788,6 +854,14 @@ public class GUI extends javax.swing.JFrame {
         establishConnection();
     }//GEN-LAST:event_jButtonSyncActionPerformed
 
+    private void jCheckBoxExcludeLastWeekActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxExcludeLastWeekActionPerformed
+        if (getCh().getRh().getActiveRecipeListsize() < 14) {
+            jCheckBoxExcludeLastWeek.setSelected(false);
+            JOptionPane.showMessageDialog(this, "Der er ikke nok opskrfiter til, at kunne undlade opskrifter fra sidste uge\nDenne indstilling kræver minimum 14 opskrifter", "ADVARSEL", JOptionPane.ERROR_MESSAGE);
+            decorateUI("Luk", "");
+        }
+    }//GEN-LAST:event_jCheckBoxExcludeLastWeekActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -802,7 +876,7 @@ public class GUI extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-                    
+
                 }
             }
         } catch (ClassNotFoundException ex) {
@@ -836,11 +910,51 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JButton jButtonShop;
     private javax.swing.JButton jButtonSync;
     private javax.swing.JButton jButtonUpdate;
+    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox jCheckBox10;
+    private javax.swing.JCheckBox jCheckBox11;
+    private javax.swing.JCheckBox jCheckBox12;
+    private javax.swing.JCheckBox jCheckBox13;
+    private javax.swing.JCheckBox jCheckBox14;
+    private javax.swing.JCheckBox jCheckBox15;
+    private javax.swing.JCheckBox jCheckBox16;
+    private javax.swing.JCheckBox jCheckBox17;
+    private javax.swing.JCheckBox jCheckBox18;
+    private javax.swing.JCheckBox jCheckBox2;
+    private javax.swing.JCheckBox jCheckBox3;
+    private javax.swing.JCheckBox jCheckBox4;
+    private javax.swing.JCheckBox jCheckBox5;
+    private javax.swing.JCheckBox jCheckBox6;
+    private javax.swing.JCheckBox jCheckBox7;
+    private javax.swing.JCheckBox jCheckBox8;
+    private javax.swing.JCheckBox jCheckBox9;
+    private javax.swing.JCheckBox jCheckBoxAllowDuplicated;
+    private javax.swing.JCheckBox jCheckBoxExcludeLastWeek;
     private javax.swing.JComboBox jComboWeek;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelNoWeek;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JPanel jPanelContent;
+    private javax.swing.JPanel jPanelSettings;
     private javax.swing.JPanel jPanelWeek;
     private javax.swing.JPanel jPanelWeekNumbers;
     // End of variables declaration//GEN-END:variables

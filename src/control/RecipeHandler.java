@@ -8,11 +8,13 @@ package control;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Calendar;
 import model.Ingredient;
 import model.IngredientAmount;
 import model.Recipe;
 import model.Unit;
+import model.Week;
+import model.Weekday;
 
 /**
  *
@@ -95,13 +97,46 @@ public class RecipeHandler {
         return activeList.size();
     }
 
-    public Recipe getRandomRecipe(int n) {
+    public Recipe getRandomRecipe(int n, boolean duplicateAllowed, boolean excludeLastWeek, Calendar week) {
+        Week lastWeek = null;
         Recipe recipe = null;
+        if (excludeLastWeek) {
+            Calendar tempWeek = Calendar.getInstance();
+            tempWeek.setTime(week.getTime());
+            tempWeek.add(Calendar.WEEK_OF_YEAR, -1);
+            lastWeek = ControlHandler.getWh().getWeek(tempWeek.get(Calendar.WEEK_OF_YEAR));
+        }
         if (addedRecipes.size() < 7) {
             for (int i = 0; addedRecipes.size() < 7; i++) {
                 recipe = recipeList.get((int) (Math.random() * recipeList.size()));
-                if (!addedRecipes.contains(recipe) && recipe.isActive()) {
-                    addedRecipes.add(recipe);
+                if (recipe.isActive()) {
+                    if (lastWeek != null) {
+                        System.out.println("Lastweek: " + lastWeek.getDate());
+                        boolean found = false;
+                        for (int j = 0; j < lastWeek.getWeekdays().length; j++) {
+                            if (lastWeek.getWeekdays()[j].getRecipe().equals(recipe)) {
+                                System.out.println(recipe + " fundet i sidste uge");
+                                found = true;
+                            }
+                        }
+                        if (!found) {
+                            if (duplicateAllowed) {
+                                addedRecipes.add(recipe);
+                            } else {
+                                if (!addedRecipes.contains(recipe)) {
+                                    addedRecipes.add(recipe);
+                                }
+                            }
+                        }
+                    } else {
+                        if (duplicateAllowed) {
+                            addedRecipes.add(recipe);
+                        } else {
+                            if (!addedRecipes.contains(recipe)) {
+                                addedRecipes.add(recipe);
+                            }
+                        }
+                    }
                 }
             }
             recipe = addedRecipes.get(n);
@@ -109,6 +144,11 @@ public class RecipeHandler {
             recipe = addedRecipes.get(n);
         }
         return recipe;
+    }
+
+    public boolean isRecipeFoundInLastWeek(Recipe recipe) {
+        boolean found = false;
+        return found;
     }
 
     public void clearAddedRecipes() {

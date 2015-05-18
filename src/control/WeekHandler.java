@@ -54,6 +54,18 @@ public class WeekHandler {
         return weekdaysForWeek;
     }
 
+    public Week getWeek(int weekNumber) {
+        boolean found = false;
+        Week week = null;
+        for (int i = 0; i < weekList.size() && !found; i++) {
+            if (weekList.get(i).getDate() == weekNumber) {
+                week = weekList.get(i);
+                found = true;
+            }
+        }
+        return week;
+    }
+
     public LinkedList<Week> getWeekList() {
         return weekList;
     }
