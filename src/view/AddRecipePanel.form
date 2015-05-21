@@ -138,6 +138,11 @@
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jPic">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/res/unchecked.png"/>
+            </Property>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
@@ -153,7 +158,7 @@
         <Component class="javax.swing.JLabel" name="jLabel11">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/view/images/addwatermark.png"/>
+              <Image iconType="3" name="/res/addwatermark.png"/>
             </Property>
           </Properties>
         </Component>

@@ -43,9 +43,9 @@ public class EditPanel extends javax.swing.JPanel {
     private Ingredient selectedIngredient;
     private int recipeOffset;
     private int IngredientOffset;
-    private final ImageIcon checkedImg = new ImageIcon("src\\view\\images\\checked.png");
-    private final ImageIcon uncheckedImg = new ImageIcon("src\\view\\images\\unchecked.png");
-    private final Image searchImg = Toolkit.getDefaultToolkit().getImage("src\\view\\images\\search.png");
+    private final ImageIcon checkedImg = new ImageIcon(getClass().getClassLoader().getResource("res/checked.png"));
+    private final ImageIcon uncheckedImg = new ImageIcon(getClass().getClassLoader().getResource("res/unchecked.png"));
+    private final Image searchImg = Toolkit.getDefaultToolkit().getImage(getClass().getClassLoader().getResource("res/search.png"));
     private DefaultListModel model;
 
     /**
@@ -390,7 +390,7 @@ public class EditPanel extends javax.swing.JPanel {
         jTextFieldEditRecipeAmount.setBorder(null);
         jTextFieldEditRecipeAmount.setEnabled(false);
 
-        jPicRecipeFound.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/unchecked.png"))); // NOI18N
+        jPicRecipeFound.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/unchecked.png"))); // NOI18N
 
         jComboBoxEditRecipeUnit.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jComboBoxEditRecipeUnit.setBorder(null);
@@ -575,7 +575,7 @@ public class EditPanel extends javax.swing.JPanel {
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Søg ingrediens");
 
-        jPicIngredientFound.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/unchecked.png"))); // NOI18N
+        jPicIngredientFound.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/unchecked.png"))); // NOI18N
 
         jLabel11.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
@@ -637,7 +637,7 @@ public class EditPanel extends javax.swing.JPanel {
         jComboBoxEditIngredientUnit.setEnabled(false);
 
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/editwatermark.png"))); // NOI18N
+        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/editwatermark.png"))); // NOI18N
 
         jLabel16.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));

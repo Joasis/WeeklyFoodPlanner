@@ -118,7 +118,7 @@ public class WeekdayPanel extends javax.swing.JPanel {
                 setColors(GUI.omittedColor);
                 g.fillRect(0, 0, getWidth(), getHeight());
             }
-            Image img = Toolkit.getDefaultToolkit().getImage("src\\view\\images\\deletedred.png");
+            Image img = Toolkit.getDefaultToolkit().getImage(getClass().getClassLoader().getResource("res/deletedred.png"));
             g.drawImage(img, 0, 0, this);
             disableButtons();
 
@@ -127,9 +127,9 @@ public class WeekdayPanel extends javax.swing.JPanel {
             if (!drawSwitch) {
                 setColors(GUI.omittedColor);
             }
-            Image img = Toolkit.getDefaultToolkit().getImage("src\\view\\images\\undladt.png");
+            Image img = Toolkit.getDefaultToolkit().getImage(getClass().getClassLoader().getResource("res/undladt.png"));
             g.drawImage(img, 0, 0, this);
-            disableButtons();
+            jButtonReplace.setEnabled(true);
         }
     }
 
@@ -331,6 +331,11 @@ public class WeekdayPanel extends javax.swing.JPanel {
         jLabelOpskriftNavn.setOpaque(false);
         jLabelOpskriftNavn.setRequestFocusEnabled(false);
         jLabelOpskriftNavn.setVerifyInputWhenFocusTarget(false);
+        jLabelOpskriftNavn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jLabelOpskriftNavnMouseReleased(evt);
+            }
+        });
         jPanel1.add(jLabelOpskriftNavn);
         jLabelOpskriftNavn.setBounds(0, 59, 140, 30);
 
@@ -392,6 +397,10 @@ public class WeekdayPanel extends javax.swing.JPanel {
             swapRecipe();
         }
     }//GEN-LAST:event_jComboAllRecipesActionPerformed
+
+    private void jLabelOpskriftNavnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelOpskriftNavnMouseReleased
+        switchDay();
+    }//GEN-LAST:event_jLabelOpskriftNavnMouseReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonDisable;

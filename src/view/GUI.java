@@ -45,7 +45,7 @@ public class GUI extends javax.swing.JFrame {
     protected final static Color omittedColor = new Color(118, 118, 118);
     protected final static Color succesColor = new Color(107, 191, 76);
     protected final static Color dangerColor = new Color(201, 48, 44);
-    private final ImageIcon loadingIcon = new ImageIcon("src\\view\\images\\loading.gif");
+    private final ImageIcon loadingIcon = new ImageIcon(getClass().getClassLoader().getResource("res/loading.gif"));
     private boolean currentWeekSat;
     private boolean firstRun;
     private String chooseWeek;
@@ -331,7 +331,7 @@ public class GUI extends javax.swing.JFrame {
         jButtonAdd.setBackground(mainColor);
         jButtonAdd.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jButtonAdd.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/add.png"))); // NOI18N
+        jButtonAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/add.png"))); // NOI18N
         jButtonAdd.setText("Tilføj");
         jButtonAdd.setBorder(null);
         jButtonAdd.setFocusPainted(false);
@@ -354,7 +354,7 @@ public class GUI extends javax.swing.JFrame {
         jButtonUpdate.setBackground(mainColor);
         jButtonUpdate.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jButtonUpdate.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/edit.png"))); // NOI18N
+        jButtonUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/edit.png"))); // NOI18N
         jButtonUpdate.setText("Ret");
         jButtonUpdate.setBorder(null);
         jButtonUpdate.setFocusPainted(false);
@@ -377,8 +377,8 @@ public class GUI extends javax.swing.JFrame {
         jButtonBack.setBackground(mainColor);
         jButtonBack.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jButtonBack.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/home.png"))); // NOI18N
-        jButtonBack.setText("Tilbage");
+        jButtonBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/home.png"))); // NOI18N
+        jButtonBack.setText("Forside");
         jButtonBack.setBorder(null);
         jButtonBack.setEnabled(false);
         jButtonBack.setFocusPainted(false);
@@ -401,7 +401,7 @@ public class GUI extends javax.swing.JFrame {
         jButtonGenerate.setBackground(mainColor);
         jButtonGenerate.setFont(new java.awt.Font("Verdana", 0, 20)); // NOI18N
         jButtonGenerate.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonGenerate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/generate.png"))); // NOI18N
+        jButtonGenerate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/generate.png"))); // NOI18N
         jButtonGenerate.setText("Generér madplan");
         jButtonGenerate.setBorder(null);
         jButtonGenerate.setFocusPainted(false);
@@ -424,7 +424,7 @@ public class GUI extends javax.swing.JFrame {
         jButtonShop.setBackground(mainColor);
         jButtonShop.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jButtonShop.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonShop.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/shop.png"))); // NOI18N
+        jButtonShop.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/shop.png"))); // NOI18N
         jButtonShop.setText("Indkøbsliste");
         jButtonShop.setBorder(null);
         jButtonShop.setEnabled(false);
@@ -448,7 +448,7 @@ public class GUI extends javax.swing.JFrame {
         jPanelWeekNumbers.setBackground(mainColor);
 
         jButtonDatePrevious.setBackground(mainColor);
-        jButtonDatePrevious.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/back.png"))); // NOI18N
+        jButtonDatePrevious.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/back.png"))); // NOI18N
         jButtonDatePrevious.setBorder(null);
         jButtonDatePrevious.setFocusPainted(false);
         jButtonDatePrevious.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -483,7 +483,7 @@ public class GUI extends javax.swing.JFrame {
         jLabel2.setText("Uge");
 
         jButtonDateNext.setBackground(mainColor);
-        jButtonDateNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/forward.png"))); // NOI18N
+        jButtonDateNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/forward.png"))); // NOI18N
         jButtonDateNext.setBorder(null);
         jButtonDateNext.setFocusPainted(false);
         jButtonDateNext.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -531,7 +531,7 @@ public class GUI extends javax.swing.JFrame {
         jButtonSync.setBackground(mainColor);
         jButtonSync.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jButtonSync.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonSync.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/update.png"))); // NOI18N
+        jButtonSync.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/update.png"))); // NOI18N
         jButtonSync.setText("Synkroniser");
         jButtonSync.setBorder(null);
         jButtonSync.setEnabled(false);

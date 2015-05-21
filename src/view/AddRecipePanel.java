@@ -37,8 +37,8 @@ public class AddRecipePanel extends javax.swing.JPanel {
     private ArrayList<Ingredient> ingredientList;
     private ArrayList<Unit> unitList;
     private int offset;
-    private final ImageIcon checkedImg = new ImageIcon("src\\view\\images\\checked.png");
-    private final ImageIcon uncheckedImg = new ImageIcon("src\\view\\images\\unchecked.png");
+    private final ImageIcon checkedImg = new ImageIcon(getClass().getClassLoader().getResource("res/checked.png"));
+    private final ImageIcon uncheckedImg = new ImageIcon(getClass().getClassLoader().getResource("res/unchecked.png"));
     private Ingredient selectedIngredient;
 
     public AddRecipePanel() {
@@ -113,11 +113,13 @@ public class AddRecipePanel extends javax.swing.JPanel {
             }
         });
 
+        jPic.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/unchecked.png"))); // NOI18N
+
         jLabel5.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Tilføj Ingrediens");
 
-        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/addwatermark.png"))); // NOI18N
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/addwatermark.png"))); // NOI18N
 
         jPanel3.setBackground(GUI.buttonHoverColor);
 
