@@ -10,16 +10,11 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import model.IngredientAmount;
 import model.Week;
 import model.Weekday;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import view.GUI;
 
 /**
  *
@@ -66,7 +61,6 @@ public class ServerHandler {
             osw.flush();
             osw.close();
         } catch (IOException ex) {
-            Logger.getLogger(ServerHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

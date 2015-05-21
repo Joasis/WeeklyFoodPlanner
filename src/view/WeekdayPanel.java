@@ -10,8 +10,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import model.Recipe;
 import model.Weekday;
 
@@ -151,8 +150,13 @@ public class WeekdayPanel extends javax.swing.JPanel {
         try {
             GUI.getCh().getDbh().updateWeekdayOmit(wkday);
         } catch (SQLException ex) {
-            System.out.println("FEJL VED OPDATERING AF OMIT PÅ WEEKDAY" + ex);
+            showSqlErrorDialog();
         }
+    }
+
+    public void showSqlErrorDialog() {
+        GUI.decorateUI("Luk", "");
+        JOptionPane.showMessageDialog(this, "Indlæsning af ugeplan mislykkedes\nKunne ikke etablere forbindelse til databasen", "ADVARSEL", JOptionPane.ERROR_MESSAGE);
     }
 
     public Weekday getWkday() {
@@ -377,7 +381,7 @@ public class WeekdayPanel extends javax.swing.JPanel {
             GUI.getCh().getDbh().swapRecipe(getWkday());
             setWeekday();
         } catch (SQLException ex) {
-            System.out.println("SQL FEJL" + ex);
+           showSqlErrorDialog();
         }
     }
 

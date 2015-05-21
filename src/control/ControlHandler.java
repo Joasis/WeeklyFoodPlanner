@@ -5,6 +5,8 @@
  */
 package control;
 
+import java.sql.SQLException;
+
 /**
  *
  * @author Jonas
@@ -18,7 +20,7 @@ public class ControlHandler {
     private static WeekHandler wh;
     private static WeekdayHandler wdh;
 
-    public ControlHandler() {
+    public ControlHandler() throws SQLException, ClassNotFoundException {
         dbh = new DBHandler();
         uh = new UnitHandler();
         ih = new IngredientHandler();

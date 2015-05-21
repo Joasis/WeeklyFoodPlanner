@@ -11,9 +11,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JLabel;
 import model.Ingredient;
 import model.IngredientAmount;
 import model.Recipe;
@@ -30,48 +27,12 @@ public class DBHandler {
     protected static Statement stmt;
     private String db;
 
-    public DBHandler(String host, String pnr, String db, String usr, String pwd, JLabel label) {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            String url = "jdbc:mysql://" + host + ":" + pnr + "/" + db;
-            conn = DriverManager.getConnection(url, usr, pwd);
-            stmt = conn.createStatement();
-            this.db = db;
-        } catch (SQLException ex) {
-            String errMsg = "Ukendt fejl " + ex.getErrorCode() + ", prøv igen senere";;
-            if (ex.getErrorCode() == 0) {
-                errMsg = "Forbindelsen blev ikke fundet, kontroller at 'Host' og 'Port' er korrekt";
-            } else if (ex.getErrorCode() == 1045) {
-                errMsg = "Brugernavn og Password stemmer ikke";
-            } else if (ex.getErrorCode() == 1049) {
-                errMsg = "Databasen kunne ikke findes";
-            }
-            label.setText(errMsg);
-        } catch (ClassNotFoundException ex) {
-            label.setText("Fejl i driver til databasen, kontakt din programmør");
-        }
-    }
-
-    public DBHandler() {
-        try {
+    public DBHandler() throws SQLException, ClassNotFoundException {
             Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://localhost:3306/wfoodplanner";
             conn = DriverManager.getConnection(url, "root", "root");
             stmt = conn.createStatement();
             db = "wfoodplanner";
-        } catch (SQLException ex) {
-            String errMsg = "Ukendt fejl " + ex.getErrorCode() + ", prøv igen senere";
-            if (ex.getErrorCode() == 0) {
-                errMsg = "Forbindelsen blev ikke fundet, kontroller at 'Host' og 'Port' er korrekt";
-            } else if (ex.getErrorCode() == 1045) {
-                errMsg = "Brugernavn og Password stemmer ikke";
-            } else if (ex.getErrorCode() == 1049) {
-                errMsg = "Databasen kunne ikke findes";
-            }
-            System.out.println(errMsg);
-        } catch (ClassNotFoundException ex) {
-            System.out.println("Fejl i driver til databasen, kontakt din programmør");
-        }
     }
 
     public void updateWeekdayOmit(Weekday weekday) throws SQLException {
@@ -84,7 +45,6 @@ public class DBHandler {
     public void updateWeekdayDate(Weekday weekday) throws SQLException {
         String sql = "UPDATE wkday set wkd_date = " + weekday.getDateByCal().getTimeInMillis() + " where wkd_id = " + weekday.getId();
         if (stmt != null) {
-            System.out.println(sql);
             stmt.execute(sql);
         }
     }
@@ -116,7 +76,6 @@ public class DBHandler {
         String sql = "update ingr SET in_name = '" + ing.getName() + "' where in_id = " + ing.getId();
         if (stmt != null) {
             stmt.execute(sql);
-            System.out.println(sql);
         }
     }
 
@@ -178,7 +137,6 @@ public class DBHandler {
         sqlQueries.add(sql);
         sql = "UPDATE recipe SET re_cooktime = " + recipe.getCookingtime() + " where re_id = " + recipe.getId();
         sqlQueries.add(sql);
-        System.out.println("antal queries" + sqlQueries.size());
         for (String sqlQuery : sqlQueries) {
             stmt.addBatch(sqlQuery);
         }
@@ -192,7 +150,6 @@ public class DBHandler {
                 + "(" + recipe.getId() + ", " + ingAm.getIngredient().getId()
                 + ", " + ingAm.getAmount() + ", " + ingAm.getUnit().getId() + ");";
         if (stmt != null) {
-            System.out.println(sql);
             stmt.execute(sql);
         }
     }
@@ -200,7 +157,6 @@ public class DBHandler {
     public void insertIngredient(Ingredient ing) throws SQLException {
         String sql = "INSERT into ingr values(" + ing.getId() + ",'" + ing.getName() + "')";
         if (stmt != null) {
-            System.out.println(sql);
             stmt.execute(sql);
         }
     }

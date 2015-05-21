@@ -202,6 +202,7 @@ public class EditPanel extends javax.swing.JPanel {
             selectedRecipe = null;
             toggleRecipePanel(false);
             clearFeedBack("Recipe");
+            jTextFieldRecipeSearch.requestFocus();
         }
         if (clearPanel.equals("Ingredient")) {
             jTextFieldIngredientNewName.setText("");
@@ -210,6 +211,7 @@ public class EditPanel extends javax.swing.JPanel {
             selectedIngredient = null;
             toggleIngredientPanel(false);
             clearFeedBack("Ingredient");
+            jTextFieldIngredientSearch.requestFocus();
         }
     }
 
@@ -357,6 +359,8 @@ public class EditPanel extends javax.swing.JPanel {
             }
         });
 
+        jScrollPane2.setBorder(null);
+
         jListEditRecipeIngredients.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jListEditRecipeIngredients.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jListEditRecipeIngredients.setEnabled(false);
@@ -397,6 +401,8 @@ public class EditPanel extends javax.swing.JPanel {
         jComboBoxEditRecipeUnit.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jComboBoxEditRecipeUnit.setBorder(null);
         jComboBoxEditRecipeUnit.setEnabled(false);
+
+        jScrollPane1.setBorder(null);
 
         jTextAreaDescription.setColumns(20);
         jTextAreaDescription.setFont(new java.awt.Font("Verdana", 2, 11)); // NOI18N
@@ -952,12 +958,17 @@ public class EditPanel extends javax.swing.JPanel {
                         clearSelection("Ingredient");
                         jTextFieldIngredientSearch.setText("");
                     } catch (SQLException ex) {
-                        System.out.println("Fejl ved indsættelse af ingredient til nuværende opskrift (DB)");
-                        System.out.println(ex);
+                        showSqlErrorDialog();
                     }
                 }
             }
         }
+    }
+
+    public void showSqlErrorDialog() {
+        GUI.decorateUI("Luk", "");
+        JOptionPane.showMessageDialog(this, "Indlæsning af ugeplan mislykkedes\nKunne ikke etablere forbindelse til databasen", "ADVARSEL", JOptionPane.ERROR_MESSAGE);
+
     }
     private void jButtonAddIngredientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddIngredientActionPerformed
         addIngredientToRecipe();
@@ -1052,8 +1063,10 @@ public class EditPanel extends javax.swing.JPanel {
             try {
                 selectedIngredient.setName(newIngName);
                 GUI.getCh().getDbh().updateIngredient(selectedIngredient);
+                jTextFieldIngredientSearch.setText("");
+                clearSelection("Ingredient");
             } catch (SQLException ex) {
-                System.out.println("Fejl ved opdatering af ingrediens i DB");
+                showSqlErrorDialog();
             }
         } else {
             setFeedback(jTextFieldIngredientNewName);
@@ -1068,7 +1081,7 @@ public class EditPanel extends javax.swing.JPanel {
                 clearSelection("Ingredient");
                 jTextFieldIngredientSearch.setText("");
             } catch (SQLException ex) {
-                System.out.println("Fejl ved sletning af ingrediens fra database");
+                showSqlErrorDialog();
             }
         }
     }
@@ -1100,7 +1113,7 @@ public class EditPanel extends javax.swing.JPanel {
                         clearSelection("Recipe");
                         jTextFieldRecipeSearch.setText("");
                     } catch (SQLException ex) {
-                        System.out.println("Fejl ved update recipe atabase");
+                        showSqlErrorDialog();
                     }
                 }
             }

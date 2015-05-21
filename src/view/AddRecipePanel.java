@@ -148,6 +148,7 @@ public class AddRecipePanel extends javax.swing.JPanel {
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Antal");
 
+        jScrollPane3.setBorder(null);
         jScrollPane3.setAutoscrolls(true);
 
         jListIngredients.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
@@ -301,6 +302,8 @@ public class AddRecipePanel extends javax.swing.JPanel {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Navn");
 
+        jScrollPane1.setBorder(null);
+
         jTextArea_description.setColumns(20);
         jTextArea_description.setFont(new java.awt.Font("Verdana", 2, 11)); // NOI18N
         jTextArea_description.setLineWrap(true);
@@ -343,7 +346,6 @@ public class AddRecipePanel extends javax.swing.JPanel {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(43, 43, 43)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField_name, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -398,21 +400,24 @@ public class AddRecipePanel extends javax.swing.JPanel {
         try {
             addRecipe();
         } catch (SQLException ex) {
-            System.out.println("Sqlfejl ved getNextRecipeNumber");;
+            showSqlErrorDialog();
         }
     }//GEN-LAST:event_jButton_saveRecipeActionPerformed
 
     private void jButton_addIngredientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_addIngredientActionPerformed
         try {
             addIngredient();
-
-            // 
         } catch (SQLException ex) {
-            System.out.println("SQLFEJL ved getNextAI ingr");
+            showSqlErrorDialog();
         } catch (NullPointerException ex) {
-            System.out.println("Nullpointer ved addingredient");
+            showSqlErrorDialog();
         }
     }//GEN-LAST:event_jButton_addIngredientActionPerformed
+
+    public void showSqlErrorDialog() {
+        GUI.decorateUI("Luk", "");
+        JOptionPane.showMessageDialog(this, "Indlæsning af ugeplan mislykkedes\nKunne ikke etablere forbindelse til databasen", "ADVARSEL", JOptionPane.ERROR_MESSAGE);
+    }
 
     private void jTextField_searchIngredientKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_searchIngredientKeyReleased
         autoFillRecipe(evt, (JTextField) evt.getSource(), ingredientList, jPic, offset);
@@ -547,11 +552,6 @@ public class AddRecipePanel extends javax.swing.JPanel {
                         IngredientAmount ingAm = new IngredientAmount(GUI.getCh().getUh().getUnitList().get(0), GUI.getCh().getIh().getIngredientList().get(0), RecipeHandler.NO_INGREDIENTS);
                         GUI.getCh().getDbh().insertIngredientToRecipe(newRecipe, ingAm);
                     }
-                    System.out.println("Name: " + newRecipe.getName());
-                    System.out.println("Descr: " + newRecipe.getDescription());
-                    System.out.println("Cook: " + newRecipe.getCookingtime());
-                    System.out.println("Personer: " + newRecipe.getPortions());
-                    System.out.println("ing: " + newRecipe.getIngredientList().size());
                 }
                 clearPanel("All");
             }
@@ -575,7 +575,6 @@ public class AddRecipePanel extends javax.swing.JPanel {
                         clearIngredients();
                     } else {
                         jListIngredients.setBorder(new LineBorder(Color.RED, 1));
-                        System.out.println("DEN er på listen");
                     }
                 } else {
                     list.addElement(ingAm);
@@ -745,6 +744,7 @@ public class AddRecipePanel extends javax.swing.JPanel {
             selectedIngredient = null;
             list.clear();
             clearFeedBack("All");
+            jTextField_name.requestFocus();
         }
         if (clearPanel.equals("Ingredient")) {
             jTextField_searchIngredient.setText("");
@@ -752,6 +752,7 @@ public class AddRecipePanel extends javax.swing.JPanel {
             jComboBoxRecipeUnit.setSelectedIndex(0);
             selectedIngredient = null;
             list.clear();
+            jTextField_searchIngredient.requestFocus();
         }
     }
 }

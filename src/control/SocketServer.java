@@ -8,8 +8,6 @@ package control;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.Week;
 
 /**
@@ -50,13 +48,10 @@ public class SocketServer implements Runnable {
     public void run() {
         while (active) {
             try {
-                System.out.println("Venter på klient...");
                 Socket socket = ss.accept();
-                System.out.println("Klient forbundet");
                 serverHandler = new ServerHandler(socket);
                 serverHandler.sendData(week);
             } catch (IOException ex) {
-                System.out.println("FEJL VED SYNKRONISERING i RUN" + ex);
             }
         }
     }
@@ -65,7 +60,6 @@ public class SocketServer implements Runnable {
         try {
             ss.close();
         } catch (IOException ex) {
-            Logger.getLogger(SocketServer.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

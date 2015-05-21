@@ -10,16 +10,19 @@ import control.SocketServer;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.io.IOException;
 import java.net.Inet4Address;
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.LinkedList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
+import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.basic.BasicComboBoxUI;
 import model.Recipe;
 import model.Week;
@@ -46,6 +49,7 @@ public class GUI extends javax.swing.JFrame {
     protected final static Color succesColor = new Color(107, 191, 76);
     protected final static Color dangerColor = new Color(201, 48, 44);
     private final ImageIcon loadingIcon = new ImageIcon(getClass().getClassLoader().getResource("res/loading.gif"));
+    private final Image logoImage = Toolkit.getDefaultToolkit().getImage(getClass().getClassLoader().getResource("res/logo.png"));
     private boolean currentWeekSat;
     private boolean firstRun;
     private String chooseWeek;
@@ -68,6 +72,7 @@ public class GUI extends javax.swing.JFrame {
          UIManager.put("Label.font", font);
          */
         initComponents();
+        setIconImage(logoImage);
         jComboWeek.setUI(bcb);
 
         jPanelContent.setBackground(mainColor);
@@ -82,6 +87,7 @@ public class GUI extends javax.swing.JFrame {
         UIManager.put("Panel.background", GUI.buttonHoverColor);
         UIManager.put("OptionPane.messageForeground", Color.white);
         UIManager.put("OptionPane.messageFont", new Font("Verdana", Font.PLAIN, 12));
+        UIManager.put("Button.focus", new ColorUIResource(new Color(0, 0, 0, 0)));
     }
 
     protected static ControlHandler getCh() {
@@ -255,15 +261,19 @@ public class GUI extends javax.swing.JFrame {
                 ss = new SocketServer(getSelectedWeekPanel().getWeek());
                 Thread td = new Thread(ss);
                 td.start();
-                System.out.println("Synkroniserer...");
                 decorateUI("Luk", "");
-                JOptionPane.showConfirmDialog(this, "Forbind din telefon til netværket.\nIndtast følgende, som ip adresse i appen:\n" + Inet4Address.getLocalHost().getHostAddress(), "Synkronisering til android", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, loadingIcon);
+                JOptionPane.showConfirmDialog(this, "Forbind din telefon til netværket.\nIndtast følgende, som ip adresse i appen:\n" + Inet4Address.getLocalHost().getHostAddress() + "\n\n<html><i>Ved forbindelsesproblemer, tjek da evt. din firewall indstilling</i></html>", "Synkronisering til android", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, loadingIcon);
                 ss.setActive(false);
                 ss.close();
             } catch (IOException ex) {
-                System.out.println("FEJL VED SYNKRONISERING" + ex.getMessage());
+                showSqlErrorDialog();
             }
         }
+    }
+
+    public void showSqlErrorDialog() {
+        decorateUI("Luk", "");
+        JOptionPane.showMessageDialog(this, "Indlæsning af ugeplan mislykkedes\nKunne ikke etablere forbindelse til databasen", "ADVARSEL", JOptionPane.ERROR_MESSAGE);
     }
 
     /**
@@ -673,7 +683,8 @@ public class GUI extends javax.swing.JFrame {
             try {
                 generateFoodPlan();
             } catch (SQLException ex) {
-                Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "Indlæsning af ugeplan mislykkedes\nKunne ikke etablere forbindelse til databasen", "ADVARSEL", JOptionPane.ERROR_MESSAGE);
+                decorateUI("Luk", "");
             }
         }
     }//GEN-LAST:event_jButtonGenerateActionPerformed
@@ -880,18 +891,7 @@ public class GUI extends javax.swing.JFrame {
 
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GUI.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GUI.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GUI.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GUI.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (Exception ex) {
         }
         //</editor-fold>
 

@@ -22,13 +22,12 @@ public class WeekHandler {
     private LinkedList<Week> weekList;
     private Weekday[] weekdaysToSwitch = new Weekday[2];
 
-    public WeekHandler() {
+    public WeekHandler() throws SQLException {
         weekList = new LinkedList<>();
         getWeeksFromDB();
     }
 
-    public void getWeeksFromDB() {
-        try {
+    public void getWeeksFromDB() throws SQLException {
             ResultSet rs = ControlHandler.getDbh().selectAll("wk order by wk_date DESC");
             while (rs.next()) {
                 Calendar cal = Calendar.getInstance();
@@ -37,9 +36,6 @@ public class WeekHandler {
                 Week week = new Week(weekID, cal, rs.getInt("wk_rare"), gettWeekdays(weekID));
                 weekList.add(week);
             }
-        } catch (SQLException ex) {
-            System.out.println("SQL FEJL " + ex);
-        }
     }
 
     public Weekday[] gettWeekdays(int weekID) {

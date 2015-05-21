@@ -26,38 +26,34 @@ public class RecipeHandler {
     private ArrayList<Recipe> addedRecipes;
     public static final int NO_INGREDIENTS = -866;
 
-    public RecipeHandler() {
+    public RecipeHandler() throws SQLException {
         getRecipesFromDB();
     }
 
-    public void getRecipesFromDB() {
+    public void getRecipesFromDB() throws SQLException {
         clearAddedRecipes();
         recipeList = new ArrayList<>();
-        try {
-            ResultSet rs = ControlHandler.getDbh().selectAll("amount inner join recipe on fk_recipe = re_id");
+        ResultSet rs = ControlHandler.getDbh().selectAll("amount inner join recipe on fk_recipe = re_id");
 
-            ArrayList<IngredientAmount> ingList = new ArrayList<>();;
-            IngredientAmount ingAm;
-            Ingredient ing;
-            Unit unit;
+        ArrayList<IngredientAmount> ingList = new ArrayList<>();;
+        IngredientAmount ingAm;
+        Ingredient ing;
+        Unit unit;
 
-            int currentID = 0;
-            while (rs.next()) {
-                if (currentID != rs.getInt("re_id")) {
-                    ingList = new ArrayList<>();
-                    Recipe rec = new Recipe(rs.getInt("re_id"), rs.getString("re_name"), rs.getString("re_description"), rs.getInt("re_portions"), rs.getInt("re_cooktime"), rs.getBoolean("re_active"), ingList);
-                    recipeList.add(rec);
-                }
-                if (rs.getDouble("am_amount") != NO_INGREDIENTS) {
-                    unit = ControlHandler.getUh().getUnit(rs.getInt("fk_am_unittype"));
-                    ing = ControlHandler.getIh().getIngredient(rs.getInt("fk_ingr"));
-                    ingAm = new IngredientAmount(unit, ing, rs.getDouble("am_amount"));
-                    ingList.add(ingAm);
-                }
-                currentID = rs.getInt("re_id");
+        int currentID = 0;
+        while (rs.next()) {
+            if (currentID != rs.getInt("re_id")) {
+                ingList = new ArrayList<>();
+                Recipe rec = new Recipe(rs.getInt("re_id"), rs.getString("re_name"), rs.getString("re_description"), rs.getInt("re_portions"), rs.getInt("re_cooktime"), rs.getBoolean("re_active"), ingList);
+                recipeList.add(rec);
             }
-        } catch (SQLException ex) {
-            System.out.println("SQL FEJL " + ex);
+            if (rs.getDouble("am_amount") != NO_INGREDIENTS) {
+                unit = ControlHandler.getUh().getUnit(rs.getInt("fk_am_unittype"));
+                ing = ControlHandler.getIh().getIngredient(rs.getInt("fk_ingr"));
+                ingAm = new IngredientAmount(unit, ing, rs.getDouble("am_amount"));
+                ingList.add(ingAm);
+            }
+            currentID = rs.getInt("re_id");
         }
     }
 
@@ -111,11 +107,9 @@ public class RecipeHandler {
                 recipe = recipeList.get((int) (Math.random() * recipeList.size()));
                 if (recipe.isActive()) {
                     if (lastWeek != null) {
-                        System.out.println("Lastweek: " + lastWeek.getDate());
                         boolean found = false;
                         for (int j = 0; j < lastWeek.getWeekdays().length; j++) {
                             if (lastWeek.getWeekdays()[j].getRecipe().equals(recipe)) {
-                                System.out.println(recipe + " fundet i sidste uge");
                                 found = true;
                             }
                         }

@@ -5,11 +5,8 @@
  */
 package control;
 
-import model.Ingredient;
-import model.Recipe;
-import model.Unit;
-import model.Week;
-import model.Weekday;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import view.GUI;
 
 /**
@@ -19,32 +16,24 @@ import view.GUI;
 public class Start {
 
     public Start() {
-        ControlHandler ch = new ControlHandler();
-
-        System.out.println("List of all unittypes:");
-        for (Unit un : ch.getUh().getUnitList()) {
-            System.out.println("\t" + un.getName() + " (" + un.getShortname() + ")");
+        try {
+            ControlHandler ch = new ControlHandler();
+            GUI gui = new GUI(ch);
+            gui.setVisible(true);
+        } catch (SQLException ex) {
+            String errMsg = "Ukendt fejl " + ex.getErrorCode() + ", prøv igen senere";
+            if (ex.getErrorCode() == 0) {
+                errMsg = "Forbindelsen blev ikke fundet, kontroller at 'Host' og 'Port' er korrekt";
+            } else if (ex.getErrorCode() == 1045) {
+                errMsg = "Brugernavn og Password stemmer ikke";
+            } else if (ex.getErrorCode() == 1049) {
+                errMsg = "Databasen kunne ikke findes";
+            }
+            JOptionPane.showMessageDialog(null, "Indlæsning af ugeplan mislykkedes\nKunne ikke etablere forbindelse til databasen", "ADVARSEL", JOptionPane.ERROR_MESSAGE);
+            GUI.decorateUI("Luk", "");
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "Indlæsning af ugeplan mislykkedes\nKunne ikke etablere forbindelse til databasen", "ADVARSEL", JOptionPane.ERROR_MESSAGE);
+            GUI.decorateUI("Luk", "");
         }
-        System.out.println("\nList of all ingredients:");
-        for (Ingredient in : ch.getIh().getIngredientList()) {
-            System.out.println("\t" + in.getName());
-        }
-
-        System.out.println("\nList of all recipes:");
-        for (Recipe rec : ch.getRh().getRecipeList()) {
-            System.out.println("\t" + rec.getName());
-        }
-
-        System.out.println("\nList of all Weekdays:");
-        for (Weekday weekday : ch.getWdh().getWeekdays()) {
-            System.out.println("\t" + weekday.getDate());
-        }
-
-        System.out.println("\nList of all Weeks:");
-        for (Week week : ch.getWh().getWeekList()) {
-            System.out.println("\tWeek of year: " + week.getDate());
-        }
-        GUI gui = new GUI(ch);
-        gui.setVisible(true);
     }
 }

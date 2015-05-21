@@ -18,20 +18,16 @@ public class IngredientHandler {
 
     private final ArrayList<Ingredient> ingredientList;
 
-    public IngredientHandler() {
+    public IngredientHandler() throws SQLException {
         ingredientList = new ArrayList<>();
         getIngredientsFromDB();
     }
 
-    public void getIngredientsFromDB() {
-        try {
-            ResultSet rs = ControlHandler.getDbh().selectAll("ingr");
-            while (rs.next()) {
-                Ingredient ing = new Ingredient(rs.getInt("in_id"), rs.getString("in_name"));
-                ingredientList.add(ing);
-            }
-        } catch (SQLException ex) {
-            System.out.println("SQL FEJL " + ex);
+    public void getIngredientsFromDB() throws SQLException {
+        ResultSet rs = ControlHandler.getDbh().selectAll("ingr");
+        while (rs.next()) {
+            Ingredient ing = new Ingredient(rs.getInt("in_id"), rs.getString("in_name"));
+            ingredientList.add(ing);
         }
     }
 

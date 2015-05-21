@@ -18,20 +18,16 @@ public class UnitHandler {
 
     private final ArrayList<Unit> unitList;
 
-    public UnitHandler() {
+    public UnitHandler() throws SQLException {
         unitList = new ArrayList<>();
         getUnitsFromDB();
     }
 
-    public void getUnitsFromDB() {
-        try {
-            ResultSet rs = ControlHandler.getDbh().selectAll("Unit");
-            while (rs.next()) {
-                Unit unit = new Unit(rs.getInt("un_id"), rs.getString("un_name"), rs.getString("un_shortname"));
-                unitList.add(unit);
-            }
-        } catch (SQLException ex) {
-            System.out.println("SQL FEJL" + ex);
+    public void getUnitsFromDB() throws SQLException {
+        ResultSet rs = ControlHandler.getDbh().selectAll("Unit");
+        while (rs.next()) {
+            Unit unit = new Unit(rs.getInt("un_id"), rs.getString("un_name"), rs.getString("un_shortname"));
+            unitList.add(unit);
         }
     }
 
