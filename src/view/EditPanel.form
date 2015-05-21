@@ -555,50 +555,45 @@
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
+                              <Component id="jButtonDeleteIngredient" min="-2" pref="118" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                              <Component id="jButtonSaveIngredient" min="-2" pref="118" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="jTextFieldIngredientNewName" min="-2" pref="256" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="jButtonDeleteIngredient" min="-2" pref="118" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                                      <Component id="jButtonSaveIngredient" min="-2" pref="118" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="jTextFieldIngredientNewName" min="-2" pref="256" max="-2" attributes="0"/>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jLabel11" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Component id="jLabel13" min="-2" pref="60" max="-2" attributes="0"/>
-                                                      <Component id="jTextFieldEditIngredientAmount" alignment="1" min="-2" pref="60" max="-2" attributes="0"/>
-                                                  </Group>
-                                                  <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                      <Component id="jComboBoxEditIngredientUnit" max="32767" attributes="0"/>
-                                                      <Component id="jLabel14" pref="71" max="32767" attributes="0"/>
-                                                  </Group>
-                                              </Group>
-                                              <Component id="jButtonAddIngredient" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="jLabel16" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jLabel11" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="jLabel13" min="-2" pref="60" max="-2" attributes="0"/>
+                                              <Component id="jTextFieldEditIngredientAmount" alignment="1" min="-2" pref="60" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="jComboBoxEditIngredientUnit" max="32767" attributes="0"/>
+                                              <Component id="jLabel14" pref="71" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="jLabel15" min="-2" pref="274" max="-2" attributes="0"/>
+                                      <Component id="jButtonAddIngredient" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="jLabel16" alignment="0" max="32767" attributes="0"/>
                                   </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="1" attributes="0">
-                                          <Component id="jLabelShowAllIngredients" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jTextFieldIngredientSearch" min="-2" pref="416" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="jPicIngredientFound" min="-2" pref="22" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="jLabel10" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="jLabel15" min="-2" pref="274" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jLabel9" min="-2" pref="454" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="jLabelShowAllIngredients" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jTextFieldIngredientSearch" min="-2" pref="416" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="jPicIngredientFound" min="-2" pref="22" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="jLabel10" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel9" min="-2" pref="455" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>

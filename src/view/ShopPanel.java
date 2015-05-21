@@ -43,8 +43,9 @@ public class ShopPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanelTop = new javax.swing.JPanel();
         jLabelHeadline = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jPanelTop = new javax.swing.JPanel();
         jPanelDays = new javax.swing.JPanel();
         jPanelFre = new javax.swing.JPanel();
         jLabelFre = new javax.swing.JLabel();
@@ -76,6 +77,7 @@ public class ShopPanel extends javax.swing.JPanel {
         jTextAreaOns = new javax.swing.JTextArea();
         jPanelFull = new javax.swing.JPanel();
         jLabelHeadline1 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextAreaFull = new javax.swing.JTextArea();
 
@@ -83,14 +85,19 @@ public class ShopPanel extends javax.swing.JPanel {
         setForeground(new java.awt.Color(255, 255, 255));
         setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
 
+        jLabelHeadline.setBackground(GUI.succesColor);
+        jLabelHeadline.setFont(new java.awt.Font("Verdana", 1, 22)); // NOI18N
+        jLabelHeadline.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelHeadline.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelHeadline.setOpaque(true);
+
+        jPanel2.setBackground(GUI.dayColor);
+
         jPanelTop.setBackground(GUI.buttonHoverColor);
 
-        jLabelHeadline.setFont(new java.awt.Font("Verdana", 0, 22)); // NOI18N
-        jLabelHeadline.setForeground(new java.awt.Color(255, 255, 255));
+        jPanelDays.setBackground(GUI.dayColor);
 
-        jPanelDays.setBackground(GUI.buttonHoverColor);
-
-        jPanelFre.setBackground(GUI.dayColor);
+        jPanelFre.setBackground(GUI.weekPanelColor);
 
         jLabelFre.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
         jLabelFre.setForeground(new java.awt.Color(255, 255, 255));
@@ -101,7 +108,7 @@ public class ShopPanel extends javax.swing.JPanel {
         jScrollPane6.setBorder(null);
 
         jTextAreaFre.setEditable(false);
-        jTextAreaFre.setBackground(GUI.dayColor);
+        jTextAreaFre.setBackground(GUI.weekPanelColor);
         jTextAreaFre.setColumns(20);
         jTextAreaFre.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jTextAreaFre.setForeground(new java.awt.Color(255, 255, 255));
@@ -130,7 +137,7 @@ public class ShopPanel extends javax.swing.JPanel {
                 .addComponent(jScrollPane6))
         );
 
-        jPanelTir.setBackground(GUI.dayColor);
+        jPanelTir.setBackground(GUI.weekPanelColor);
 
         jLabelTir.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
         jLabelTir.setForeground(new java.awt.Color(255, 255, 255));
@@ -141,7 +148,7 @@ public class ShopPanel extends javax.swing.JPanel {
         jScrollPane3.setBorder(null);
 
         jTextAreaTir.setEditable(false);
-        jTextAreaTir.setBackground(GUI.dayColor);
+        jTextAreaTir.setBackground(GUI.weekPanelColor);
         jTextAreaTir.setColumns(20);
         jTextAreaTir.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jTextAreaTir.setForeground(new java.awt.Color(255, 255, 255));
@@ -170,7 +177,7 @@ public class ShopPanel extends javax.swing.JPanel {
                 .addComponent(jScrollPane3))
         );
 
-        jPanelSon.setBackground(GUI.dayColor);
+        jPanelSon.setBackground(GUI.weekPanelColor);
 
         jLabelSon.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
         jLabelSon.setForeground(new java.awt.Color(255, 255, 255));
@@ -181,7 +188,7 @@ public class ShopPanel extends javax.swing.JPanel {
         jScrollPane8.setBorder(null);
 
         jTextAreaSon.setEditable(false);
-        jTextAreaSon.setBackground(GUI.dayColor);
+        jTextAreaSon.setBackground(GUI.weekPanelColor);
         jTextAreaSon.setColumns(20);
         jTextAreaSon.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jTextAreaSon.setForeground(new java.awt.Color(255, 255, 255));
@@ -210,7 +217,7 @@ public class ShopPanel extends javax.swing.JPanel {
                 .addComponent(jScrollPane8))
         );
 
-        jPanelTor.setBackground(GUI.dayColor);
+        jPanelTor.setBackground(GUI.weekPanelColor);
 
         jLabelTor.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
         jLabelTor.setForeground(new java.awt.Color(255, 255, 255));
@@ -221,7 +228,7 @@ public class ShopPanel extends javax.swing.JPanel {
         jScrollPane5.setBorder(null);
 
         jTextAreaTor.setEditable(false);
-        jTextAreaTor.setBackground(GUI.dayColor);
+        jTextAreaTor.setBackground(GUI.weekPanelColor);
         jTextAreaTor.setColumns(20);
         jTextAreaTor.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jTextAreaTor.setForeground(new java.awt.Color(255, 255, 255));
@@ -250,7 +257,7 @@ public class ShopPanel extends javax.swing.JPanel {
                 .addComponent(jScrollPane5))
         );
 
-        jPanelLor.setBackground(GUI.dayColor);
+        jPanelLor.setBackground(GUI.weekPanelColor);
 
         jLabelLor.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
         jLabelLor.setForeground(new java.awt.Color(255, 255, 255));
@@ -261,7 +268,7 @@ public class ShopPanel extends javax.swing.JPanel {
         jScrollPane7.setBorder(null);
 
         jTextAreaLor.setEditable(false);
-        jTextAreaLor.setBackground(GUI.dayColor);
+        jTextAreaLor.setBackground(GUI.weekPanelColor);
         jTextAreaLor.setColumns(20);
         jTextAreaLor.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jTextAreaLor.setForeground(new java.awt.Color(255, 255, 255));
@@ -290,7 +297,7 @@ public class ShopPanel extends javax.swing.JPanel {
                 .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE))
         );
 
-        jPanelMan.setBackground(GUI.dayColor);
+        jPanelMan.setBackground(GUI.weekPanelColor);
 
         jLabelMan.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
         jLabelMan.setForeground(new java.awt.Color(255, 255, 255));
@@ -301,7 +308,7 @@ public class ShopPanel extends javax.swing.JPanel {
         jScrollPane2.setBorder(null);
 
         jTextAreaMan.setEditable(false);
-        jTextAreaMan.setBackground(GUI.dayColor);
+        jTextAreaMan.setBackground(GUI.weekPanelColor);
         jTextAreaMan.setColumns(20);
         jTextAreaMan.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jTextAreaMan.setForeground(new java.awt.Color(255, 255, 255));
@@ -320,9 +327,7 @@ public class ShopPanel extends javax.swing.JPanel {
             .addGroup(jPanelManLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabelMan, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanelManLayout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         jPanelManLayout.setVerticalGroup(
             jPanelManLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -332,7 +337,7 @@ public class ShopPanel extends javax.swing.JPanel {
                 .addComponent(jScrollPane2))
         );
 
-        jPanelOns.setBackground(GUI.dayColor);
+        jPanelOns.setBackground(GUI.weekPanelColor);
 
         jLabelOns.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
         jLabelOns.setForeground(new java.awt.Color(255, 255, 255));
@@ -343,7 +348,7 @@ public class ShopPanel extends javax.swing.JPanel {
         jScrollPane4.setBorder(null);
 
         jTextAreaOns.setEditable(false);
-        jTextAreaOns.setBackground(GUI.dayColor);
+        jTextAreaOns.setBackground(GUI.weekPanelColor);
         jTextAreaOns.setColumns(20);
         jTextAreaOns.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jTextAreaOns.setForeground(new java.awt.Color(255, 255, 255));
@@ -378,19 +383,19 @@ public class ShopPanel extends javax.swing.JPanel {
             jPanelDaysLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelDaysLayout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addComponent(jPanelMan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanelMan, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(1, 1, 1)
-                .addComponent(jPanelTir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanelTir, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(1, 1, 1)
-                .addComponent(jPanelOns, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanelOns, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(1, 1, 1)
-                .addComponent(jPanelTor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanelTor, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(1, 1, 1)
-                .addComponent(jPanelFre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanelFre, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(1, 1, 1)
-                .addComponent(jPanelLor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanelLor, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(1, 1, 1)
-                .addComponent(jPanelSon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanelSon, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
         );
         jPanelDaysLayout.setVerticalGroup(
@@ -412,7 +417,6 @@ public class ShopPanel extends javax.swing.JPanel {
         jPanelTop.setLayout(jPanelTopLayout);
         jPanelTopLayout.setHorizontalGroup(
             jPanelTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabelHeadline, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanelTopLayout.createSequentialGroup()
                 .addComponent(jPanelDays, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -420,23 +424,27 @@ public class ShopPanel extends javax.swing.JPanel {
         jPanelTopLayout.setVerticalGroup(
             jPanelTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelTopLayout.createSequentialGroup()
-                .addComponent(jLabelHeadline, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanelDays, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, 0)
+                .addComponent(jPanelDays, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
 
-        jPanelFull.setBackground(GUI.buttonHoverColor);
+        jPanelFull.setBackground(GUI.dayColor);
 
-        jLabelHeadline1.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jLabelHeadline1.setBackground(new java.awt.Color(255, 255, 255));
+        jLabelHeadline1.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jLabelHeadline1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelHeadline1.setText("Fuld indkøbsliste:");
+        jLabelHeadline1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelHeadline1.setText("Fuld indkøbsliste");
+
+        jPanel1.setBackground(GUI.weekPanelColor);
 
         jScrollPane1.setBorder(null);
 
         jTextAreaFull.setEditable(false);
-        jTextAreaFull.setBackground(GUI.dayColor);
+        jTextAreaFull.setBackground(GUI.weekPanelColor);
         jTextAreaFull.setColumns(20);
-        jTextAreaFull.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        jTextAreaFull.setFont(new java.awt.Font("Verdana", 2, 12)); // NOI18N
         jTextAreaFull.setLineWrap(true);
         jTextAreaFull.setRows(5);
         jTextAreaFull.setWrapStyleWord(true);
@@ -445,37 +453,77 @@ public class ShopPanel extends javax.swing.JPanel {
         jTextAreaFull.setEnabled(false);
         jScrollPane1.setViewportView(jTextAreaFull);
 
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
+        );
+
         javax.swing.GroupLayout jPanelFullLayout = new javax.swing.GroupLayout(jPanelFull);
         jPanelFull.setLayout(jPanelFullLayout);
         jPanelFullLayout.setHorizontalGroup(
             jPanelFullLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabelHeadline1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanelFullLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanelFullLayout.setVerticalGroup(
             jPanelFullLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelFullLayout.createSequentialGroup()
                 .addComponent(jLabelHeadline1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanelFull, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelTop, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, 0))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanelTop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanelFull, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelFull, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanelTop, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabelHeadline, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanelTop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanelFull, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(10, 10, 10)
+                .addComponent(jLabelHeadline, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -490,6 +538,8 @@ public class ShopPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabelSon;
     private javax.swing.JLabel jLabelTir;
     private javax.swing.JLabel jLabelTor;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelDays;
     private javax.swing.JPanel jPanelFre;
     private javax.swing.JPanel jPanelFull;
@@ -554,10 +604,14 @@ public class ShopPanel extends javax.swing.JPanel {
                     break;
             }
             weekday = week.getWeekdays()[i];
-            if (weekday.isOmit() || !weekday.getRecipe().isActive()) {
-                day.setBackground(GUI.buttonHoverColor);
-                parent.setBackground(GUI.buttonHoverColor);
-                day.setText("Dag undladt");
+            if (weekday.isOmit()) {
+                day.setBackground(GUI.omittedColor);
+                parent.setBackground(GUI.omittedColor);
+                day.setText("Ugedag undladt");
+	    }else if(!weekday.getRecipe().isActive()){
+		day.setBackground(GUI.omittedColor);
+                parent.setBackground(GUI.omittedColor);
+                day.setText("Opskrift fjernet");
             } else {
                 day.append(weekday.getRecipe().getName() + "\n\n");
                 for (IngredientAmount ingAm : weekday.getRecipe().getIngredientList()) {
