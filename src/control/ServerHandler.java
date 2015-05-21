@@ -9,14 +9,17 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import model.IngredientAmount;
 import model.Week;
 import model.Weekday;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import view.GUI;
 
 /**
  *
@@ -32,13 +35,9 @@ public class ServerHandler {
     }
 
     public void sendData(Week week) {
-//        InputStream input = null;
         try {
-//            input = socket.getInputStream();
-//            Scanner scan = new Scanner(input);
             OutputStream ops = socket.getOutputStream();
-//            PrintWriter pw = new PrintWriter(output, true);
-            OutputStreamWriter osw = new OutputStreamWriter(ops);
+            OutputStreamWriter osw = new OutputStreamWriter(ops, Charset.forName("UTF-8"));
 
             jsonRecipies = new JSONArray();
             JSONObject weekObject = new JSONObject();
@@ -46,7 +45,6 @@ public class ServerHandler {
             for (Weekday wkday : week.getWeekdays()) {
                 JSONObject recipe = new JSONObject();
                 recipe.put("name", wkday.getRecipe().getName());
-//                recipe.put("date", wkday.getDate());
                 recipe.put("omit", wkday.isOmit());
                 recipe.put("active", wkday.getRecipe().isActive());
                 JSONArray ingList = new JSONArray();
@@ -64,20 +62,11 @@ public class ServerHandler {
             String output = weekObject.toJSONString();
             if (!socket.isClosed()) {
                 osw.write(output);
-//                String request = scan.nextLine();
-//                String response = request + " (" + request.length() + ")";
-//                pw.println("Du er forbundet");
             }
             osw.flush();
             osw.close();
         } catch (IOException ex) {
             Logger.getLogger(ServerHandler.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-//            try {
-//                input.close();
-//            } catch (IOException ex) {
-//                Logger.getLogger(ServerHandler.class.getName()).log(Level.SEVERE, null, ex);
-//            }
         }
     }
 }
