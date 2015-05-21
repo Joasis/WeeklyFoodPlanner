@@ -91,7 +91,8 @@ public class ShopPanel extends javax.swing.JPanel {
         jLabelHeadline.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelHeadline.setOpaque(true);
 
-        jPanel2.setBackground(GUI.dayColor);
+        jPanel2.setBackground(GUI.
+            dayColor);
 
         jPanelTop.setBackground(GUI.buttonHoverColor);
 
@@ -294,7 +295,7 @@ public class ShopPanel extends javax.swing.JPanel {
             .addGroup(jPanelLorLayout.createSequentialGroup()
                 .addComponent(jLabelLor)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE))
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE))
         );
 
         jPanelMan.setBackground(GUI.weekPanelColor);
@@ -426,16 +427,15 @@ public class ShopPanel extends javax.swing.JPanel {
             .addGroup(jPanelTopLayout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addComponent(jPanelDays, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanelFull.setBackground(GUI.dayColor);
-
-        jLabelHeadline1.setBackground(new java.awt.Color(255, 255, 255));
+        jLabelHeadline1.setBackground(GUI.succesColor);
         jLabelHeadline1.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jLabelHeadline1.setForeground(new java.awt.Color(255, 255, 255));
         jLabelHeadline1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelHeadline1.setText("Fuld indkøbsliste");
+        jLabelHeadline1.setOpaque(true);
 
         jPanel1.setBackground(GUI.weekPanelColor);
 
@@ -446,7 +446,7 @@ public class ShopPanel extends javax.swing.JPanel {
         jTextAreaFull.setColumns(20);
         jTextAreaFull.setFont(new java.awt.Font("Verdana", 2, 12)); // NOI18N
         jTextAreaFull.setLineWrap(true);
-        jTextAreaFull.setRows(5);
+        jTextAreaFull.setRows(1);
         jTextAreaFull.setWrapStyleWord(true);
         jTextAreaFull.setBorder(null);
         jTextAreaFull.setDisabledTextColor(new java.awt.Color(255, 255, 255));
@@ -465,9 +465,8 @@ public class ShopPanel extends javax.swing.JPanel {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanelFullLayout = new javax.swing.GroupLayout(jPanelFull);
@@ -481,7 +480,7 @@ public class ShopPanel extends javax.swing.JPanel {
             jPanelFullLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelFullLayout.createSequentialGroup()
                 .addComponent(jLabelHeadline1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -499,9 +498,9 @@ public class ShopPanel extends javax.swing.JPanel {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(0, 0, 0)
                 .addComponent(jPanelTop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
                 .addComponent(jPanelFull, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
