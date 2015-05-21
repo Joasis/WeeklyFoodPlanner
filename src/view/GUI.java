@@ -296,6 +296,7 @@ public class GUI extends javax.swing.JFrame {
         jCheckBoxExcludeLastWeek = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Min madplan");
         setResizable(false);
 
         jPanelContent.setBackground(mainColor);
@@ -730,8 +731,9 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboWeekActionPerformed
 
     private void jButtonDatePreviousActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDatePreviousActionPerformed
-        if (jComboWeek.getSelectedIndex() > 0) {
-            jComboWeek.setSelectedIndex(jComboWeek.getSelectedIndex() - 1);
+        int selectedIndexPlus1 = jComboWeek.getSelectedIndex() + 1;
+        if (selectedIndexPlus1 < jComboWeek.getItemCount()) {
+            jComboWeek.setSelectedIndex(selectedIndexPlus1);
         }
     }//GEN-LAST:event_jButtonDatePreviousActionPerformed
 
@@ -752,9 +754,8 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonBackActionPerformed
 
     private void jButtonDateNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDateNextActionPerformed
-        int selectedIndexPlus1 = jComboWeek.getSelectedIndex() + 1;
-        if (selectedIndexPlus1 < jComboWeek.getItemCount()) {
-            jComboWeek.setSelectedIndex(selectedIndexPlus1);
+        if (jComboWeek.getSelectedIndex() > 0) {
+            jComboWeek.setSelectedIndex(jComboWeek.getSelectedIndex() - 1);
         }
     }//GEN-LAST:event_jButtonDateNextActionPerformed
 
@@ -910,49 +911,13 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JButton jButtonShop;
     private javax.swing.JButton jButtonSync;
     private javax.swing.JButton jButtonUpdate;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox10;
-    private javax.swing.JCheckBox jCheckBox11;
-    private javax.swing.JCheckBox jCheckBox12;
-    private javax.swing.JCheckBox jCheckBox13;
-    private javax.swing.JCheckBox jCheckBox14;
-    private javax.swing.JCheckBox jCheckBox15;
-    private javax.swing.JCheckBox jCheckBox16;
-    private javax.swing.JCheckBox jCheckBox17;
-    private javax.swing.JCheckBox jCheckBox18;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JCheckBox jCheckBox3;
-    private javax.swing.JCheckBox jCheckBox4;
-    private javax.swing.JCheckBox jCheckBox5;
-    private javax.swing.JCheckBox jCheckBox6;
-    private javax.swing.JCheckBox jCheckBox7;
-    private javax.swing.JCheckBox jCheckBox8;
-    private javax.swing.JCheckBox jCheckBox9;
     private javax.swing.JCheckBox jCheckBoxAllowDuplicated;
     private javax.swing.JCheckBox jCheckBoxExcludeLastWeek;
     private javax.swing.JComboBox jComboWeek;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelNoWeek;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
     private javax.swing.JPanel jPanelContent;
     private javax.swing.JPanel jPanelSettings;
     private javax.swing.JPanel jPanelWeek;
