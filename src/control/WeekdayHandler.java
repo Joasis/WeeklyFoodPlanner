@@ -59,8 +59,8 @@ public class WeekdayHandler {
                 ControlHandler.getDbh().updateWeekdayDate(wd);
                 ControlHandler.getDbh().updateWeekdayDate(selectedWeekday);
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "Indlæsning af ugeplan mislykkedes\nKunne ikke etablere forbindelse til databasen", "ADVARSEL", JOptionPane.ERROR_MESSAGE);
                 GUI.decorateUI("Luk", "");
+                JOptionPane.showMessageDialog(null, "Indlæsning af ugeplan mislykkedes\nKunne ikke etablere forbindelse til databasen", "ADVARSEL", JOptionPane.ERROR_MESSAGE);
             }
             selectedWeekday = null;
             swap = 2;

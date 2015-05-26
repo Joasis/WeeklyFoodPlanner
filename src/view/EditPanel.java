@@ -810,26 +810,6 @@ public class EditPanel extends javax.swing.JPanel {
 
     public void removeIngredientFromSelectedRecipe() {
         if (selectedRecipe != null) {
-            /*
-             GUI.decorateUI("Ja", "Nej");
-             int option = JOptionPane.showConfirmDialog(this, "Hvis du fjerner den sidste ingrediens, slettes opskriften\nVil du fortsætte?", "ADVARSEL", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-             if (option == 0) {
-             deleteSelectedRecipe();
-             }
-
-             if (!jListEditRecipeIngredients.isSelectionEmpty()) {
-             IngredientAmount ingam = (IngredientAmount) jListEditRecipeIngredients.getSelectedValue();
-             model.removeElement(ingam);
-             jTextFieldEditRecipeAmount.setText("");
-             jComboBoxEditRecipeUnit.setSelectedIndex(0);
-             try {
-             selectedRecipe.getIngredientList().remove(ingam);
-             GUI.getCh().getDbh().createEmptyRecipe(selectedRecipe);
-             } catch (SQLException ex) {
-             JOptionPane.showMessageDialog(this, "FEJL VED INGREDIENT REMOVAL FRA DATABASE");
-             }
-             }
-             */
             if (!jListEditRecipeIngredients.isSelectionEmpty()) {
                 IngredientAmount ingam = (IngredientAmount) jListEditRecipeIngredients.getSelectedValue();
                 selectedRecipe.getIngredientList().remove(ingam);
@@ -843,7 +823,7 @@ public class EditPanel extends javax.swing.JPanel {
                         GUI.getCh().getDbh().insertIngredientToRecipe(selectedRecipe, ingam);
                     }
                 } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(this, "FEJL VED INGREDIENT REMOVAL FRA DATABASE");
+                    showSqlErrorDialog();
                 }
             }
         }
@@ -877,8 +857,8 @@ public class EditPanel extends javax.swing.JPanel {
             if (jTextFieldEditIngredientAmount.getText().length() > 8) {
                 setFeedback(jTextFieldEditIngredientAmount);
                 ok = false;
+                GUI.decorateUI("OK", "");
                 JOptionPane.showMessageDialog(this, "Antal overskrider den maksimale værdi på 8 tegn\nRet værdien, og prøv igen", "ADVARSEL", JOptionPane.ERROR_MESSAGE);
-                GUI.decorateUI("Luk", "");
             } else {
                 jTextFieldEditIngredientAmount.setText(jTextFieldEditIngredientAmount.getText().replace(",", "."));
                 double a = Double.parseDouble(jTextFieldEditIngredientAmount.getText());
@@ -900,8 +880,8 @@ public class EditPanel extends javax.swing.JPanel {
         if (jTextFieldCookingTime.getText().length() > 8) {
             setFeedback(jTextFieldCookingTime);
             ok = false;
+            GUI.decorateUI("OK", "");
             JOptionPane.showMessageDialog(this, "Tilberedningstiden overskrider den maksimale værdi på 8 tegn\nRet værdien, og prøv igen", "ADVARSEL", JOptionPane.ERROR_MESSAGE);
-            GUI.decorateUI("Luk", "");
         } else {
             try {
                 int a = Integer.parseInt(jTextFieldCookingTime.getText());
@@ -913,8 +893,8 @@ public class EditPanel extends javax.swing.JPanel {
         if (jTextFieldPortions.getText().length() > 8) {
             setFeedback(jTextFieldPortions);
             ok = false;
+            GUI.decorateUI("OK", "");
             JOptionPane.showMessageDialog(this, "Antal overskrider den maksimale værdi på 8 tegn\nRet værdien, og prøv igen", "ADVARSEL", JOptionPane.ERROR_MESSAGE);
-            GUI.decorateUI("Luk", "");
         } else {
             try {
                 int a = Integer.parseInt(jTextFieldPortions.getText());
@@ -968,7 +948,6 @@ public class EditPanel extends javax.swing.JPanel {
     public void showSqlErrorDialog() {
         GUI.decorateUI("Luk", "");
         JOptionPane.showMessageDialog(this, "Indlæsning af ugeplan mislykkedes\nKunne ikke etablere forbindelse til databasen", "ADVARSEL", JOptionPane.ERROR_MESSAGE);
-
     }
     private void jButtonAddIngredientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddIngredientActionPerformed
         addIngredientToRecipe();
@@ -995,8 +974,8 @@ public class EditPanel extends javax.swing.JPanel {
             if (!jTextFieldEditRecipeAmount.getText().isEmpty()) {
                 if (jTextFieldEditRecipeAmount.getText().length() > 8) {
                     setFeedback(jTextFieldEditRecipeAmount);
+                    GUI.decorateUI("OK", "");
                     JOptionPane.showMessageDialog(this, "Antal overskrider den maksimale værdi på 8 tegn\nRet værdien, og prøv igen", "ADVARSEL", JOptionPane.ERROR_MESSAGE);
-                    GUI.decorateUI("Luk", "");
                 } else {
                     IngredientAmount ingAm = (IngredientAmount) jListEditRecipeIngredients.getSelectedValue();
                     ingAm.setAmount(Double.parseDouble(jTextFieldEditRecipeAmount.getText()));
@@ -1090,9 +1069,9 @@ public class EditPanel extends javax.swing.JPanel {
         if (selectedRecipe != null) {
             if (validateRecipeInput()) {
                 if (!selectedRecipe.getName().equalsIgnoreCase(jTextFieldRecipeNewName.getText().trim()) && GUI.getCh().getRh().isRecipeFound(jTextFieldRecipeNewName.getText().trim())) {
+                    GUI.decorateUI("Luk", "");
                     JOptionPane.showMessageDialog(this, "Der findes allerede en opskrift med dette navn\nVælg et andet navn, og prøv igen", "ADVARSEL", JOptionPane.ERROR_MESSAGE);
                     setFeedback(jTextFieldRecipeNewName);
-                    GUI.decorateUI("Luk", "");
                 } else {
                     try {
                         selectedRecipe.setName(jTextFieldRecipeNewName.getText());
@@ -1128,7 +1107,7 @@ public class EditPanel extends javax.swing.JPanel {
                 clearSelection("Recipe");
                 jTextFieldRecipeSearch.setText("");
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, "FEJL VED SLETNING FRA DATABASE");
+                showSqlErrorDialog();
             }
         }
     }

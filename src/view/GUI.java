@@ -677,14 +677,14 @@ public class GUI extends javax.swing.JFrame {
 
     private void jButtonGenerateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGenerateActionPerformed
         if (getCh().getRh().getActiveRecipeListsize() < 7) {
-            JOptionPane.showMessageDialog(this, "Generering af ugeplan kræver mindst 7 tilføjede opskrifter\nDu mangler kun: " + (7 - getCh().getRh().getActiveRecipeListsize()) + " mere!", "ADVARSEL", JOptionPane.ERROR_MESSAGE);
             decorateUI("Luk", "");
+            JOptionPane.showMessageDialog(this, "Generering af ugeplan kræver mindst 7 tilføjede opskrifter\nDu mangler kun: " + (7 - getCh().getRh().getActiveRecipeListsize()) + " mere!", "ADVARSEL", JOptionPane.ERROR_MESSAGE);
         } else {
             try {
                 generateFoodPlan();
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "Indlæsning af ugeplan mislykkedes\nKunne ikke etablere forbindelse til databasen", "ADVARSEL", JOptionPane.ERROR_MESSAGE);
                 decorateUI("Luk", "");
+                JOptionPane.showMessageDialog(null, "Indlæsning af ugeplan mislykkedes\nKunne ikke etablere forbindelse til databasen", "ADVARSEL", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_jButtonGenerateActionPerformed
@@ -869,8 +869,8 @@ public class GUI extends javax.swing.JFrame {
     private void jCheckBoxExcludeLastWeekActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxExcludeLastWeekActionPerformed
         if (getCh().getRh().getActiveRecipeListsize() < 14) {
             jCheckBoxExcludeLastWeek.setSelected(false);
-            JOptionPane.showMessageDialog(this, "Der er ikke nok opskrfiter til, at kunne undlade opskrifter fra sidste uge\nDenne indstilling kræver minimum 14 opskrifter", "ADVARSEL", JOptionPane.ERROR_MESSAGE);
             decorateUI("Luk", "");
+            JOptionPane.showMessageDialog(this, "Der er ikke nok opskrfiter til, at kunne undlade opskrifter fra sidste uge\nDenne indstilling kræver minimum 14 opskrifter", "ADVARSEL", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jCheckBoxExcludeLastWeekActionPerformed
 
