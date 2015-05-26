@@ -162,7 +162,7 @@ public class DBHandler {
     }
 
     public void insertWeek(Week week) throws SQLException {
-        String sql = "INSERT into wk(wk_date, wk_rare) values(" + week.getCal().getTimeInMillis() + ", " + week.getRarity() + ")";
+        String sql = "INSERT into wk(wk_date) values(" + week.getCal().getTimeInMillis() + ")";
         stmt.addBatch(sql);
         String sqlWeekDay = "";
         for (Weekday wkday : week.getWeekdays()) {

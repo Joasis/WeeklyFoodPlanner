@@ -712,7 +712,7 @@ public class GUI extends javax.swing.JFrame {
         getCh().getRh().clearAddedRecipes();
 
         if (nextWeekAi != -1) {
-            Week week = new Week(nextWeekAi, newWeek, 0, weekdays);
+            Week week = new Week(nextWeekAi, newWeek, weekdays);
             getCh().getDbh().insertWeek(week);
             weekList.addFirst(week);
             currentWeekSat = true;

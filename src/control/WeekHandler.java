@@ -33,7 +33,7 @@ public class WeekHandler {
                 Calendar cal = Calendar.getInstance();
                 cal.setTimeInMillis(rs.getLong("wk_date"));
                 int weekID = rs.getInt("wk_id");
-                Week week = new Week(weekID, cal, rs.getInt("wk_rare"), gettWeekdays(weekID));
+                Week week = new Week(weekID, cal, gettWeekdays(weekID));
                 weekList.add(week);
             }
     }

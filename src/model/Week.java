@@ -15,13 +15,11 @@ public class Week {
 
     private int id;
     private Calendar cal;
-    private int rarity;
     private Weekday[] weekdays;
 
-    public Week(int id, Calendar cal, int rarity, Weekday[] weekdays) {
+    public Week(int id, Calendar cal, Weekday[] weekdays) {
         this.id = id;
         this.cal = cal;
-        this.rarity = rarity;
         this.weekdays = weekdays;
     }
 
@@ -35,10 +33,6 @@ public class Week {
 
     public Calendar getCal() {
         return cal;
-    }
-
-    public int getRarity() {
-        return rarity;
     }
 
     public Weekday[] getWeekdays() {
