@@ -532,6 +532,7 @@ public class AddRecipePanel extends javax.swing.JPanel {
         if (validateRecipeInput()) {
             String name = jTextField_name.getText();
             if (GUI.getCh().getRh().isRecipeFound(name.trim())) {
+                GUI.decorateUI("OK", "");
                 JOptionPane.showMessageDialog(this, "Der findes allerede en opskrift med navnet: " + name + "\nVælg et andet navn til din opskrift", "ADVARSEL", JOptionPane.OK_OPTION);
                 jTextField_name.selectAll();
                 jTextField_name.requestFocus();
@@ -637,8 +638,8 @@ public class AddRecipePanel extends javax.swing.JPanel {
         if (jTextField_cooktime.getText().length() > 8) {
             setFeedback(jTextField_cooktime);
             ok = false;
+            GUI.decorateUI("OK", "");
             JOptionPane.showMessageDialog(this, "Tilberedningstiden overskrider den maksimale værdi på 8 tegn\nRet værdien, og prøv igen", "ADVARSEL", JOptionPane.ERROR_MESSAGE);
-            GUI.decorateUI("Luk", "");
         } else {
             try {
                 int a = Integer.parseInt(jTextField_cooktime.getText());
@@ -650,8 +651,8 @@ public class AddRecipePanel extends javax.swing.JPanel {
         if (jTextField_portion.getText().length() > 8) {
             setFeedback(jTextField_portion);
             ok = false;
+            GUI.decorateUI("OK", "");
             JOptionPane.showMessageDialog(this, "Antal overskrider den maksimale værdi på 8 tegn\nRet værdien, og prøv igen", "ADVARSEL", JOptionPane.ERROR_MESSAGE);
-            GUI.decorateUI("Luk", "");
         } else {
             try {
                 int a = Integer.parseInt(jTextField_portion.getText());
@@ -673,8 +674,8 @@ public class AddRecipePanel extends javax.swing.JPanel {
         if (jTextFieldRecipeAmount.getText().length() > 8) {
             setFeedback(jTextFieldRecipeAmount);
             ok = false;
+            GUI.decorateUI("OK", "");
             JOptionPane.showMessageDialog(this, "Antal overskrider den maksimale værdi på 8 tegn\nRet værdien, og prøv igen", "ADVARSEL", JOptionPane.ERROR_MESSAGE);
-            GUI.decorateUI("Luk", "");
         } else {
             try {
                 jTextFieldRecipeAmount.setText(jTextFieldRecipeAmount.getText().replace(",", "."));
