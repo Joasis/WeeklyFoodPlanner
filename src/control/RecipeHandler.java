@@ -109,7 +109,7 @@ public class RecipeHandler {
                     if (lastWeek != null) {
                         boolean found = false;
                         for (int j = 0; j < lastWeek.getWeekdays().length; j++) {
-                            if (lastWeek.getWeekdays()[j].getRecipe().equals(recipe)) {
+                            if (lastWeek.getWeekdays()[j].getRecipe().equals(recipe) && !lastWeek.getWeekdays()[j].isOmit()) {
                                 found = true;
                             }
                         }

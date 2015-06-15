@@ -153,7 +153,7 @@ public class AddRecipePanel extends javax.swing.JPanel {
 
         jListIngredients.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jListIngredients.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        jListIngredients.setPreferredSize(new java.awt.Dimension(160, 90));
+        jListIngredients.setPreferredSize(null);
         jListIngredients.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 jListIngredientsValueChanged(evt);

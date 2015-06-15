@@ -329,7 +329,7 @@
                     </Property>
                     <Property name="selectionMode" type="int" value="1"/>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                      <Dimension value="[160, 90]"/>
+                      <Dimension value="null"/>
                     </Property>
                   </Properties>
                   <Events>
